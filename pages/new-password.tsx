@@ -26,7 +26,7 @@ export default function Home() {
   }
 
   return (
-    <section className="bg-secondary h-full w-full">
+    <section className="bg-secondary h-full w-full overflow-y-hidden">
       <Head>
         <meta property="og:title" content={"Sistema Financeiro - Igreja Irmãos Menonitas - Criar Nova Senha"} />
         <meta property="og:url" content={`https://igrejairmaosmenonitas.vercel.app`} />

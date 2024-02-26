@@ -13,7 +13,7 @@ export default function Home() {
   const [isLogin, setIsLogin] = useState(false)
 
   return (
-    <section className="bg-secondary h-full w-full">
+    <section className="bg-secondary h-full w-full overflow-y-hidden">
       <Head>
         <meta property="og:title" content={"Sistema Financeiro - Igreja Irmãos Menonitas - Login"} />
         <meta property="og:url" content={`https://igrejairmaosmenonitas.vercel.app`} />

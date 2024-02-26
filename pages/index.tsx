@@ -12,7 +12,7 @@ export default function Home() {
   const [isLogin, setIsLogin] = useState(false)
 
   return (
-    <section className="bg-secondary h-full w-full overflow-y-hidden">
+    <section className="bg-secondary h-full w-full flex justify-center items-center">
       <Head>
         <meta property="og:title" content={"Sistema Financeiro - Igreja Irmãos Menonitas - Login"} />
         <meta property="og:url" content={`https://igrejairmaosmenonitas.vercel.app`} />
@@ -22,11 +22,11 @@ export default function Home() {
         <meta property="og:locale" content="pt-BR" />
         <title>Sistema Financeiro - Igreja Irmãos Menonitas - Login</title>
       </Head>
-      <div className="flex flex-col w-[300px] mx-auto pt-[80px] sm:pt-[30px]">
+      <div className="flex min-h-[500px] flex-col w-[300px] mx-auto">
         <div className="flex justify-center">
           <Logo cursor="cursor-default" />
         </div>
-        <TitleH1 className="text-center mt-[50px] md:mt-[30px]" text="Sistema Financeiro" />
+        <TitleH1 className="text-center" text="Sistema Financeiro" />
         <p className="text-center text-sm text-light font-light tracking-wide ">Igreja Irmãos Menonitas</p>
         <Input className={"mt-[24px]"} user={true} value={email} type="email" onChange={(ev) => setEmail(ev.target.value)} text="Email" placeholder="Email" />
         <Input className={"mt-[16px]"} padlock={true} look={true} type="password" value={password} onChange={(ev) => setPassword(ev.target.value)} text="Senha" placeholder="Senha" />

@@ -13,7 +13,7 @@ export default function Home() {
   const [isLogin, setIsLogin] = useState(false)
 
   return (
-    <section className="bg-secondary h-full w-full overflow-y-hidden">
+    <section className="bg-secondary h-full w-full overflow-y-hidden flex justify-center items-center">
       <Head>
         <meta property="og:title" content={"Sistema Financeiro - Igreja Irmãos Menonitas - Login"} />
         <meta property="og:url" content={`https://igrejairmaosmenonitas.vercel.app`} />
@@ -26,11 +26,11 @@ export default function Home() {
       <div className="absolute top-[20px] left-[20px]">
         <Back />
       </div>
-      <div className="flex flex-col w-[300px] mx-auto pt-[80px] sm:pt-[30px]">
+      <div className="flex min-h-[500px] flex-col w-[300px] mx-auto">
         <div className="flex justify-center">
           <Logo cursor="cursor-default" />
         </div>
-        <TitleH1 className="text-center mt-[50px] md:mt-[30px]" text="Recuperar Senha" />
+        <TitleH1 className="text-center " text="Recuperar Senha" />
         <p className="text-center text-sm text-light font-light tracking-wide ">Igreja Irmãos Menonitas</p>
         <Input className={"mt-[24px]"} user={true} value={email} type="email" onChange={(ev) => setEmail(ev.target.value)} text="Email" placeholder="Email" />
         <Button text="Recuperar Senha" className="bg-primary mt-[14px]" />

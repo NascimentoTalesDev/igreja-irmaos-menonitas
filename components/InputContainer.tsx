@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({text, user, padlock, placeholder, classNam
 
     return (
         <div className="w-full">
-            <div className={`flex items-center justify-between h-[44px] px-[10px] rounded bg-secondary_less ${className}`}>
+            <div className={`flex items-center justify-between h-[44px] px-[10px] rounded bg-secondary_less border-[0.1px] border-gray-500 ${className}`}>
                 <div className="w-fit">
                     {user && (
                         <UserIcon />

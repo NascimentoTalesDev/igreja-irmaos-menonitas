@@ -5,7 +5,7 @@ interface TitleH1Props{
 
 const Button:React.FC<TitleH1Props> = ({ text, className }) => {
     return (
-        <button className={`text-base h-[44px] rounded text-light ${className}`}>{text}</button>
+        <button className={`text-sm md:text-base h-[44px] rounded text-light ${className}`}>{text}</button>
     );
 }
  

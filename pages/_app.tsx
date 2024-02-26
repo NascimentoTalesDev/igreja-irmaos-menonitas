@@ -4,7 +4,7 @@ import { Roboto } from "next/font/google";
 
 const font = Roboto({ 
   subsets: ["latin"],
-  weight: ["100","400", "700"]
+  weight: ["100", "400", "700"]
 });
 export default function App({ Component, pageProps }: AppProps) {
   return(

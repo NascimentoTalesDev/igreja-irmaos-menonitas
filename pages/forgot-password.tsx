@@ -5,6 +5,7 @@ import Input from "@/components/InputContainer";
 import { useState } from "react";
 import Button from "@/components/Button";
 import Head from "next/head";
+import Back from "@/components/Back";
 
 export default function Home() {
   const [email, setEmail] = useState('')
@@ -22,19 +23,21 @@ export default function Home() {
         <meta property="og:locale" content="pt-BR" />
         <title>Sistema Financeiro - Igreja Irmãos Menonitas - Login</title>
       </Head>
+      <div className="absolute top-[20px] left-[20px]">
+        <Back />
+      </div>
       <div className="flex flex-col w-[300px] mx-auto pt-[80px] sm:pt-[30px]">
         <div className="flex justify-center">
           <Logo cursor="cursor-default" />
         </div>
-        <TitleH1 className="text-center mt-[50px] md:mt-[30px]" text="Sistema Financeiro" />
+        <TitleH1 className="text-center mt-[50px] md:mt-[30px]" text="Recuperar Senha" />
         <p className="text-center text-sm text-light font-light tracking-wide ">Igreja Irmãos Menonitas</p>
         <Input className={"mt-[24px]"} user={true} value={email} type="email" onChange={(ev) => setEmail(ev.target.value)} text="Email" placeholder="Email" />
-        <Input className={"mt-[16px]"} padlock={true} look={true} type="password" value={password} onChange={(ev) => setPassword(ev.target.value)} text="Senha" placeholder="Senha" />
-        <LinkItem path="/forgot-password" className="text-right text-sm mt-[16px] underline md:text-xs" text="Esqueci minha senha" />
-        <Button text="Acessar minha conta" className="bg-primary mt-[14px]" />
+        <Button text="Recuperar Senha" className="bg-primary mt-[14px]" />
+        
         <div className="flex mt-[14px] md:mt-[10px]">
-          <input className="cursor-pointer" type="checkbox" id="password-remember" name="password-remember" value="password-remember" />
-          <label htmlFor="password-remember" className="cursor-pointer ml-[10px] text-light text-sm md:text-xs">Lembrar email e senha</label>
+          <span className="cursor-pointer text-light text-sm md:text-xs">Lembrou a senha?</span>
+          <LinkItem path="/" className="text-right ml-[10px] text-sm underline md:text-xs" text="Fazer login" />
         </div>
         <div>
         </div>

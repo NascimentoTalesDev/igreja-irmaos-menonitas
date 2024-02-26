@@ -1,0 +1,2 @@
+db=eoxcUoUcIpGESG7u
+user=nascimentotalesdev

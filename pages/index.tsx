@@ -4,6 +4,7 @@ import TitleH1 from "@/components/TitleH1";
 import Input from "@/components/InputContainer";
 import { useState } from "react";
 import Button from "@/components/Button";
+import Head from "next/head";
 
 export default function Home() {
   const [email, setEmail] = useState('')
@@ -11,8 +12,17 @@ export default function Home() {
   const [isLogin, setIsLogin] = useState(false)
 
   return (
-    <section className="bg-secondary h-full w-full">
-      <div className="flex flex-col w-[300px] mx-auto pt-[130px] md:pt-[30px]">
+    <section className="bg-secondary min-h-screen w-full">
+      <Head>
+        <meta property="og:title" content={"Sistema Financeiro - Igreja Irmãos Menonitas - Login"} />
+        <meta property="og:url" content={`https://igrejairmaosmenonitas.vercel.app`} />
+        <meta property="og:image" content={`${<Logo cursor="cursor-default"/>}`} />
+        <meta property="og:image:width" content="400" />
+        <meta property="og:image:height" content="300" />
+        <meta property="og:locale" content="pt-BR" />
+        <title>Sistema Financeiro - Igreja Irmãos Menonitas - Login</title>
+      </Head>
+      <div className="flex flex-col w-[300px] mx-auto py-[130px] sm:pt-[30px]">
         <div className="flex justify-center">
           <Logo cursor="cursor-default" />
         </div>

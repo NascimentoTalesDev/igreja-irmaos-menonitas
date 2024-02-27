@@ -2,15 +2,28 @@ import api from '@/utils/api'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import useFlashMessage from './useFlashMessage'
+import Cookies from "js-cookie"
 
 export default function useUserAuth() {
     const router = useRouter()
     const { setFlashMessage } = useFlashMessage()
+    const [authenticated, setAuthenticated] = useState(false)    
+    const [user, setUser] = useState("")    
+
+    useEffect(() => {
+        let token = localStorage.getItem('token')
+
+        if (token) {
+            api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`
+            setAuthenticated(true)
+        } else {
+            setAuthenticated(false)
+        }
+    }, [authenticated])
 
     async function authUser(data) {
-
         localStorage.setItem('token', JSON.stringify(data?.token))
-
+        setUser(data?.user)
         router.replace("/dashboard")
     }
 
@@ -32,6 +45,6 @@ export default function useUserAuth() {
 
     }
 
-    return { login }
+    return { login, user }
 }
 

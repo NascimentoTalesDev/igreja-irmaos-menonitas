@@ -5,9 +5,9 @@ const contextUserAuth = createContext()
 
 function UserAuthProvider({ children }) {
 
-    const { login } = useUserAuth()
+    const { login, user } = useUserAuth()
 
-    return <contextUserAuth.Provider value={{ login }} >{children}</contextUserAuth.Provider>
+    return <contextUserAuth.Provider value={{ login, user }} >{children}</contextUserAuth.Provider>
 }
 
 export { contextUserAuth, UserAuthProvider }

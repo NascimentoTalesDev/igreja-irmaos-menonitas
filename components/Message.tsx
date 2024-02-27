@@ -17,33 +17,29 @@ function Message() {
 
             setTimeout(() => {
                 setVisibility(false)
-            }, 2000);
+            }, 2500);
         })
     }, [])
 
     if (type === "error") {
         return (
-            visibility && (
-                <div className={`fixed z-[9999999999] top-0 left-0 w-full flex justify-center`}>
-                    <div className='bg-danger flex gap-2 text-gray-50 p-2 rounded-md mt-1'>
-                        {message}
-                        <CloseCircleIcon />
-                    </div>
+            <div className={`fixed z-[9999999999] transition-all duration-500 ${visibility ? '-top-[0%]' : '-top-[100%]'} left-0 w-full flex justify-center`}>
+                <div className=' bg-danger flex text-sm items-center gap-2 text-gray-50 py-1 px-2 rounded-md mt-1'>
+                    {message}
+                    <CloseCircleIcon />
                 </div>
-            )
+            </div>
         )
     }
 
     if (type === "success") {
         return (
-            visibility && (
-                <div className={`fixed z-[9999999999] top-0 left-0 w-full flex justify-center`}>
-                    <div className='bg-success flex gap-2 text-gray-50 p-2 rounded-md mt-1'>
-                        {message}
-                        <CheckCircleIcon />
-                    </div>
+            <div className={`fixed z-[9999999999] transition-all duration-500 ${visibility ? '-top-[0%]' : '-top-[100%]'} left-0 w-full flex justify-center`}>
+                <div className=' bg-success flex text-sm items-center gap-2 text-gray-50 py-1 px-2 rounded-md mt-1'>
+                    {message}
+                    <CheckCircleIcon />
                 </div>
-            )
+            </div>
         )
     }
     

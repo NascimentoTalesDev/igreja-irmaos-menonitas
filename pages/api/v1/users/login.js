@@ -10,8 +10,8 @@ export default async function login(req, res){
     if (method === "POST"){
         const {email, password} = req.body;
 
-        if (!email) return res.status(422).json({ message: { type: "error", data: "Email não pode ficar vazio!"} });
-        if (!password) return res.status(422).json({ message: { type: "error", data: "Senha não pode ficar vazia!"} });
+        if (!email) return res.status(422).json({ message: { type: "error", data: "Email não pode ficar vazio"} });
+        if (!password) return res.status(422).json({ message: { type: "error", data: "Senha não pode ficar vazia"} });
                 
         try {            
             const user = await User.findOne({email: email })

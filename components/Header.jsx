@@ -3,11 +3,11 @@ import HamburgerIcon from "./icons/HamburgerIcon";
 import formatName from "@/lib/formatName"
 import { getCurrentUser } from "@/helpers/getCurrentUser"
 const Header = () => {
-    const [user, setUser] = useState()
+    const [user, setUser] = useState("")
     
     useEffect(()=>{
-        let item = getCurrentUser()
-        setUser(item)
+        let currentUser = getCurrentUser()
+        setUser(currentUser)
     },[])
     
     return (

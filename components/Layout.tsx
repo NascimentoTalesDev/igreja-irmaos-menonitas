@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import Menu from "./Menu";
 import Header from "./Header";
-import { contextUserAuth } from "@/providers/userAuthProvider";
+import Modal from "@/components/Modal";
+import Center from "@/components/Center";
 
 interface LayoutProps{
     children: React.ReactNode;
@@ -9,10 +10,13 @@ interface LayoutProps{
 const Layout: React.FC<LayoutProps> = ({children}) => {
     
     return (
-        <div className="h-screen w-full bg-secondary text-light">
+        <div className="h-screen w-full bg-light dark:bg-secondary text-secondary dark:text-light">
+            <Modal />
             <Header />
-            <main className="px-[14px] pt-[110px] w-full max-w-[1000px] mx-auto">
-                {children}
+            <main className="px-[14px] py-[110px] w-full h-full overflow-y-scroll">
+                <Center>
+                    {children}
+                </Center>
             </main>
             <Menu />
         </div>

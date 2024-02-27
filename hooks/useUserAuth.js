@@ -22,6 +22,12 @@ export default function useUserAuth() {
     }, [authenticated])
 
     async function authUser(data) {
+        let theme = document.querySelector('.dark')
+        console.log("Theme", theme);
+        if (theme) {
+            localStorage.setItem('theme', 'dark')        
+        }
+
         localStorage.setItem('token', JSON.stringify(data?.token))
         Cookies.set("user", JSON.stringify(data?.user))
         setUser(data?.user)

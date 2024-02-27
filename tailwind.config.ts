@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: 'selector',
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -22,7 +23,9 @@ const config: Config = {
         secondary_less:"#2E343B",
         success:"#1CD174",
         danger:"#FF5658",
-        light:"#FFFFFF"
+        light:"#FFFFFF",
+        dark:"#000000",
+        black_rgba:'rgba(0, 0, 0, 0.7)'
       }
     },
   },

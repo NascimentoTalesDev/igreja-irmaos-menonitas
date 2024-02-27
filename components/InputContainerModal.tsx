@@ -24,16 +24,8 @@ const Input: React.FC<InputProps> = ({text, user, padlock, placeholder, classNam
 
     return (
         <div className="w-full">
-            <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-secondary_less border-[0.1px] border-gray-500 ${className}`}>
-                <div className="w-fit -ml-[5px] mr-[5px]">
-                    {user && (
-                        <UserIcon />
-                    )}
-                    {padlock && (
-                        <PadlockIcon />
-                    )}
-                </div>
-                <input onKeyUp={onKeyUp} type={look ? `${isOpen ? "text" : "password"}` : `${type}`} value={value} onChange={onChange} placeholder={placeholder} className={`group w-full bg-secondary_less h-full text-light tracking-wide text-sm md:text-base ${classNameInput}`}  required={required} />
+            <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-secondary border-[0.1px] border-gray-500 ${className}`}>
+                <input onKeyUp={onKeyUp} type={look ? `${isOpen ? "text" : "password"}` : `${type}`} value={value} onChange={onChange} placeholder={placeholder} className={`group w-full bg-secondary h-full text-light tracking-wide text-sm md:text-base ${classNameInput}`}  required={required} />
                 {look && (
                     <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
                         {isOpen ? (

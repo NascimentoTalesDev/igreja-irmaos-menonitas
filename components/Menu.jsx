@@ -40,7 +40,6 @@ const Menu = () => {
                     <span className="text-light text-sm">Perfil</span>
                 </li>
             </ul>
-
         </div>
     );
 }

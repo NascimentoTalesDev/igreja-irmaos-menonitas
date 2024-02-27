@@ -25,7 +25,8 @@ const config: Config = {
         danger:"#FF5658",
         light:"#FFFFFF",
         dark:"#000000",
-        black_rgba:'rgba(0, 0, 0, 0.7)'
+        black_rgba:'rgba(0, 0, 0, 0.7)',
+        placeholder:'#9CA3AF'
       }
     },
   },

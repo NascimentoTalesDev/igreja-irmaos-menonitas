@@ -13,7 +13,7 @@ const Profile = () => {
         setUser(currentUser)
     },[])
 
-    function alterarTema(){
+    function toggleTheme(){
         let theme = localStorage.getItem('theme')
         
         if (!theme) {
@@ -33,8 +33,8 @@ const Profile = () => {
             <h2 className="mt-[30px]">Nome: {formatName(user?.name)}</h2>
             <h2 className="mt-[20px]">Função: {formatName(user?.rule?.name)}</h2>
             <div className="flex mt-[20px] justify-between items-center">
-                <h2>Modo escuro </h2> 
-                <button onClick={()=> alterarTema()}>{themeUser ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon /> }</button>
+                <h2>Modo escuro:</h2> 
+                <button onClick={()=> toggleTheme()}>{themeUser ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon /> }</button>
             </div>
         </div>
     );

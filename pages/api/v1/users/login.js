@@ -18,7 +18,7 @@ export default async function login(req, res){
             if (!user) return res.status(401).json({ message: { type: "error", data: "Usuário não registrado"} });
             
             const passwordMatch = await bcrypt.compare(password, user.password)
-            if (!passwordMatch) return res.status(401).json({ message: { type: "error", data: "Senha inválida"} });
+            if (!passwordMatch) return res.status(401).json({ message: { type: "error", data: "Email e/ou senha inválidos"} });
             
             await createToken(user, req, res)
 

@@ -1,11 +1,14 @@
+import { MouseEventHandler } from "react";
+
 interface TitleH1Props{
     text: string;
     className?: string;
+    onClick?: MouseEventHandler<HTMLButtonElement> | undefined;
 }
 
-const Button:React.FC<TitleH1Props> = ({ text, className }) => {
+const Button:React.FC<TitleH1Props> = ({ text, className, onClick }) => {
     return (
-        <button className={`text-sm md:text-base h-[44px] rounded text-light ${className}`}>{text}</button>
+        <button onClick={onClick} className={`text-sm md:text-base h-[44px] rounded text-light ${className}`}>{text}</button>
     );
 }
  

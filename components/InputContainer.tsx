@@ -12,12 +12,13 @@ interface InputProps{
     type?: string;
     look?: boolean;
     user?: boolean;
+    required?: boolean;
     padlock?: boolean;
     onChange: ChangeEventHandler<HTMLInputElement> | undefined;
     onKeyUp?: KeyboardEventHandler<HTMLInputElement> | undefined;
 } 
 
-const Input: React.FC<InputProps> = ({text, user, padlock, placeholder, className, value, onChange, onKeyUp, type, look}) => {
+const Input: React.FC<InputProps> = ({text, user, padlock, placeholder, className, value, onChange, onKeyUp, type, look, required}) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -31,7 +32,7 @@ const Input: React.FC<InputProps> = ({text, user, padlock, placeholder, classNam
                     <PadlockIcon />
                     )}
                 </div>
-                <input onKeyUp={onKeyUp} type={look ? `${isOpen ? "text" : "password"}` : `${type}`} value={value} onChange={onChange} placeholder={placeholder} className="group w-full bg-secondary_less px-[10px] h-full text-light tracking-wide text-sm md:text-base"  />
+                <input onKeyUp={onKeyUp} type={look ? `${isOpen ? "text" : "password"}` : `${type}`} value={value} onChange={onChange} placeholder={placeholder} className="group w-full bg-secondary_less px-[10px] h-full text-light tracking-wide text-sm md:text-base"  required={required} />
                 {look && (
                     <div onClick={() => setIsOpen(!isOpen)} className="cursor-pointer">
                         {isOpen ? (

@@ -40,7 +40,7 @@ export default function Home() {
         <div className="flex justify-center">
           <Logo cursor="cursor-default" />
         </div>
-        <TitleH1 className="text-center" text="Criar Nova Senha" />
+        <TitleH1 className="text-center mt-[20px]" text="Criar Nova Senha" />
         <p className="text-center text-sm text-light font-light tracking-wide ">Igreja Irmãos Menonitas</p>
         <Input onKeyUp={checkMatchPassword} className={"mt-[16px]"} padlock={true} look={true} type="password" value={newPassword} onChange={(ev) => setNewPassword(ev.target.value)} text="Senha" placeholder="Senha" />
         <Input onKeyUp={checkMatchPassword} className={"mt-[16px]"} padlock={true} look={true} type="password" value={confirmNewPassword} onChange={(ev) => setConfirmNewPassword(ev.target.value)} text="Senha" placeholder="Confirme a senha" />

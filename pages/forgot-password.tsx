@@ -30,7 +30,7 @@ export default function Home() {
         <div className="flex justify-center">
           <Logo cursor="cursor-default" />
         </div>
-        <TitleH1 className="text-center " text="Recuperar Senha" />
+        <TitleH1 className="text-center mt-[20px]" text="Recuperar Senha" />
         <p className="text-center text-sm text-light font-light tracking-wide ">Igreja Irmãos Menonitas</p>
         <Input className={"mt-[24px]"} user={true} value={email} type="email" onChange={(ev) => setEmail(ev.target.value)} text="Email" placeholder="Email" />
         <Button text="Recuperar Senha" className="bg-primary mt-[14px]" />

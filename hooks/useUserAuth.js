@@ -23,6 +23,7 @@ export default function useUserAuth() {
 
     async function authUser(data) {
         localStorage.setItem('token', JSON.stringify(data?.token))
+        Cookies.set("user", JSON.stringify(data?.user))
         setUser(data?.user)
         router.replace("/dashboard")
     }
@@ -42,7 +43,6 @@ export default function useUserAuth() {
             msgType = 'error'
         }
         setFlashMessage(msgText, msgType)
-
     }
 
     return { login, user }

@@ -1,13 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export default function middleware(request: NextRequest, response: NextResponse) {    
-  const token = request.cookies.get("rule")?.value
+  var token: string | undefined  = request.cookies.get("user")?.value
+  let rule: string;
+
+  const signInURL = new URL("/", request.url)
   
-  //const signInURL = new URL("/admin", request.url)
+  if (!token) {
+      return NextResponse.redirect(signInURL)
+  }
+
+  if (token) {
+    let user = JSON.parse(token);
+    rule = user?.rule?.name;
+  }
+  console.log(rule);
   
-  //if (!token || !token.includes("NiMdA")) {
-  //    return NextResponse.redirect(signInURL)
-  //}
 }
 
 export const config = {

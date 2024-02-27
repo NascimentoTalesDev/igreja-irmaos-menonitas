@@ -8,7 +8,7 @@ import UserProfileIcon from "./icons/UserProfileIcon";
 const Menu = () => {
     return (
         <div className="fixed px-[10px] bottom-0 left-0 h-[80px] w-full bg-secondary_more">
-            <ul className="flex justify-between h-full items-center">
+            <ul className="flex justify-between h-full items-center max-w-[600px] mx-auto">
                 <li className="w-[60px] h-[60px] p-3 flex items-center justify-center">
                     <Link className="flex flex-col items-center justify-center" href={"/dashboard"}>
                         <HomeIcon />

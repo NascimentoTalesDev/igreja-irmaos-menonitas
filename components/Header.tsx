@@ -1,9 +1,14 @@
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import HamburgerIcon from "./icons/HamburgerIcon";
-import { contextUserAuth } from "@/providers/userAuthProvider";
 import formatName from "@/lib/formatName"
+import { getCurrentUser } from "@/helpers/getCurrentUser"
 const Header = () => {
-    const { user } = useContext(contextUserAuth)
+    const [user, setUser] = useState()
+    
+    useEffect(()=>{
+        let item = getCurrentUser()
+        setUser(item)
+    },[])
     
     return (
         <div className="fixed flex items-center justify-between h-[80px] w-full left-0 top-0 bg-secondary_more px-[15px]">

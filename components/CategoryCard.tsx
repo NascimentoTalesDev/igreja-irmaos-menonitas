@@ -10,7 +10,7 @@ interface CategoryCardProps{
     onClick?: MouseEventHandler<HTMLDivElement> | undefined;
 } 
 
-const CategoryCard: React.FC<CategoryCardProps> = ({ text, img, className, onClick, id, close }) => {
+const CategoryCard: React.FC<CategoryCardProps> = ({ text, img, className, onClick, id }) => {
     return (
         <div id={id} onClick={onClick} className={`relative flex gap-1 items-center justify-center w-[76px] h-[76px] rounded p-2 flex-col ${className ? className :"bg-mygray_less dark:bg-secondary_less"}`} >
             <Image id={id} width={30} height={30} alt="Image" src={img} />

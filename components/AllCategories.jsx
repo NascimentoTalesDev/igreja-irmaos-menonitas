@@ -1,24 +1,28 @@
+import { useContext } from "react";
 import CategoryCard from "./CategoryCard";
 import TitleH3 from "./TitleH3";
+import { ModalSecondContext } from "@/providers/ModalSecondProvider";
 
 const AllCategories = () => {
+    const { toggleModalSecond, setInfo } = useContext(ModalSecondContext)
+
     return (
         <section>
-            <TitleH3 className="text-center" text="Todas as Categorias"/>
+            <TitleH3 className="text-center" text="Mais categorias"/>
             <div className="grid grid-cols-4 md:grid-cols-5 gap-[16px]  pt-[30px] ">
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/acampamento-nova-vida.png" text="Acampamento Nova Vida" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/despesas-pastorais.png" text="Despesas Pastorais" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/dizimo-escolinha.png" text="Dízimo Escolinha" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/dizimo-igreja.png" text="Dízimo Igreja" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/energia-eletrica.png" text="Energia Elétrica" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/investimento.png" text="Investimento" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/lanches.png" text="Lanches" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/limpeza-patio.png" text="Limpeza Pátio" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/manutencao.png" text="Manutencao" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/materiais-escolinhas.png" text="Materiais Escolinhas" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/oferta-extra.png" text="Oferta Extra" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/redizimo.png" text="Redízimo" />
-                <CategoryCard className="cursor-pointer hover:bg-secondary_more transition-all bg-secondary" img="/categories/salario-pastor.png" text="Salário Pastor" />
+                <CategoryCard id="acampamento-nova-vida" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/acampamento-nova-vida.png" />
+                <CategoryCard id="despesas-pastorais" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/despesas-pastorais.png" />
+                <CategoryCard id="dizimo-escolinha" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/dizimo-escolinha.png" />
+                <CategoryCard id="dizimo-igreja"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/dizimo-igreja.png" />
+                <CategoryCard id="energia-eletrica"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/energia-eletrica.png" />
+                <CategoryCard id="investimento"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/investimento.png" />
+                <CategoryCard id="lanches"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/lanches.png" />
+                <CategoryCard id="limpeza-patio"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/limpeza-patio.png" />
+                <CategoryCard id="manutencao"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/manutencao.png" />
+                <CategoryCard id="materiais-escolinhas"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/materiais-escolinhas.png" />
+                <CategoryCard id="oferta-extra"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/oferta-extra.png" />
+                <CategoryCard id="redizimo"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/redizimo.png" />
+                <CategoryCard id="salario-pastor"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray dark:hover:bg-secondary_more transition-all bg-mygray_less dark:bg-secondary" value="" img="/categories/salario-pastor.png" />
             </div>
         </section>
     );

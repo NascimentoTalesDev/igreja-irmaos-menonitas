@@ -12,7 +12,7 @@ const Menu = () => {
     const {setDataModal, toggleModal} = useContext(ModalContext)
     
     return (
-        <div className="fixed px-[10px] bottom-0 left-0 h-[80px] w-full bg-secondary_more">
+        <div className="fixed px-[10px] bottom-0 left-0 h-[80px] w-full bg-primary dark:bg-secondary_more">
             <ul className="flex justify-between h-full items-center max-w-[600px] mx-auto">
                 <li className="w-[60px] h-[60px] p-3 flex items-center justify-center">
                     <Link className="flex flex-col items-center justify-center" href={"/dashboard"}>
@@ -26,7 +26,7 @@ const Menu = () => {
                         <span className="text-light text-sm">Categorias</span>
                     </Link>
                 </li>
-                <li className="w-[60px] h-[60px] p-3 flex items-center justify-center">
+                <li className="w-[60px] h-[60px] p-3 flex items-center justify-center border border-light dark:border-0 rounded cursor-pointer">
                     <ActionsIcon />
                 </li>
                 <li className="w-[60px] h-[60px] p-3 flex items-center justify-center">

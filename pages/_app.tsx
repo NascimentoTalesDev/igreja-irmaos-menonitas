@@ -5,6 +5,8 @@ import { UserAuthProvider } from "@/providers/userAuthProvider";
 import Message from "@/components/Message";
 import ModalContextProvider from "@/providers/ModalProvider";
 import ModalSecondContextProvider from "@/providers/ModalSecondProvider";
+import ModalThirdContextProvider from "@/providers/ModalThirdProvider";
+import NextNProgress from 'nextjs-progressbar';
 
 const font = Roboto({
   subsets: ["latin"],
@@ -17,8 +19,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <UserAuthProvider>
           <ModalContextProvider>
           <ModalSecondContextProvider>
+          <ModalThirdContextProvider>
           <Message />
+          <NextNProgress color="#fff" startPosition={0.3} stopDelayMs={200} height={5} showOnShallow={true} />
           <Component {...pageProps} />
+          </ModalThirdContextProvider>
           </ModalSecondContextProvider>
           </ModalContextProvider>
         </UserAuthProvider>

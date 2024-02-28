@@ -2,11 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     outline: none;
     scrollbar-width: thin;
     scrollbar-color: #FFF #171C22;
+}
+
+#nprogress {
+    position: relative;
+    z-index: 99999999999;
+}
+
+#nprogress .bar {
+    box-shadow: none;
 }

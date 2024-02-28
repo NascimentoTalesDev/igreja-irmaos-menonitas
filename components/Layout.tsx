@@ -3,6 +3,7 @@ import Menu from "./Menu";
 import Header from "./Header";
 import Modal from "@/components/Modal";
 import ModalSecond from "@/components/ModalSecond";
+import ModalThird from "@/components/ModalThird";
 import Center from "@/components/Center";
 
 interface LayoutProps{
@@ -12,6 +13,7 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
     
     return (
         <div className="h-screen w-full bg-light dark:bg-secondary text-secondary dark:text-light">
+            <ModalThird />
             <ModalSecond />
             <Modal />
             <Header />

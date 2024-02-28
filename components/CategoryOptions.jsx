@@ -8,9 +8,13 @@ import { ModalContext } from "@/providers/ModalProvider";
 import useFlashMessage from "@/hooks/useFlashMessage";
 import axios from "axios";
 import { useRouter } from "next/router";
+import EditCategory from "./EditCategory";
+import { ModalThirdContext } from "@/providers/ModalThirdProvider";
 
-const CategoryOptions = ({ id }) => {
+const CategoryOptions = ({ category }) => {
     const { toggleModal} = useContext(ModalContext)
+    const {setDataModalThird, toggleModalThird, info, setInfo} = useContext(ModalThirdContext)
+
     const { setFlashMessage } = useFlashMessage()
     const router = useRouter()
 
@@ -20,8 +24,9 @@ const CategoryOptions = ({ id }) => {
         setIsDeleting(true)
         let msgText;
         let msgType = 'success'
+        
         try {
-            await axios.delete(`${api}/${versionApi}/categories/id/${id}`).then(response => { 
+            await axios.delete(`${api}/${versionApi}/categories/id/${category?._id}`).then(response => { 
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type
@@ -43,7 +48,7 @@ const CategoryOptions = ({ id }) => {
         <div className="flex flex-col text-sm">
             <TitleH3 text="Mais opções" className="" />
             <div className="flex flex-col w-fit items-start mt-[30px]">
-                <Button icon={<PencilIcon />} onClick={()=>{}} text={"Editar categoria"} className={"mt-[24px] bg-none" } />
+                <Button icon={<PencilIcon />} onClick={()=> {toggleModalThird(), setDataModalThird(<EditCategory category={category} />)}} text={"Editar categoria"} className={"mt-[24px] bg-none" } />
                 <Button icon={<TrashIcon />} onClick={deleteCategory} text={`${isDeleting ? "Excluindo..." : "Excluir categoria"}`} className={"mt-[24px] text-red-400 " } />
             </div>    
         </div>

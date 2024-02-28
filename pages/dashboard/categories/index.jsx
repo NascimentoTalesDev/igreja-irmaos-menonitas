@@ -11,6 +11,7 @@ import { ModalContext } from "@/providers/ModalProvider";
 import { useContext } from "react";
 import GridLayout from "@/components/GridLayout";
 import CategoryCard from "@/components/CategoryCard";
+import formatName from "@/lib/formatName";
 
 const Categories = ({ categoriesDb }) => {
     const {setDataModal, toggleModal} = useContext(ModalContext)
@@ -25,7 +26,7 @@ const Categories = ({ categoriesDb }) => {
                     <TitleH2 text="Minhas categorias" className="mt-[24px] mb-[14px]" />
                     <GridLayout>
                     {categories.map(category=> (
-                        <CategoryCard onClick={()=> {toggleModal(), setDataModal(<CategoryOptions id={category?._id}/>)}} key={category._id} text={category.name} img={`/categories/${category.icon}.png`} />
+                        <CategoryCard onClick={()=> {toggleModal(), setDataModal(<CategoryOptions category={category} />)}} key={category._id} text={formatName(category.name)} img={`/categories/${category.icon}.png`} className=" cursor-pointer hover:bg-mygray " />
                     ))}
                     </GridLayout>
                 </>

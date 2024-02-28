@@ -6,7 +6,7 @@ const Modal = () => {
     const {showModal, dataModal, toggleModal} = useContext(ModalContext)
 
     return (
-        <section className={`flex items-center backdrop-blur-[2px] justify-center bg-black_rgba absolute top-0 left-0 text-light transition-all ${showModal ? "z-[999999999]" : "-z-[100]"} w-full h-screen`}>
+        <section className={`flex items-center backdrop-blur-[2px] justify-center bg-black_rgba absolute top-0 left-0 text-light transition-all w-full h-screen ${showModal ? "z-[99] " : "-z-[9] "}`}>
             <div className="bg-light dark:bg-secondary_less text-secondary dark:text-light rounded shadow-2xl min-h-[300px] w-[90%] max-w-[400px] relative p-[20px]">
                 <div onClick={toggleModal} className="cursor-pointer w-fit absolute right-[10px] top-[15px]" >
                     <CloseIcon />

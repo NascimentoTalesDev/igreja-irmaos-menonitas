@@ -1,10 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TitleH3 from "./TitleH3";
 import InputContainerModal from "@/components/InputContainerModal";
 import AllCategories from "@/components/AllCategories";
 import Button from "./Button";
 import SelectContainer from "./SelectContainer";
-import { ModalSecondContext } from "@/providers/ModalSecondProvider";
+import { ModalThirdContext } from "@/providers/ModalThirdProvider";
 import Image from "next/image";
 import ChevronRightIcon from "./icons/ChevronRightIcon";
 import axios from "axios";
@@ -12,32 +12,36 @@ import useFlashMessage from "@/hooks/useFlashMessage";
 import { api, versionApi } from "@/lib/configApi";
 import { ModalContext } from "@/providers/ModalProvider";
 import { useRouter } from "next/router";
+import { ModalSecondContext } from "@/providers/ModalSecondProvider";
 
-const NewCategory = () => {
+const EditCategory = ( {category} ) => {
+    const { setFlashMessage } = useFlashMessage()
+    const {setDataModalThird, toggleModalThird } = useContext(ModalThirdContext)
     const {setDataModalSecond, toggleModalSecond, info, setInfo} = useContext(ModalSecondContext)
     const { toggleModal, setDataModal } = useContext(ModalContext)
     const router = useRouter()
+    
     const categoriesType = ["Despesa", "Investimento", "Receita"]
-    const { setFlashMessage } = useFlashMessage()
-
+    
     const [name, setName] = useState("")
     const [type, setType] = useState("")
     
     const [isSetting, setIsSetting] = useState(false)
 
-    const saveNewCategory = async() =>{
+    const updateCategory = async() =>{
         setIsSetting(true)
         let msgText;
         let msgType = 'success'
         const data = { name, type, icon:info }
         try {
-            await axios.post(`${api}/${versionApi}/categories`, data).then(response => { 
+            await axios.patch(`${api}/${versionApi}/categories/id/${category?._id}`, data).then(response => { 
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type
                 } else {
                     msgText = response?.data?.message?.data
                     toggleModal()
+                    toggleModalThird()
                     setInfo("")
                     setDataModal("")
                     router.push("/dashboard/categories")
@@ -50,6 +54,12 @@ const NewCategory = () => {
         setFlashMessage(msgText, msgType)
         setIsSetting(false)
     } 
+
+    useEffect(()=>{
+        setName(category?.name)
+        setType(category?.type)
+        setInfo(category?.icon)
+    },[])
 
     return (
         <div className="flex flex-col text-sm">
@@ -77,9 +87,9 @@ const NewCategory = () => {
                 )}
             </div>
 
-            <Button onClick={saveNewCategory} text={`${isSetting ? "Cadastrando...": "Cadastrar"}`} className={`mt-[24px] ${isSetting ? "bg-neutral-500" : "bg-primary" }`} />
+            <Button onClick={updateCategory} text={`${isSetting ? "Atualizando...": "Atualizar"}`} className={`mt-[24px] ${isSetting ? "bg-neutral-500" : "bg-primary" }`} />
         </div>
     );
 }
  
-export default NewCategory;
+export default EditCategory;

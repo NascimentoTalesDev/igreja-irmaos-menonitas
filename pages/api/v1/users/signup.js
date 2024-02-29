@@ -34,7 +34,7 @@ export default async function signup (req, res) {
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ message: { type: "error", data: "Error ao registrar usuário"} });
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
         
     }

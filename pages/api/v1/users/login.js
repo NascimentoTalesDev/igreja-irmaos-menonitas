@@ -26,7 +26,7 @@ export default async function login(req, res){
             await createToken(user, req, res)
 
         } catch (error) {
-            return res.status(500).json({ message: { type: "error", data: "Error ao fazer login" } })
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
 }

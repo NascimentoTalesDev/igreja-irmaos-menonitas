@@ -7,7 +7,6 @@ export default async function UserId(req, res) {
     const { method } = req
 
     if (method === "DELETE") {
-        console.log("AQUI");
         const { id } = req.query
 
         try {
@@ -15,9 +14,9 @@ export default async function UserId(req, res) {
 
             await user.deleteOne()
 
-            return res.send({ message: { type: "success", data: "Categoria excluida com sucesso" } })
+            return res.send({ message: { type: "success", data: "Usuário excluido com sucesso" } })
         } catch (error) {
-            return res.status(500).json({ message: { type: "error", data: "Error ao buscar categorias" } });
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
 
@@ -43,7 +42,7 @@ export default async function UserId(req, res) {
 
             return res.send({ message: { type: "success", data: "Usuário atualizado com sucesso" } })
         } catch (error) {
-            return res.status(500).json({ message: { type: "error", data: "Error ao atualizar usuário" } });
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
 } 

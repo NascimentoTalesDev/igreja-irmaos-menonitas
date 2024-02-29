@@ -5,7 +5,7 @@ import { error } from "console";
 export default async function Categories (req, res) {
     await mongooseConnect()
     const {method} = req
-    console.log("NODE");
+
     if (method === "POST") {            
         
         const { name, type, icon } = req.body;
@@ -27,7 +27,7 @@ export default async function Categories (req, res) {
             return res.json({category, message: { type: "success", data: "Categoria cadastrada com sucesso"}})
 
         } catch (error) {
-            return res.status(500).json({ message: { type: "error", data: "Error ao cadastrar categoria"} });
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
 
@@ -37,7 +37,7 @@ export default async function Categories (req, res) {
             
             return res.json(categories)
         } catch (error) {
-            return res.status(500).json({ message: { type: "error", data: "Error ao buscar categorias"} });
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
          

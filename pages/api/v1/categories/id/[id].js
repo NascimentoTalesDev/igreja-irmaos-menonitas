@@ -16,7 +16,7 @@ export default async function CategoryId(req, res) {
 
             return res.send({ message: { type: "success", data: "Categoria excluida com sucesso" } })
         } catch (error) {
-            return res.status(500).json({ message: { type: "error", data: "Error ao buscar categorias" } });
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
 
@@ -39,7 +39,7 @@ export default async function CategoryId(req, res) {
 
             return res.send({ message: { type: "success", data: "Categoria atualizada com sucesso" } })
         } catch (error) {
-            return res.status(500).json({ message: { type: "error", data: "Error ao atualizar categoria" } });
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
 } 

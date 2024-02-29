@@ -14,7 +14,7 @@ export default async function users(req, res){
             return res.send(users)
 
         } catch (error) {
-            return res.status(500).json({ message: { type: "error", data: "Error ao encontrar usuários" } })
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
 }

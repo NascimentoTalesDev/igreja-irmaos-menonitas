@@ -22,7 +22,7 @@ export default async function rules(req, res){
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ message: { type: "error", data: "Error ao cadastrar função" } })
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
 
@@ -34,7 +34,7 @@ export default async function rules(req, res){
             return res.json(rules)
 
         } catch (error) {
-            return res.status(500).json({ message: { type: "error", data: "Error ao fazer login" } })
+            return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
 }

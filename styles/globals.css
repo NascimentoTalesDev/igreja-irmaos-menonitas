@@ -19,3 +19,8 @@
 #nprogress .bar {
     box-shadow: none;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    padding: 10px;
+}

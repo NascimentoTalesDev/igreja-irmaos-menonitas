@@ -44,7 +44,7 @@ const WarnMessage = ({ user, path, back }) => {
             <TitleH2 text="Tem certeza?" />
             <p className="my-[30px]">Você quer realmente excluir &quot;<span className="font-bold">{user?.name}</span>&ldquo;?</p>
             <div className="flex gap-[20px]">
-                <Button onClick={toggleModal} text={"Cancelar"} className="bg-mygray hover:scale-105 transition-all gap-[2px] h-[40px] w-[120px]" />
+                <Button onClick={toggleModal} text={"Cancelar"} className="bg-secondary hover:scale-105 transition-all gap-[2px] h-[40px] w-[120px]" />
                 <Button onClick={remove} text={`${isRemoving ? "Excluindo...": "Sim, Excluir" }`} className="bg-danger hover:scale-105 transition-all  gap-[2px] h-[40px] w-[120px]" />
             </div>
         </div>

@@ -17,7 +17,7 @@ export default function Home() {
       <Head>
         <meta property="og:title" content={"Sistema Financeiro - Igreja Irmãos Menonitas - Login"} />
         <meta property="og:url" content={`https://igrejairmaosmenonitas.vercel.app`} />
-        <meta property="og:image" content={`${<Logo cursor="cursor-default"/>}`} />
+        <meta property="og:image" content={`${<Logo cursor="cursor-default" />}`} />
         <meta property="og:image:width" content="400" />
         <meta property="og:image:height" content="300" />
         <meta property="og:locale" content="pt-BR" />
@@ -34,12 +34,10 @@ export default function Home() {
         <p className="text-center text-sm text-light font-light tracking-wide ">Igreja Irmãos Menonitas</p>
         <Input className={"mt-[24px]"} user={true} value={email} type="email" onChange={(ev) => setEmail(ev.target.value)} text="Email" placeholder="Email" />
         <Button text="Recuperar Senha" className="bg-primary mt-[14px]" />
-        
+
         <div className="flex mt-[14px] md:mt-[10px]">
           <span className="cursor-pointer text-light text-sm md:text-xs">Lembrou a senha?</span>
           <LinkItem path="/" className="text-right ml-[10px] text-sm underline md:text-xs" text="Fazer login" />
-        </div>
-        <div>
         </div>
       </div>
     </section>

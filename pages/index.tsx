@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import Button from "@/components/Button";
 import Head from "next/head";
 import { contextUserAuth } from "@/providers/userAuthProvider";
+import checkKey from '@/lib/checkKey'
 
 export default function Home() {
   const { login } = useContext(contextUserAuth)
@@ -16,16 +17,17 @@ export default function Home() {
 
   const loginUser = async () => {
     setIsLogin(true)
-    const data = { email, password}
+    const data = { email, password }
     await login(data)
     setIsLogin(false)
-}
+  }
+  
   return (
-    <section className="bg-secondary h-full w-full flex justify-center items-center">
+    <section onKeyDown={(ev) => checkKey(ev, loginUser)} className="bg-secondary h-full w-full flex justify-center items-center">
       <Head>
         <meta property="og:title" content={"Sistema Financeiro - Igreja Irmãos Menonitas - Login"} />
         <meta property="og:url" content={`https://igrejairmaosmenonitas.vercel.app`} />
-        <meta property="og:image" content={`${<Logo cursor="cursor-default"/>}`} />
+        <meta property="og:image" content={`${<Logo cursor="cursor-default" />}`} />
         <meta property="og:image:width" content="400" />
         <meta property="og:image:height" content="300" />
         <meta property="og:locale" content="pt-BR" />
@@ -42,15 +44,13 @@ export default function Home() {
         <LinkItem path="/forgot-password" className="text-right text-sm mt-[16px] underline md:text-xs" text="Esqueci minha senha" />
         {isLogin ? (
           <Button text="Acessando..." className="bg-primary_less mt-[14px]" />
-        ):(
+        ) : (
           <Button onClick={loginUser} text="Acessar minha conta" className="bg-primary mt-[14px]" />
         )}
-        
+
         <div className="flex mt-[14px] md:mt-[10px]">
           <input className="cursor-pointer" type="checkbox" id="password-remember" name="password-remember" value="password-remember" />
           <label htmlFor="password-remember" className="cursor-pointer ml-[10px] text-light text-sm md:text-xs">Lembrar email e senha</label>
-        </div>
-        <div>
         </div>
       </div>
     </section>

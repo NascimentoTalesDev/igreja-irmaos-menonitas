@@ -56,9 +56,6 @@ export default function Home() {
           (
             <Button text="Acessar minha conta" className="mt-[14px] bg-neutral-500 cursor-not-allowed" />
           )}
-
-        <div>
-        </div>
       </div>
     </section>
   );

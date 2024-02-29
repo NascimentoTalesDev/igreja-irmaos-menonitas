@@ -5,6 +5,7 @@ import Modal from "@/components/Modal";
 import ModalSecond from "@/components/ModalSecond";
 import ModalThird from "@/components/ModalThird";
 import Center from "@/components/Center";
+import MenuMobile from "@/components/MenuMobile";
 
 interface LayoutProps{
     children: React.ReactNode;
@@ -13,6 +14,7 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
     
     return (
         <div className="h-screen w-full bg-light dark:bg-secondary text-secondary dark:text-light">
+            <MenuMobile />
             <ModalThird />
             <ModalSecond />
             <Modal />

@@ -17,7 +17,7 @@ export default async function signup (req, res) {
         
         try {
             const userExists = await User.findOne({ email: email })
-            if(userExists) return res.status(401).json({ message: { type: "error", data: "Usuário já registrado."} });
+            if(userExists) return res.status(401).json({ message: { type: "error", data: "Email já registrado"} });
             
             const hash = await bcrypt.hash(password, 12)
 
@@ -30,11 +30,11 @@ export default async function signup (req, res) {
 
             user.password = undefined
 
-            return res.json(user)
+            return res.json({user, message: { type: "success", data: "Usuário registrado com sucesso"} })
 
         } catch (error) {
             console.log(error);
-            return res.status(500).json({ message: { type: "error", data: "Error ao registrar usuário."} });
+            return res.status(500).json({ message: { type: "error", data: "Error ao registrar usuário"} });
         }
         
     }

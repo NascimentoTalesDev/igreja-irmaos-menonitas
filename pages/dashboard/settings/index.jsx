@@ -5,7 +5,7 @@ const Settings = () => {
 
   return (
     <Layout>
-      <Title text="Settings" className="mb-[24px]" />
+      <Title text="Configurações" className="mb-[24px]" />
     </Layout>
   );
 }

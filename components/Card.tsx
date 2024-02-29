@@ -1,11 +1,14 @@
-interface CardProps{
+interface CardProps {
     children: React.ReactNode
+    className?: String;
 }
 
-const Card:React.FC<CardProps> = ({ children }) => {
+const Card: React.FC<CardProps> = ({ children, className }) => {
     return (
-        <div className={`bg-secondary_less p-[20px] rounded`}>{children}</div>
+        <div className={`bg-mygray  dark:bg-secondary_less py-[24px] px-[15px] rounded ${className}`}>
+            {children}
+        </div>
     );
 }
- 
+
 export default Card;

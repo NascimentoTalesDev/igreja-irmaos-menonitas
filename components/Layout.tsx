@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import Menu from "./Menu";
 import Header from "./Header";
 import Modal from "@/components/Modal";
@@ -6,12 +6,19 @@ import ModalSecond from "@/components/ModalSecond";
 import ModalThird from "@/components/ModalThird";
 import Center from "@/components/Center";
 import MenuMobile from "@/components/MenuMobile";
+import { contextUserAuth } from "@/providers/userAuthProvider";
 
 interface LayoutProps{
     children: React.ReactNode;
 }
+
 const Layout: React.FC<LayoutProps> = ({children}) => {
-    
+    const {checkTheme} = useContext(contextUserAuth)
+
+    useEffect(()=>{
+        checkTheme()
+    },[])
+
     return (
         <div className="h-screen w-full bg-light dark:bg-secondary text-secondary dark:text-light">
             <MenuMobile />

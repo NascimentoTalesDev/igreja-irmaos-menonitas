@@ -14,20 +14,20 @@ import CategoryCard from "@/components/CategoryCard";
 import formatName from "@/lib/formatName";
 
 const Categories = ({ categoriesDb }) => {
-    const {setDataModal, toggleModal} = useContext(ModalContext)
+    const { setDataModal, toggleModal } = useContext(ModalContext)
     const categories = categoriesDb
 
     return (
         <Layout>
             <Title text="Categorias" className="mb-[24px]" />
-            <CategoryCardButton onClick={()=> {toggleModal(), setDataModal(<NewCategory />)}} />
+            <CategoryCardButton onClick={() => { toggleModal(), setDataModal(<NewCategory />) }} />
             {categories.length > 0 && (
                 <>
                     <TitleH2 text="Minhas categorias" className="mt-[24px] mb-[14px]" />
                     <GridLayout>
-                    {categories.map(category=> (
-                        <CategoryCard onClick={()=> {toggleModal(), setDataModal(<CategoryOptions category={category} />)}} key={category._id} text={formatName(category.name)} img={`/categories/${category.icon}.png`} className=" cursor-pointer hover:bg-mygray " />
-                    ))}
+                        {categories.map(category => (
+                            <CategoryCard onClick={() => { toggleModal(), setDataModal(<CategoryOptions category={category} />) }} key={category._id} text={formatName(category.name)} img={`/categories/${category.icon}.png`} className=" cursor-pointer hover:bg-mygray " />
+                        ))}
                     </GridLayout>
                 </>
             )}
@@ -42,10 +42,10 @@ export default Categories;
 export async function getServerSideProps(req) {
     await mongooseConnect()
     const categoriesDb = await Category.find({})
-  
+
     return {
-      props: {
-        categoriesDb: JSON.parse(JSON.stringify(categoriesDb)),
-      }
+        props: {
+            categoriesDb: JSON.parse(JSON.stringify(categoriesDb)),
+        }
     }
-  }
+}

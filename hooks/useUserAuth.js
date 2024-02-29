@@ -22,16 +22,29 @@ export default function useUserAuth() {
     }, [authenticated])
 
     async function authUser(data) {
-        let theme = document.querySelector('.dark')
-        console.log("Theme", theme);
-        if (theme) {
-            localStorage.setItem('theme', 'dark')        
+        
+        const theme = localStorage.getItem('theme')
+        const ExistClass = window.document.querySelector('.dark')
+
+        if (theme || ExistClass) {
+            window.document.documentElement.classList.add('dark')
+        }else{
+            window.document.documentElement.classList.remove('dark')
         }
 
         localStorage.setItem('token', JSON.stringify(data?.token))
         Cookies.set("user", JSON.stringify(data?.user))
+        
         setUser(data?.user)
         router.replace("/dashboard")
+    }
+    
+    async function logout() {
+        localStorage.removeItem('token')
+        Cookies.remove("user")
+        
+        setUser("")
+        router.replace("/")
     }
 
     async function login(user) {
@@ -51,6 +64,6 @@ export default function useUserAuth() {
         setFlashMessage(msgText, msgType)
     }
 
-    return { login, user }
+    return { login, user, logout }
 }
 

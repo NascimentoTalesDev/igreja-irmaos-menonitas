@@ -18,7 +18,7 @@ const SelectContainer= ({ data, placeholder, onchange }) => {
                 <option value="" className="text-secondary dark:text-light" >{placeholder}</option>
                 {data.length > 0 && data.map(item => {
                     return(
-                        <option className="text-secondary dark:text-light" key={item} value={item}>{item}</option>
+                        <option key={item?._id} className="text-secondary dark:text-light" value={item?._id}>{item?.name}</option>
                     )
                 })}
             </select>

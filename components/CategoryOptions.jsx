@@ -48,7 +48,7 @@ const CategoryOptions = ({ category }) => {
         <div className="flex flex-col text-sm">
             <TitleH3 text="Mais opções" className="" />
             <div className="flex flex-col w-fit items-start mt-[30px]">
-                <Button icon={<PencilIcon />} onClick={()=> {toggleModalThird(), setDataModalThird(<EditCategory category={category} />)}} text={"Editar categoria"} className={"mt-[24px] bg-none" } />
+                <Button icon={<PencilIcon className="text-secondary dark:text-light" />} onClick={()=> {toggleModalThird(), setDataModalThird(<EditCategory category={category} />)}} text={"Editar categoria"} className={"mt-[24px] bg-none text-secondary dark:text-light " } />
                 <Button icon={<TrashIcon />} onClick={deleteCategory} text={`${isDeleting ? "Excluindo..." : "Excluir categoria"}`} className={"mt-[24px] text-red-400 " } />
             </div>    
         </div>

@@ -12,8 +12,11 @@ import UsersIcon from "./icons/UsersIcon";
 import TransactionsIcon from "./icons/TransactionsIcon";
 import LogIcon from "./icons/LogIcon";
 import Overlay from "./Overlay";
+import { contextUserAuth } from "@/providers/userAuthProvider";
+import LogoColorful from "./LogoColorful";
 
 const MenuMobile = () => {
+    const { logout, themeUser } = useContext(contextUserAuth)
     const { showMenuMobile, toggleMenuMobile } = useContext(NavContext)
     const [user, setUser] = useState("")
 
@@ -22,13 +25,22 @@ const MenuMobile = () => {
         setUser(currentUser)
     }, [])
 
+    const logoutUser = async () => {
+        await logout()
+    }
+    console.log(themeUser);
+
     return (
         <div className={`w-screen h-screen fixed top-0 z-[99] transition-all duration-500 ${showMenuMobile ? "right-[0%] " : "-right-[100%]"}`}>
             <Overlay onClick={toggleMenuMobile} />
             <div className={`absolute h-full py-[30px] justify-between backdrop-blur-[2px] flex flex-col w-[350px] bg-light shadow-lg dark:bg-gray_rgba right-0`}>
                 <menu>
                     <div className="flex px-[30px] justify-between w-full">
-                        <Logo height={39} width={27} onclick={toggleMenuMobile} path="/dashboard" />
+                        {themeUser ? (
+                            <Logo height={39} width={27} onclick={toggleMenuMobile} path="/dashboard" />
+                        ):(
+                            <LogoColorful height={39} width={27} onclick={toggleMenuMobile} path="/dashboard" />
+                        )}
                         <div className="h-fit w-fit absolute top-[20px] right-[20px] p-3 cursor-pointer" onClick={toggleMenuMobile} >
                             <CloseIcon />
                         </div>
@@ -91,12 +103,12 @@ const MenuMobile = () => {
                         <li className="py-1 text-[14px]">
                             <span className="font-thin">Logado como </span><span className="">{formatName(user?.name)}</span>
                         </li>
-                        <li className="py-1">
+                        <li onClick={()=> {toggleMenuMobile(), logoutUser()}} className="py-1">
                             <Link className="" href={"/dashboard"}>
                                 Sair
                             </Link>
                         </li>
-                        <li className="text-right">
+                        <li className="text-right mr-[10px]">
                             <span className="text-[10px] ">Versão 1.0.0</span>
                         </li>
                     </ul>

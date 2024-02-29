@@ -8,7 +8,7 @@
     box-sizing: border-box;
     outline: none;
     scrollbar-width: thin;
-    scrollbar-color: #FFF #171C22;
+    scrollbar-color: #171C22 #FFF;
 }
 
 #nprogress {

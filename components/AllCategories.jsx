@@ -10,7 +10,7 @@ const AllCategories = () => {
         <section>
             <TitleH3 className="text-center" text="Mais categorias"/>
             <div className="grid grid-cols-4 md:grid-cols-5 gap-[16px]  pt-[30px] ">
-                <CategoryCard id="acampamento-nova-vida" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray_more dark:bg-gray-600 transition-all " img="/categories/acampamento-nova-vida.png" />
+                <CategoryCard id="acampamento-nova-vida" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray_more dark:bg-gray-600 transition-all bg-mygray_less" img="/categories/acampamento-nova-vida.png" />
                 <CategoryCard id="despesas-pastorais" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray_more dark:bg-gray-600 transition-all bg-mygray_less" img="/categories/despesas-pastorais.png" />
                 <CategoryCard id="dizimo-escolinha" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray_more dark:bg-gray-600 transition-all bg-mygray_less" img="/categories/dizimo-escolinha.png" />
                 <CategoryCard id="dizimo-igreja"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.id)}} className="cursor-pointer hover:bg-mygray_more dark:bg-gray-600 transition-all bg-mygray_less" img="/categories/dizimo-igreja.png" />

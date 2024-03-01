@@ -9,13 +9,14 @@ export default async function Documents(req, res){
         console.log("DOCUMENTS");
 
         const {userId} = req.query
-        const {name, date, description} = req.body;
+        const {name, date, description, doc} = req.body;
 
-        console.log(userId, name, date, description);
+        console.log(userId, name, date, description, doc);
         
         if (!name) return res.status(422).json({ message: { type: "error", data: "Nome não pode ficar vazio"} });
         if (!date) return res.status(422).json({ message: { type: "error", data: "Data não pode ficar vazia"} });
         if (!description) return res.status(422).json({ message: { type: "error", data: "Descrição não pode ficar vazia"} });
+        if (!doc) return res.status(422).json({ message: { type: "error", data: "Documento não pode ficar vazio"} });
                 
         try {            
             const documentExists = await Document.findOne({ name })
@@ -25,6 +26,7 @@ export default async function Documents(req, res){
                 name,
                 date,
                 description,
+                doc,
                 user: userId
             })
 

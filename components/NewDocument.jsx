@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import TitleH3 from "./TitleH3";
 import InputContainerModal from "@/components/InputContainerModal";
 import Button from "./Button";
-import SelectContainer from "./SelectContainer";
 import axios from "axios";
 import useFlashMessage from "@/hooks/useFlashMessage";
 import { api, versionApi } from "@/lib/configApi";
@@ -10,6 +9,7 @@ import { useRouter } from "next/router";
 import TitleH2 from "./TitleH2";
 import { ModalContext } from "@/providers/ModalProvider";
 import { getCurrentUser } from "@/helpers/getCurrentUser"
+import UploadImages from "./UploadImages";
 
 const NewDocument = () => {
     const { setFlashMessage } = useFlashMessage()
@@ -26,7 +26,7 @@ const NewDocument = () => {
     const [name, setName] = useState("")
     const [date, setDate] = useState("")
     const [description, setDescription] = useState("")
-    const [doc, setDoc] = useState("")
+    const [doc, setDoc] = useState([])
     
     const [isSaving, setIsSaving] = useState(false)
 
@@ -35,7 +35,6 @@ const NewDocument = () => {
         let msgText;
         let msgType = 'success'
         const data = { name, date, description, doc }
-        console.log(data);
 
         try {
             await axios.post(`${api}/${versionApi}/documents?userId=${user?._id}`, data).then(response => {
@@ -65,7 +64,7 @@ const NewDocument = () => {
             <InputContainerModal required={true} className={"my-[10px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
                         
             <TitleH3 text="Data" />
-            <div className="w-full">
+            <div className="w-full mb-[24px]">
                 <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-mygray_less dark:bg-secondary border-[0.1px] border-gray-500`}>
                     <input value={date} onChange={(ev)=> setDate(ev.target.value)} className="custom-input w-full bg-mygray_less dark:bg-secondary h-full text-secondary dark:text-light tracking-wide text-sm md:text-base placeholder:text-mygray_more" type="date" name="date" id="date" />    
                 </div>    
@@ -73,7 +72,9 @@ const NewDocument = () => {
 
             <TitleH3 text="Descrição" />
             <InputContainerModal required={true} className={"my-[10px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={description} onChange={(ev) => setDescription(ev.target.value)} placeholder="Nome" />
-        
+            
+            <TitleH3 text="Documento" className="mb-[24px]" />
+            <UploadImages className={`w-full gap-2 grid place-items-center grid-cols-3 mx-auto max-h-[200px] md:max-h-[120px] overflow-y-auto`}  images={doc} setImages={setDoc} />
 
             <Button onClick={saveNewDocument} text={`${isSaving ? "Salvando..." : "Salvar"}`} className={`mt-[24px] ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
         </div>

@@ -5,7 +5,7 @@ interface CenterProps{
 }
 const Center: React.FC<CenterProps> = ({children}) => {
     return (
-        <section className="max-w-[352px] sm:max-w-[444px] md:max-w-[540px] lg:max-w-[720px] mx-auto">
+        <section className="max-w-[352px] sm:max-w-[520px] md:max-w-[590px] lg:max-w-[740px] mx-auto">
             {children}
         </section>
     );

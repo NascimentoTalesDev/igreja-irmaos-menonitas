@@ -26,7 +26,7 @@ const Categories = ({ categoriesDb }) => {
                     <TitleH2 text="Minhas categorias" className="mt-[24px] mb-[14px]" />
                     <GridLayout>
                         {categories.map(category => (
-                            <CategoryCard onClick={() => { toggleModal(), setDataModal(<CategoryOptions category={category} />) }} key={category._id} text={formatName(category.name)} img={`/categories/${category.icon}.png`} className="cursor-pointer bg-mygray_less dark:bg-secondary_less hover:bg-mygray " />
+                            <CategoryCard onClick={() => { toggleModal(), setDataModal(<CategoryOptions category={category} />) }} key={category._id} text={formatName(category.name)} img={`/categories/${category.icon}.png`} className="cursor-pointer bg-mygray_less dark:bg-secondary_less hover:bg-mygray sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] " />
                         ))}
                     </GridLayout>
                 </>

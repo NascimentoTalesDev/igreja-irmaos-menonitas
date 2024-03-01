@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { KeyboardEventHandler, useContext, useEffect } from "react";
 import Menu from "./Menu";
 import Header from "./Header";
 import Modal from "@/components/Modal";
@@ -10,9 +10,10 @@ import { contextUserAuth } from "@/providers/userAuthProvider";
 
 interface LayoutProps{
     children: React.ReactNode;
+    onKeyDown?: KeyboardEventHandler<HTMLDivElement> | undefined;
 }
 
-const Layout: React.FC<LayoutProps> = ({children}) => {
+const Layout: React.FC<LayoutProps> = ({children, onKeyDown}) => {
     const {checkTheme} = useContext(contextUserAuth)
 
     useEffect(()=>{
@@ -20,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({children}) => {
     },[])
 
     return (
-        <div className="h-screen w-full bg-light dark:bg-secondary text-secondary dark:text-light">
+        <div onKeyDown={onKeyDown} className="h-screen w-full bg-light dark:bg-secondary text-secondary dark:text-light">
             <MenuMobile />
             <ModalThird />
             <ModalSecond />

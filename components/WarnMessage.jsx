@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { api, versionApi } from "@/lib/configApi";
 
-const WarnMessage = ({ user, path, back }) => {
+const WarnMessage = ({ item, path, back }) => {
     const { setFlashMessage } = useFlashMessage()
     const { toggleModal, setDataModal } = useContext(ModalContext)
     const router = useRouter()
@@ -42,10 +42,10 @@ const WarnMessage = ({ user, path, back }) => {
     return (
         <div className="flex items-center flex-col justify-center h-[260px]">
             <TitleH2 text="Tem certeza?" />
-            <p className="my-[30px]">Você quer realmente excluir &quot;<span className="font-bold">{user?.name}</span>&ldquo;?</p>
+            <p className="my-[30px]">Você quer realmente excluir &quot;<span className="font-bold">{item?.name}</span>&ldquo;?</p>
             <div className="flex gap-[20px]">
                 <Button onClick={toggleModal} text={"Cancelar"} className="bg-secondary hover:scale-105 transition-all gap-[2px] h-[40px] w-[120px]" />
-                <Button onClick={remove} text={`${isRemoving ? "Excluindo...": "Sim, Excluir" }`} className="bg-danger hover:scale-105 transition-all  gap-[2px] h-[40px] w-[120px]" />
+                <Button onClick={remove} text={`${isRemoving ? "Excluindo...": "Sim, Excluir" }`} className="bg-primary hover:scale-105 transition-all  gap-[2px] h-[40px] w-[120px]" />
             </div>
         </div>
     );

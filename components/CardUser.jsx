@@ -21,8 +21,8 @@ const CardUser = ({ users, rules }) => {
                     </div>
                     <div className="flex items-center gap-[10px]">
                         <span className="text-sm text-secondary dark:text-light ">{formatCharacterLimit(13, user.rule.name)}</span>
-                        <PencilIcon onClick={() => { toggleModal(), setDataModal(<EditUser user={user} rules={rules} />) }} className="text-light cursor-pointer"/>
-                        <TrashIcon  onClick={() => { toggleModal(), setDataModal(<WarnMessage user={user} path={`/users/id/${user?._id}`} back={"manage-accounts"} />) }} className="cursor-pointer"/>
+                        <PencilIcon onClick={() => { toggleModal(), setDataModal(<EditUser user={user} rules={rules} />) }} className="text-secondary dark:text-light  cursor-pointer "/>
+                        <TrashIcon  onClick={() => { toggleModal(), setDataModal(<WarnMessage item={user} path={`/users/id/${user?._id}`} back={"manage-accounts"} />) }} className="cursor-pointer"/>
                     </div>
                 </div>
             ))}

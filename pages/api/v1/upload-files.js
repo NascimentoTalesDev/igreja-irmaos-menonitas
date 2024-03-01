@@ -16,7 +16,6 @@ export default async function handle(req, res) {
         }
     });
 
-    
     if (method === "POST") {
 
         const form = new multiparty.Form();
@@ -31,6 +30,9 @@ export default async function handle(req, res) {
         
         for (const file of files.file) {
             const ext = file.originalFilename.split('.').pop();
+            
+            if(ext !== "png" && ext !== "pdf" && ext !== "jpg" && ext !== "jpeg"  && ext !== "webp" ) return res.status(401).json({ message: { type: "error", data: "Arquivo não suportado"} });
+            
             const newFileName = Date.now() + '.' + ext;
 
             await client.send(new PutObjectCommand({

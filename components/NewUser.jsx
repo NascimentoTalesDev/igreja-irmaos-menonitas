@@ -52,16 +52,16 @@ const NewUser = ({ rules }) => {
             <TitleH2 text="Criar Novo usuário" className="mb-[24px]" />
 
             <TitleH3 text="Nome" />
-            <InputContainerModal required={true} className={"my-[10px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
+            <InputContainerModal required={true} className={"my-[5px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
                         
             <TitleH3 text="Email" />
-            <InputContainerModal required={true} className={"my-[10px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Nome" />
+            <InputContainerModal required={true} className={"my-[5px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Nome" />
         
             <TitleH3 text="Senha" />
-            <InputContainerModal look={true} required={true} className={"my-[10px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={password} onChange={(ev) => setPassword(ev.target.value)} placeholder="Senha" />
+            <InputContainerModal look={true} required={true} className={"my-[5px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={password} onChange={(ev) => setPassword(ev.target.value)} placeholder="Senha" />
         
-            <TitleH3 text="Função" />
-            <SelectContainer required={true} data={rules} value={rule} onchange={(ev)=> setRule(ev.target.value)}  className={"mt-[16px]"} placeholder="Selecione a função" />
+            <TitleH3 className="mb-[5px]" text="Função" />
+            <SelectContainer required={true} data={rules} value={rule} onchange={(ev)=> setRule(ev.target.value)} placeholder="Selecione a função" />
 
             <Button onClick={saveNewUser} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
         </div>

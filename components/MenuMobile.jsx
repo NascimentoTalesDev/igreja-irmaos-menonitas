@@ -31,17 +31,17 @@ const MenuMobile = () => {
     console.log(themeUser);
 
     return (
-        <div className={`w-screen h-screen fixed top-0 z-[99] transition-all duration-500 ${showMenuMobile ? "right-[0%] " : "-right-[100%]"}`}>
+        <div className={`w-screen h-screen fixed top-0 z-[99] transition-all duration-500 ${showMenuMobile ? "left-[0%] " : "-left-[100%]"}`}>
             <Overlay onClick={toggleMenuMobile} />
-            <div className={`absolute h-full py-[30px] justify-between backdrop-blur-[2px] flex flex-col w-[350px] bg-light shadow-lg dark:bg-gray_rgba right-0`}>
+            <div className={`absolute h-full py-[30px] justify-between backdrop-blur-[2px] flex flex-col w-[350px] bg-light shadow-lg dark:bg-gray_rgba left-0`}>
                 <menu>
                     <div className="flex px-[30px] justify-between w-full">
                         {themeUser ? (
                             <Logo height={39} width={27} onclick={toggleMenuMobile} path="/dashboard" />
-                        ):(
+                            ):(
                             <LogoColorful height={39} width={27} onclick={toggleMenuMobile} path="/dashboard" />
                         )}
-                        <div className="h-fit w-fit absolute top-[20px] right-[20px] p-3 cursor-pointer" onClick={toggleMenuMobile} >
+                        <div className="h-fit w-fit absolute top-[20px] right-[20px] cursor-pointer" onClick={toggleMenuMobile} >
                             <CloseIcon />
                         </div>
                     </div>
@@ -49,8 +49,8 @@ const MenuMobile = () => {
                     {/* Options to admin */}
                     <div className="mt-[30px] w-full">
                         <ul className="flex flex-col justify-center">
-                            <li onClick={toggleMenuMobile} className="p-3 border-b border-mygray_more">
-                                <Link className="flex justify-between items-center" href={"/dashboard/documents"}>
+                            <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
+                                <Link className="flex p-3 h-full justify-between items-center" href={"/dashboard/documents"}>
                                     <div className="flex items-center gap-2">
                                         <DocsIcon />
                                         Documentos
@@ -58,8 +58,8 @@ const MenuMobile = () => {
                                     <ChevronRightIcon className="w-4 h-4" />
                                 </Link>
                             </li>
-                            <li onClick={toggleMenuMobile} className="p-3 border-b border-mygray_more">
-                                <Link className="flex justify-between items-center" href={"/dashboard/transactions"}>
+                            <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
+                                <Link className="flex p-3 justify-between items-center" href={"/dashboard/transactions"}>
                                     <div className="flex items-center gap-2">
                                         <TransactionsIcon />
                                         Movimentações
@@ -67,8 +67,8 @@ const MenuMobile = () => {
                                     <ChevronRightIcon className="w-4 h-4" />
                                 </Link>
                             </li>
-                            <li onClick={toggleMenuMobile} className="p-3 border-b border-mygray_more">
-                                <Link className="flex justify-between items-center" href={"/dashboard/manage-accounts"}>
+                            <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
+                                <Link className="flex p-3 justify-between items-center" href={"/dashboard/manage-accounts"}>
                                     <div className="flex items-center gap-2">
                                         <UsersIcon />
                                         Gerenciar contas
@@ -76,8 +76,8 @@ const MenuMobile = () => {
                                     <ChevronRightIcon className="w-4 h-4" />
                                 </Link>
                             </li>
-                            <li onClick={toggleMenuMobile} className="p-3 border-b border-mygray_more">
-                                <Link className="flex justify-between items-center" href={"/dashboard/system-log"}>
+                            <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
+                                <Link className="flex p-3 justify-between items-center" href={"/dashboard/system-log"}>
                                     <div className="flex items-center gap-2">
                                         <LogIcon />
                                         Log do sistema
@@ -85,8 +85,8 @@ const MenuMobile = () => {
                                     <ChevronRightIcon className="w-4 h-4" />
                                 </Link>
                             </li>
-                            <li onClick={toggleMenuMobile} className="p-3 border-b border-mygray_more">
-                                <Link className="flex justify-between items-center" href={"/dashboard/settings"}>
+                            <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
+                                <Link className="flex p-3 justify-between items-center" href={"/dashboard/settings"}>
                                     <div className="flex items-center gap-2">
                                         <SettingsIcon />
                                         Configurações
@@ -108,7 +108,7 @@ const MenuMobile = () => {
                                 Sair
                             </Link>
                         </li>
-                        <li className="text-right mr-[10px]">
+                        <li className="text-left ml-[10px]">
                             <span className="text-[10px] ">Versão 1.0.0</span>
                         </li>
                     </ul>

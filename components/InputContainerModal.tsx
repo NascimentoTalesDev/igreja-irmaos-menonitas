@@ -1,6 +1,4 @@
 import { ChangeEventHandler, KeyboardEventHandler, ReactNode, useState } from "react";
-import UserIcon from "./icons/UserIcon";
-import PadlockIcon from "./icons/PadlockIcon";
 import EyeIconIcon from "./icons/EyeIcon";
 import EyeSlashIcon from "./icons/EyeSlashIcon";
 

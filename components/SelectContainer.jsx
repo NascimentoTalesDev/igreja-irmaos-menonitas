@@ -1,3 +1,4 @@
+import formatName from "@/lib/formatName";
 import { useState } from "react";
 
 const SelectContainer= ({ data, placeholder, onchange }) => {
@@ -18,7 +19,7 @@ const SelectContainer= ({ data, placeholder, onchange }) => {
                 <option value="" className="text-secondary dark:text-light" >{placeholder}</option>
                 {data.length > 0 && data.map(item => {
                     return(
-                        <option key={item?._id} className="text-secondary dark:text-light" value={item?._id}>{item?.name}</option>
+                        <option key={item?._id} className="text-secondary dark:text-light" value={item?._id}>{formatName(item?.name)}</option>
                     )
                 })}
             </select>

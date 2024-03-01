@@ -49,8 +49,8 @@ export default async function handle(req, res) {
 
     if (method === "DELETE") {
 
-        const { image } = req.query;
-        let ima = image.split('.com/')[1]
+        const { file } = req.query;
+        let ima = file.split('.com/')[1]
 
         try {
             const resp = await client.send(new DeleteObjectCommand ({

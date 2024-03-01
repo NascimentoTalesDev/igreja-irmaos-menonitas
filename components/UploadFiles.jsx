@@ -4,11 +4,11 @@ import axios from "axios";
 import { versionApi, api } from "@/lib/configApi";
 import Image from "next/image";
 
-const UploadImages = ({ images, setImages, className }) => {
+const UploadFiles = ({ files, setFiles, className }) => {
     const [isUploading, setIsUploading] = useState(false)
     const [isDeleting, setIsDeleting] = useState('')
 
-    async function uploadImages(ev) {
+    async function uploadFiles(ev) {
         const files = ev.target?.files
 
         if (files?.length > 0) {
@@ -17,21 +17,21 @@ const UploadImages = ({ images, setImages, className }) => {
             for (const file of files) {
                 data.append("file", file)
             }
-            const res = await axios.post(`${api}/${versionApi}/upload-images`, data);
+            const res = await axios.post(`${api}/${versionApi}/upload-files`, data);
 
-            setImages(oldImages => {
-                return [...oldImages, ...res.data.links];
+            setFiles(oldFiles => {
+                return [...oldFiles, ...res.data.links];
             });
             setIsUploading(false)
         }
     }
 
-    async function deleteImage(file) {
+    async function deleteFile(file) {
         setIsDeleting(file)
-        await axios.delete(`${api}/${versionApi}/upload-images?image=${file}`).then(response => {
+        await axios.delete(`${api}/${versionApi}/upload-files?file=${file}`).then(response => {
             if (response?.data?.deleted) {
-                let newImages = images.filter(item => item !== file)
-                setImages(newImages);
+                let newFiles = files.filter(item => item !== file)
+                setFiles(newFiles);
             }
         });
         setIsDeleting('');
@@ -39,14 +39,14 @@ const UploadImages = ({ images, setImages, className }) => {
 
     return (
         <div className={`${className}`}>
-            {!!images?.length && images.map(link => (
+            {!!files?.length && files.map(link => (
                 <div key={link} className="relative flex items-center justify-center h-[80px] w-[80px] rounded-lg border border-gray-500 overflow-hidden">
                     {link.includes(".pdf") ? (
                             <Image alt="pdf" width={70} height={70} className="object-contain" src={"/images/pdf-g.png"} />
                         ) :(
                             <Image alt="news images" width={128} height={128} className="object-contain" src={link} />
                         )}
-                    <button onClick={() => deleteImage(link)} className="absolute font-normal text-sm top-0 right-0 w-6 h-6 bg-danger text-light">
+                    <button onClick={() => deleteFile(link)} className="absolute font-normal text-sm top-0 right-0 w-6 h-6 bg-danger text-light">
                         X
                     </button>
                     {link === isDeleting && (
@@ -68,10 +68,10 @@ const UploadImages = ({ images, setImages, className }) => {
                 <span>
                     Upload
                 </span>
-                <input onChange={uploadImages} type="file" className="hidden"></input>
+                <input onChange={uploadFiles} type="file" className="hidden"></input>
             </label>
         </div>
     );
 }
 
-export default UploadImages;
+export default UploadFiles;

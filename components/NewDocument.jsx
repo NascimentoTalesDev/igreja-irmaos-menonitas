@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import TitleH2 from "./TitleH2";
 import { ModalContext } from "@/providers/ModalProvider";
 import { getCurrentUser } from "@/helpers/getCurrentUser"
-import UploadImages from "./UploadImages";
+import UploadFiles from "./UploadFiles";
 
 const NewDocument = () => {
     const { setFlashMessage } = useFlashMessage()
@@ -74,7 +74,7 @@ const NewDocument = () => {
             <InputContainerModal required={true} className={"my-[10px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={description} onChange={(ev) => setDescription(ev.target.value)} placeholder="Nome" />
             
             <TitleH3 text="Documento" className="mb-[24px]" />
-            <UploadImages className={`w-full gap-2 grid place-items-center grid-cols-3 mx-auto max-h-[200px] md:max-h-[120px] overflow-y-auto`}  images={doc} setImages={setDoc} />
+            <UploadFiles className={`w-full gap-2 grid place-items-center grid-cols-3 mx-auto max-h-[200px] md:max-h-[120px] overflow-y-auto`}  files={doc} setFiles={setDoc} />
 
             <Button onClick={saveNewDocument} text={`${isSaving ? "Salvando..." : "Salvar"}`} className={`mt-[24px] ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
         </div>

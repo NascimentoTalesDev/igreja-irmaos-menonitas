@@ -20,7 +20,6 @@ const config: Config = {
         primary_less:"#FF7A1F",
         mygray:"#9c9f9e",
         mygray_more:"#7a7e7d",
-        mygray_less:"#d1d1d1",
         secondary:"#171C22",
         secondary_more:"#0C1014",
         secondary_less:"#2E343B",

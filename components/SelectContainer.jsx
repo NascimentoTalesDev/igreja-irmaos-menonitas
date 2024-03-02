@@ -14,8 +14,8 @@ const SelectContainer= ({ data, placeholder, onchange }) => {
     
 
     return (
-        <div onChange={(ev) => toggleColor(ev.target.value)} className="w-full overflow-hidden flex rounded items-center bg-mygray_less dark:bg-secondary border-[0.1px] border-gray-500 h-[44px]">
-            <select className={`bg-mygray_less dark:bg-secondary pl-[5px] mr-[10px] w-full h-full ${newColor ? 'text-secondary dark:text-light' : 'text-mygray_more dark:text-placeholder'}`} onChange={onchange} >
+        <div onChange={(ev) => toggleColor(ev.target.value)} className="w-full overflow-hidden flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500 h-[44px]">
+            <select className={`bg-gray-100 dark:bg-secondary pl-[5px] mr-[10px] w-full h-full ${newColor ? 'text-secondary dark:text-light' : 'text-mygray_more dark:text-placeholder'}`} onChange={onchange} >
                 <option value="" className="text-secondary dark:text-light" >{placeholder}</option>
                 {data.length > 0 && data.map(item => {
                     return(

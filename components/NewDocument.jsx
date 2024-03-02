@@ -62,17 +62,17 @@ const NewDocument = () => {
             <TitleH2 text="Criar Novo Documento" className="mb-[24px]" />
 
             <TitleH3 text="Nome" />
-            <InputContainerModal required={true} className={"my-[5px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
+            <InputContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
                         
             <TitleH3 text="Data" />
             <div className="w-full my-[5px]">
-                <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-mygray_less dark:bg-secondary border-[0.1px] border-gray-500`}>
-                    <input value={date} onChange={(ev)=> setDate(ev.target.value)} className="custom-input w-[50%] bg-mygray_less dark:bg-secondary h-full text-secondary dark:text-light tracking-wide text-sm md:text-base placeholder:text-mygray_more" type="date" name="date" id="date" />    
+                <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500`}>
+                    <input value={date} onChange={(ev)=> setDate(ev.target.value)} className="custom-input w-[50%] bg-gray-100 dark:bg-secondary h-full text-secondary dark:text-light tracking-wide text-sm md:text-base placeholder:text-mygray_more" type="date" name="date" id="date" />    
                 </div>    
             </div>
 
             <TitleH3 text="Descrição" />
-            <TextAreaContainerModal required={true} className={"my-[5px] bg-mygray_less dark:bg-secondary"} cols={3} rows={3}  classNameInput="bg-mygray_less dark:bg-secondary" value={description} onChange={(ev) => setDescription(ev.target.value)} placeholder="Descrição" />
+            <TextAreaContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"} cols={3} rows={3}  classNameInput="bg-gray-100 dark:bg-secondary" value={description} onChange={(ev) => setDescription(ev.target.value)} placeholder="Descrição" />
             
             <TitleH3 text="Documento" className="mb-[24px]" />
             <UploadFiles className={`w-full gap-2 grid place-items-center grid-cols-3 mx-auto max-h-[200px] md:max-h-[120px] overflow-y-auto`}  files={doc} setFiles={setDoc} />

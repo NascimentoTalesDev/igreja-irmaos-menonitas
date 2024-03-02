@@ -52,13 +52,13 @@ const EditUser = ({ user, rules }) => {
             <TitleH2 text="Editar usuário" className="mb-[24px]" />
 
             <TitleH3 text="Nome" />
-            <InputContainerModal required={true} className={"my-[10px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
+            <InputContainerModal required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
                         
             <TitleH3 text="Email" />
-            <InputContainerModal required={true} className={"my-[10px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Nome" />
+            <InputContainerModal required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Nome" />
         
             <TitleH3 text="Senha" />
-            <InputContainerModal look={true} required={true} className={"my-[10px] bg-mygray_less dark:bg-secondary"}  classNameInput="bg-mygray_less dark:bg-secondary" value={password} onChange={(ev) => setPassword(ev.target.value)} placeholder="Senha" />
+            <InputContainerModal look={true} required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={password} onChange={(ev) => setPassword(ev.target.value)} placeholder="Senha" />
         
             <TitleH3 text="Função" />
             <SelectContainer required={true} data={rules} value={rule} onchange={(ev)=> setRule(ev.target.value)}  className={"mt-[16px]"} placeholder="Selecione a função" />

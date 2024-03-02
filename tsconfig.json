@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Header.jsx", "providers/ModalProvider.jsx", "components/Modal.jsx", "components/Menu.jsx", "components/Profile.jsx", "pages/dashboard/categories/index.jsx", "components/SelectContainer.jsx", "components/CategoryCard.tsx", "pages/dashboard/manage-accounts/index.jsx", "components/CardUser.jsx", "components/WarnMessage.jsx", "components/ViewDocument.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "components/Header.jsx", "providers/ModalProvider.jsx", "components/Modal.jsx", "components/Menu.jsx", "components/Profile.jsx", "pages/dashboard/categories/index.jsx", "components/SelectContainer.jsx", "components/CategoryCard.tsx", "pages/dashboard/manage-accounts/index.jsx", "components/CardUser.jsx", "components/WarnMessage.jsx", "components/ViewDocument.jsx", "components/Add.jsx", "components/Calculator.jsx"],
   "exclude": ["node_modules"]
 }

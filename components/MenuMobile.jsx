@@ -101,7 +101,7 @@ const MenuMobile = () => {
                 <div className="flex justify-center flex-col">
                     <ul className="flex flex-col justify-center text-center">
                         <li className="py-1 text-[14px]">
-                            <span className="font-thin">Logado como </span><span className="">{formatName(user?.name)}</span>
+                            <span className="font-normal dark:font-thin">Logado como </span><span className="">{formatName(user?.name)}</span>
                         </li>
                         <li onClick={()=> {toggleMenuMobile(), logoutUser()}} className="py-1">
                             <Link className="" href={"/dashboard"}>

@@ -7,6 +7,7 @@ import UserProfileIcon from "./icons/UserProfileIcon";
 import { useContext } from "react";
 import { ModalContext } from "@/providers/ModalProvider";
 import Profile from "./Profile";
+import Add from "./Add";
 
 const Menu = () => {
     const {setDataModal, toggleModal} = useContext(ModalContext)
@@ -26,7 +27,7 @@ const Menu = () => {
                         <span className="text-light text-sm">Categorias</span>
                     </Link>
                 </li>
-                <li className="w-[60px] h-[60px] p-3 flex items-center justify-center border border-light dark:border-0 rounded cursor-pointer">
+                <li onClick={() => { toggleModal(), setDataModal(<Add />) }} className="w-[60px] h-[60px] p-3 flex items-center justify-center border border-light dark:border-0 rounded cursor-pointer">
                     <ActionsIcon />
                 </li>
                 <li className="w-[60px] h-[60px] p-3 flex items-center justify-center">

@@ -21,8 +21,19 @@ const EditCategory = ( {category} ) => {
     const { toggleModal, setDataModal } = useContext(ModalContext)
     const router = useRouter()
     
-    const categoriesType = ["Despesa", "Investimento", "Receita"]
-    
+    const categoriesType = [
+        {
+            _id: 1,
+            name: "Despesa"
+        },
+        {
+            _id: 2,
+            name: "Investimento"
+        },
+        {
+            _id: 3,
+            name: "Receita"
+        }]    
     const [name, setName] = useState("")
     const [type, setType] = useState("")
     
@@ -67,8 +78,8 @@ const EditCategory = ( {category} ) => {
             <InputContainerModal required={true} className={"mt-[16px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
             
             <TitleH3 text="Tipo da categoria" className="my-[16px]" />
-            <SelectContainer required={true} data={categoriesType} value={type} onchange={(ev)=> setType(ev.target.value)}  className={"mt-[16px]"} placeholder="Selecione a categoria" />
-            
+            <SelectContainer required={true} data={categoriesType} value={type} onchange={(ev) => setType(ev.target.value)} className={"mt-[16px]"} placeholder="Selecione a categoria" />
+
             <TitleH3 text="Ícone da categoria" className="my-[16px]" />
             <div onClick={()=> {toggleModalSecond(), setDataModalSecond(<AllCategories />)}} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500 h-[44px]">
                 {info ? 

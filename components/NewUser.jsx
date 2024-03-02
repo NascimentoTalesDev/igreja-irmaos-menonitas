@@ -55,7 +55,7 @@ const NewUser = ({ rules }) => {
             <InputContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
                         
             <TitleH3 text="Email" />
-            <InputContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Nome" />
+            <InputContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Email" />
         
             <TitleH3 text="Senha" />
             <InputContainerModal look={true} required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={password} onChange={(ev) => setPassword(ev.target.value)} placeholder="Senha" />

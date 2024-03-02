@@ -66,16 +66,16 @@ const NewDocument = () => {
                         
             <TitleH3 text="Data" />
             <div className="w-full my-[5px]">
-                <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500`}>
-                    <input value={date} onChange={(ev)=> setDate(ev.target.value)} className="custom-input w-[50%] bg-gray-100 dark:bg-secondary h-full text-secondary dark:text-light tracking-wide text-sm md:text-base placeholder:text-mygray_more" type="date" name="date" id="date" />    
+                <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500`}>
+                    <input value={date} onChange={(ev)=> setDate(ev.target.value)} className="custom-input w-[50%] bg-gray-100 dark:bg-secondary h-full text-secondary dark:text-light tracking-wide text-sm md:text-base placeholder:text-placeholder" type="date" name="date" id="date" />    
                 </div>    
             </div>
 
             <TitleH3 text="Descrição" />
             <TextAreaContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"} cols={3} rows={3}  classNameInput="bg-gray-100 dark:bg-secondary" value={description} onChange={(ev) => setDescription(ev.target.value)} placeholder="Descrição" />
             
-            <TitleH3 text="Documento" className="mb-[24px]" />
-            <UploadFiles className={`w-full gap-2 grid place-items-center grid-cols-3 mx-auto max-h-[200px] md:max-h-[120px] overflow-y-auto`}  files={doc} setFiles={setDoc} />
+            <TitleH3 text="Comprovante" className="mb-[10px]" />
+            <UploadFiles className={`flex gap-3`}  files={doc} setFiles={setDoc} />
 
             <Button onClick={saveNewDocument} text={`${isSaving ? "Salvando..." : "Salvar"}`} className={`mt-[24px] ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
         </div>

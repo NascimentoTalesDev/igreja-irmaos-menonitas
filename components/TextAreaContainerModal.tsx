@@ -20,7 +20,7 @@ const Input: React.FC<InputProps> = ({ placeholder, className, classNameInput, v
 
     return (
         <div className="w-full">
-            <div className={`flex items-center overflow-hidden justify-between rounded bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500 ${className}`}>
+            <div className={`flex items-center overflow-hidden justify-between rounded bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 ${className}`}>
                 <textarea cols={cols} rows={rows} value={value} onChange={onChange} placeholder={placeholder} className={`group w-full p-[10px] bg-gray-100 dark:bg-secondary h-full text-secondary dark:text-light tracking-wide text-sm md:text-base placeholder:text-mygray_more ${classNameInput}`}  required={required} />
             </div>
         </div>

@@ -46,8 +46,8 @@ const Add = ({ option }) => {
             <TitleH3 className="text-center" text={`Qual o valor ${option === "Rendimentos" ? `dos seus ${option}` : `da sua ${option}`}?`} />
             <div className="mt-[80px] flex items-end">
                 <b className="font-bold text-lg">R$</b>
-                <TitleH2 className="ml-[10px] text-3xl " text={initialState} />
-                <TitleH2 className="text-base" text={",00"} />                          
+                <h2 className="ml-[10px] font-bold text-3xl ">{initialState}</h2>
+                <b className="font-bold text-lg">,00</b>                        
             </div>
             <div className="absolute left-0 bottom-0 mb-[20px] flex items-center w-full">
                 <div className="parent mx-auto">

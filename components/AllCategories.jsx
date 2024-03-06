@@ -18,7 +18,7 @@ const AllCategories = () => {
 
     return (
         <section>
-            <TitleH3 className="text-center" text="Todas as categorias" />
+            <TitleH3 className="text-center mb-[30px]" text="Todas as categorias" />
             <GridLayout>
                 <CategoryCard id="acampamento-nova-vida" onClick={(ev) => { toggleModalSecond(), setInfo(ev.target.offsetParent) }} className="bg-gray-100 sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] dark:bg-secondary_less" img="/categories/acampamento-nova-vida.png" text="Acampamento Nova Vida" />
                 <CategoryCard id="despesas-pastorais"  onClick={(ev) => { toggleModalSecond(), setInfo(ev.target.offsetParent) }} className="bg-gray-100 sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] dark:bg-secondary_less" img="/categories/despesas-pastorais.png" text="Despesas Pastorais" />

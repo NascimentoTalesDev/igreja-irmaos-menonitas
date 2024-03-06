@@ -75,7 +75,7 @@ const NewDocument = () => {
             <TextAreaContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"} cols={3} rows={3}  classNameInput="bg-gray-100 dark:bg-secondary" value={description} onChange={(ev) => setDescription(ev.target.value)} placeholder="Descrição" />
             
             <TitleH3 text="Comprovante" className="mb-[10px]" />
-            <UploadFiles className={`flex gap-3`}  files={doc} setFiles={setDoc} />
+            <UploadFiles className={`flex gap-3`} files={doc} setFiles={setDoc} />
 
             <Button onClick={saveNewDocument} text={`${isSaving ? "Salvando..." : "Salvar"}`} className={`mt-[24px] ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
         </div>

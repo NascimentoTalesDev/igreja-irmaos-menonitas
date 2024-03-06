@@ -36,7 +36,7 @@ const InfoAdd = ({ valueCalc, option }) => {
     return (
         <div>
             <TitleH3 text="Nome por categoria" className="my-[5px]" />
-            <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500 h-[44px]">
+            <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
                 {info ?
                     (
                         <div className="flex items-center justify-between w-full">

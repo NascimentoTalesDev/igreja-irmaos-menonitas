@@ -11,7 +11,7 @@ const Add = () => {
         <div>
             <TitleH2 text="O que você quer adicionar?" className="mb-[30px]" />
             <div className="flex flex-wrap gap-[16px]">
-                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator option="Despesa" />) }} className="border border-red-500" text="Despesa" icon="" />
+                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator option="Despesa" />) }} className="border border-red-500" text="Despesa" icon=""  />
                 <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator option="Receita" />) }} className="border border-green-500" text="Receira" icon="" />
                 <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator option="Transferência" />) }} className="border border-green-500" text="Transferência" icon="" />
                 <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator option="Rendimentos" />) }} className="border border-green-500" text="Rendimentos" icon="" />

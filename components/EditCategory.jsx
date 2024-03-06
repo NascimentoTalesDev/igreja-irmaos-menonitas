@@ -14,13 +14,13 @@ import { ModalContext } from "@/providers/ModalProvider";
 import { useRouter } from "next/router";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
 
-const EditCategory = ( {category} ) => {
+const EditCategory = ({ category }) => {
     const { setFlashMessage } = useFlashMessage()
-    const {setDataModalThird, toggleModalThird } = useContext(ModalThirdContext)
-    const {setDataModalSecond, toggleModalSecond, info, setInfo} = useContext(ModalSecondContext)
+    const { setDataModalThird, toggleModalThird } = useContext(ModalThirdContext)
+    const { setDataModalSecond, toggleModalSecond, info, setInfo } = useContext(ModalSecondContext)
     const { toggleModal, setDataModal } = useContext(ModalContext)
     const router = useRouter()
-    
+
     const categoriesType = [
         {
             _id: 1,
@@ -33,19 +33,20 @@ const EditCategory = ( {category} ) => {
         {
             _id: 3,
             name: "Receita"
-        }]    
+        }]
     const [name, setName] = useState("")
     const [type, setType] = useState("")
-    
+    const [icon, setIcon] = useState("")
+
     const [isSetting, setIsSetting] = useState(false)
 
-    const updateCategory = async() =>{
+    const updateCategory = async () => {
         setIsSetting(true)
         let msgText;
         let msgType = 'success'
-        const data = { name, type, icon:info }
+        const data = { name, type, icon: info?.childNodes[1]?.id }
         try {
-            await axios.patch(`${api}/${versionApi}/categories/id/${category?._id}`, data).then(response => { 
+            await axios.patch(`${api}/${versionApi}/categories/id/${category?._id}`, data).then(response => {
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type
@@ -64,43 +65,54 @@ const EditCategory = ( {category} ) => {
         }
         setFlashMessage(msgText, msgType)
         setIsSetting(false)
-    } 
+    }
 
-    useEffect(()=>{
+    useEffect(() => {
         setName(category?.name)
         setType(category?.type)
-        setInfo(category?.icon)
-    },[])
+        setIcon(category?.icon)
+    }, [])
+
 
     return (
         <div className="flex flex-col text-sm">
             <TitleH3 text="Nome da categoria" className="mt-[30px]" />
-            <InputContainerModal required={true} className={"mt-[16px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
-            
+            <InputContainerModal required={true} className={"mt-[16px] bg-gray-100 dark:bg-secondary"} classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
+
             <TitleH3 text="Tipo da categoria" className="my-[16px]" />
             <SelectContainer required={true} data={categoriesType} value={type} onchange={(ev) => setType(ev.target.value)} className={"mt-[16px]"} placeholder="Selecione a categoria" />
 
             <TitleH3 text="Ícone da categoria" className="my-[16px]" />
-            <div onClick={()=> {toggleModalSecond(), setDataModalSecond(<AllCategories />)}} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500 h-[44px]">
-                {info ? 
-                (
-                    <div className="flex items-center justify-between w-full">
-                        <div className="flex items-center  gap-4">
-                            <Image id={info} width={30} height={30} alt="Image" src={"/categories/"+info+".png"} />
-                            <span className="text-secondary dark:text-light">alterar ícone</span>
+            <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500 h-[44px]">
+                {icon && !info &&
+                    (
+
+                        <div className="flex items-center justify-between w-full">
+                            <div className="flex items-center  gap-4">
+                                <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + icon + ".png"} />
+                                <span className="text-secondary dark:text-light">alterar ícone</span>
+                            </div>
+                            <ChevronRightIcon />
                         </div>
-                        <ChevronRightIcon />    
-                    </div>
- 
-                ):
-                (   
-                    <span>click para selecionar o ícone</span>
-                )}
+                    )
+                }
+
+                {info &&
+                    (
+                        <div className="flex items-center justify-between w-full">
+                            <div className="flex items-center  gap-4">
+                                <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
+                                <span className="text-secondary dark:text-light">alterar ícone</span>
+                            </div>
+                            <ChevronRightIcon />
+                        </div>
+                    )
+                }
             </div>
 
-            <Button onClick={updateCategory} text={`${isSetting ? "Atualizando...": "Atualizar"}`} className={`mt-[24px] ${isSetting ? "bg-neutral-500" : "bg-primary" }`} />
+            <Button onClick={updateCategory} text={`${isSetting ? "Atualizando..." : "Atualizar"}`} className={`mt-[24px] ${isSetting ? "bg-neutral-500" : "bg-primary"}`} />
         </div>
     );
 }
- 
+
 export default EditCategory;

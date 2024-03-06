@@ -40,9 +40,11 @@ const NewCategory = () => {
 
     const saveNewCategory = async () => {
         setIsSetting(true)
+        console.log("AQUI");
         let msgText;
         let msgType = 'success'
-        const data = { name, type, icon: info }
+        const data = { name, type, icon: info?.childNodes[1].id }
+
         try {
             await axios.post(`${api}/${versionApi}/categories`, data).then(response => {
                 if (response?.data?.message?.type === "error") {
@@ -63,7 +65,7 @@ const NewCategory = () => {
         setFlashMessage(msgText, msgType)
         setIsSetting(false)
     }
-
+    
     return (
         <div className="flex flex-col text-sm">
             <TitleH3 text="Nome da categoria" className="mt-[30px]" />
@@ -78,7 +80,7 @@ const NewCategory = () => {
                     (
                         <div className="flex items-center justify-between w-full">
                             <div className="flex items-center  gap-4">
-                                <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info + ".png"} />
+                                <Image id={info?.childNodes[1]?.id} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
                                 <span className="text-secondary dark:text-light">alterar ícone</span>
                             </div>
                             <ChevronRightIcon />

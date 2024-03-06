@@ -11,7 +11,7 @@ const Modal = () => {
             <Overlay onClick={()=> {toggleModal(), setDataModal()}} />
 
             <div className="bg-light dark:bg-secondary_less text-secondary dark:text-light rounded shadow-2xl min-h-[300px] w-[90%] max-w-[400px] relative p-[20px]">
-                <div onClick={()=> {toggleModal(), setDataModal()}} className="cursor-pointer w-fit absolute right-[10px] top-[15px]" >
+                <div onClick={()=> {toggleModal(), setDataModal("")}} className="cursor-pointer w-fit absolute right-[10px] top-[15px]" >
                     <CloseIcon />
                 </div>
                 {dataModal}

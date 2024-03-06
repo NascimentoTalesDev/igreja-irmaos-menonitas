@@ -13,6 +13,9 @@ interface CategoryCardProps{
 const CategoryCard: React.FC<CategoryCardProps> = ({ text, img, className, onClick, id }) => {
     return (
         <div id={id} onClick={onClick} className={`relative flex gap-1 items-center justify-center w-[76px] h-[76px] rounded p-2 flex-col transition-all duration-300 ${className} `} >
+            <div className="absolute w-full h-full opacity-50">
+
+            </div>
             <Image id={id} width={30} height={30} alt="Image" src={img} />
             {text && (
                 <h2 className="mt-[4px] text-[10px] tracking-wider min-h-[20px] leading-tight text-center text-dark font-bold dark:text-light">{text}</h2>

@@ -6,7 +6,7 @@ import InfoAdd from "./InfoAdd";
 import { ModalThirdContext } from "@/providers/ModalThirdProvider";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
 
-const Add = ({ option }) => {
+const Add = ({ type }) => {
     const {setDataModalThird, toggleModalThird} = useContext(ModalThirdContext)
     const { toggleModalSecond, setDataModalSecond } = useContext(ModalSecondContext)
 
@@ -43,7 +43,7 @@ const Add = ({ option }) => {
 
     return (
         <div onKeyDown={(ev)=> console.log(ev)} className="w-full h-full flex flex-col">
-            <TitleH3 className="text-center" text={`Qual o valor ${option === "Rendimentos" ? `dos seus ${option}` : `da sua ${option}`}?`} />
+            <TitleH3 className="text-center" text={`Qual o valor ${type === "Rendimentos" ? `dos seus ${type}` : `da sua ${type}`}?`} />
             <div className="mt-[80px] flex items-end">
                 <b className="font-bold text-lg">R$</b>
                 <h2 className="ml-[10px] font-bold text-3xl ">{initialState}</h2>
@@ -63,7 +63,7 @@ const Add = ({ option }) => {
                     <button value={0} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div13 flex items-center justify-center">0</button>
                     <button onClick={( )=> removeValue()} className="bg-slate-300 text-secondary div10 flex items-center justify-center"><RemoveCalc /></button>
                     <button onClick={( )=> clearDisplay()} className="bg-slate-300 font-bold text-secondary div11 flex items-center justify-center">AC</button>
-                    <button onClick={()=> {toggleModalSecond(), setDataModalSecond(""), toggleModalThird(), setDataModalThird(<InfoAdd valueCalc={initialState} option={option} />) }} className="div12 flex items-center justify-center h-full bg-success">enter</button>
+                    <button onClick={()=> {toggleModalSecond(), setDataModalSecond(""), toggleModalThird(), setDataModalThird(<InfoAdd valueCalc={initialState} type={type} />) }} className="div12 flex items-center justify-center h-full bg-success">enter</button>
                 </div>
             </div>
         </div>

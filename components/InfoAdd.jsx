@@ -99,7 +99,7 @@ const InfoAdd = ({ valueCalc, type }) => {
                     </div>
 
                     <TitleH3 text="Data" className="my-[5px]" />
-                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-secondary overflow-hidden flex items-center justify-center">
+                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
                         <DatePicker dateFormat="dd/MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)}  />
                         <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
                     </div>

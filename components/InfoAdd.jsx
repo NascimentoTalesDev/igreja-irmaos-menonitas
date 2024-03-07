@@ -14,6 +14,11 @@ import { api, versionApi } from "@/lib/configApi";
 import useFlashMessage from "@/hooks/useFlashMessage";
 import { ModalThirdContext } from "@/providers/ModalThirdProvider";
 import { ModalContext } from "@/providers/ModalProvider";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import ChevronDownIcon from "./icons/ChevronDownIcon";
+import ptBR from 'date-fns/locale/pt-BR';
+
 
 const InfoAdd = ({ valueCalc, type }) => {
     const { setFlashMessage } = useFlashMessage()
@@ -22,7 +27,7 @@ const InfoAdd = ({ valueCalc, type }) => {
     const { toggleModal } = useContext(ModalContext)
 
     const accountValue = valueCalc?.join("");
-    const [date, setDate] = useState("")
+    const [startDate, setStartDate] = useState(new Date());
     const [doc, setDoc] = useState([])
 
     const [inInstallmentsQtt, setInInstallmentsQtt] = useState(0)
@@ -48,7 +53,7 @@ const InfoAdd = ({ valueCalc, type }) => {
             icon = info?.childNodes[1]?.id
         }
 
-        const data = { name, icon, type, accountValue, date, doc, inInstallments, recurrent, inInstallmentsQtt, paid }
+        const data = { type, name, icon, accountValue, date: startDate, doc, inInstallments, recurrent, inInstallmentsQtt, paid }
 
         try {
             await axios.post(`${api}/${versionApi}/transactions`, data).then(response => {
@@ -69,9 +74,8 @@ const InfoAdd = ({ valueCalc, type }) => {
         }
         setFlashMessage(msgText, msgType)
         setIsSaving(false)
-
     }
-    console.log(type);
+    console.log(startDate);
     return (
         <div>
             {type === "Despesa" && (
@@ -95,10 +99,9 @@ const InfoAdd = ({ valueCalc, type }) => {
                     </div>
 
                     <TitleH3 text="Data" className="my-[5px]" />
-                    <div className="w-full">
-                        <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500`}>
-                            <input value={date} onChange={(ev) => setDate(ev.target.value)} className="custom-input w-[50%] bg-gray-100 dark:bg-secondary h-full text-secondary dark:text-light tracking-wide text-sm md:text-base placeholder:text-placeholder" type="date" name="date" id="date" />
-                        </div>
+                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-secondary overflow-hidden flex items-center justify-center">
+                        <DatePicker dateFormat="dd/MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)}  />
+                        <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
                     </div>
 
                     <TitleH3 text="Comprovante" className="my-[5px]" />
@@ -126,11 +129,13 @@ const InfoAdd = ({ valueCalc, type }) => {
                             <button onClick={(ev) => setPaid(!paid)}>{paid ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
                         </div>
                     )}
+                    
+                    <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
                 </>
             )}
 
             {type === "Receita" && (
-<>
+                <>
                     <TitleH3 text="Nome por categoria" className="my-[5px]" />
                     <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
                         {info ?
@@ -150,18 +155,19 @@ const InfoAdd = ({ valueCalc, type }) => {
                     </div>
 
                     <TitleH3 text="Data" className="my-[5px]" />
-                    <div className="w-full">
-                        <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500`}>
-                            <input value={date} onChange={(ev) => setDate(ev.target.value)} className="custom-input w-[50%] bg-gray-100 dark:bg-secondary h-full text-secondary dark:text-light tracking-wide text-sm md:text-base placeholder:text-placeholder" type="date" name="date" id="date" />
-                        </div>
+                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-secondary overflow-hidden flex items-center justify-center">
+                        <DatePicker dateFormat="dd/MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)}  />
+                        <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
                     </div>
 
                     <TitleH3 text="Comprovante" className="my-[5px]" />
                     <UploadFiles className={`flex gap-3 mb-[10px]`} files={doc} setFiles={setDoc} />
-                                
+
+                    <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
                 </>
             )}
-            <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
+
+            
         </div>
 
     );

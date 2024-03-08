@@ -9,21 +9,28 @@ const MoreCategories = () => {
 
     return (
         <section>
-            <TitleH3 className="text-center" text="Mais categorias"/>
+            <TitleH3 className="text-center" text="Mais ícones"/>
             <GridLayout className="mt-[14px]">
-                <CategoryCard id="acampamento-nova-vida" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/acampamento-nova-vida.png" />
-                <CategoryCard id="despesas-pastorais" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/despesas-pastorais.png" />
-                <CategoryCard id="dizimo-escolinha" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/dizimo-escolinha.png" />
-                <CategoryCard id="dizimo-igreja"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/dizimo-igreja.png" />
-                <CategoryCard id="energia-eletrica"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/energia-eletrica.png" />
-                <CategoryCard id="investimento"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/investimento.png" />
-                <CategoryCard id="lanches"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/lanches.png" />
-                <CategoryCard id="limpeza-patio"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/limpeza-patio.png" />
-                <CategoryCard id="manutencao"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/manutencao.png" />
-                <CategoryCard id="materiais-escolinhas"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/materiais-escolinhas.png" />
-                <CategoryCard id="oferta-extra"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/oferta-extra.png" />
-                <CategoryCard id="redizimo"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/redizimo.png" />
-                <CategoryCard id="salario-pastor"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/salario-pastor.png" />
+                <CategoryCard id="book" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/book.png" />
+                <CategoryCard id="book2" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/book2.png" />
+                <CategoryCard id="bookmark" onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/bookmark.png" />
+                <CategoryCard id="calendar"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/calendar.png" />
+                <CategoryCard id="calendar2"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/calendar2.png" />
+                <CategoryCard id="download"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/download.png" />
+                <CategoryCard id="gift"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/gift.png" />
+                <CategoryCard id="gum"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/gum.png" />
+                <CategoryCard id="hamburger"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/hamburger.png" />
+                <CategoryCard id="highlight"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/highlight.png" />
+                <CategoryCard id="home"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/home.png" />
+                <CategoryCard id="location"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/location.png" />
+                <CategoryCard id="money"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/money.png" />
+                <CategoryCard id="notebook"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/notebook.png" />
+                <CategoryCard id="right-arrow"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/right-arrow.png" />
+                <CategoryCard id="schedule"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/schedule.png" />
+                <CategoryCard id="shopping-cart"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/shopping-cart.png" />
+                <CategoryCard id="statistics"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/statistics.png" />
+                <CategoryCard id="trophy"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/trophy.png" />
+                <CategoryCard id="wheelbarrow"onClick={(ev)=> {toggleModalSecond(), setInfo(ev.target.offsetParent)}} className="cursor-pointer hover:bg-gray-200 dark:bg-gray-600 bg-gray-100" img="/categories/wheelbarrow.png" />
             </GridLayout>
         </section>
     );

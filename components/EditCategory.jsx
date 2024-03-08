@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import TitleH3 from "./TitleH3";
 import InputContainerModal from "@/components/InputContainerModal";
-import AllCategories from "@/components/AllCategories";
 import Button from "./Button";
 import SelectContainer from "./SelectContainer";
 import { ModalThirdContext } from "@/providers/ModalThirdProvider";
@@ -13,6 +12,7 @@ import { api, versionApi } from "@/lib/configApi";
 import { ModalContext } from "@/providers/ModalProvider";
 import { useRouter } from "next/router";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
+import MoreCategories from "./MoreCategories";
 
 const EditCategory = ({ category }) => {
     const { setFlashMessage } = useFlashMessage()
@@ -88,7 +88,7 @@ const EditCategory = ({ category }) => {
             <SelectContainer required={true} data={categoriesType} value={type} onchange={(ev) => setType(ev.target.value)} className={"mt-[16px]"} placeholder="Selecione a categoria" />
 
             <TitleH3 text="Ícone da categoria" className="my-[16px]" />
-            <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500 h-[44px]">
+            <div onClick={() => { toggleModalSecond(), setDataModalSecond(<MoreCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-500 h-[44px]">
                 {icon && !info &&
                     (
 

@@ -44,7 +44,12 @@ const EditCategory = ({ category }) => {
         setIsSetting(true)
         let msgText;
         let msgType = 'success'
-        const data = { name, type, icon: info?.childNodes[1]?.id }
+        let iconInfo;
+        if (info) {
+            iconInfo = info?.childNodes[1]?.id
+        }
+
+        const data = { name, type, icon: iconInfo }
         try {
             await axios.patch(`${api}/${versionApi}/categories/id/${category?._id}`, data).then(response => {
                 if (response?.data?.message?.type === "error") {

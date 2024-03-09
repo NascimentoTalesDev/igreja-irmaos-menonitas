@@ -5,67 +5,56 @@ import TitleH3 from "./TitleH3";
 import Image from "next/image";
 import Link from "next/link";
 import formatFirstWordToUpperCase from "@/lib/formatFirstWordToUpperCase";
-import { api, versionApi } from "@/lib/configApi";
 import useFlashMessage from "@/hooks/useFlashMessage";
-import { useState } from "react";
-import axios from "axios";
+import Button from "./Button";
 
 const ViewDocument = ({ document }) => {
     const { setFlashMessage } = useFlashMessage()
-    const [ isDownloading, setIsDownloading ] = useState()
+    
+    const download = async(doc) => {
+        let msgText = "Erro ao baixar o arquivo";
+        let msgType = 'error'
 
-    const download = async (doc) => {
-        console.log(doc);
-        setIsDownloading(true)
-
-        let msgText;
-        let msgType = 'success'
-        const data = { doc }
+        const docName = doc.split('.com/')[1]
 
         try {
-            await axios.get(`${api}/${versionApi}/download`, data).then(response => {
-                if (response?.data?.message?.type === "error") {
-                    msgText = response?.data?.message?.data
-                    msgType = response?.data?.message?.type
-                } else {
-                    msgText = response?.data?.message?.data
-                }
-            })
-        } catch (error) {
-            msgText = error?.response?.data?.message?.data
-            msgType = error?.response?.data?.message?.type
-        }
-        setFlashMessage(msgText, msgType)
-        setIsDownloading(false)
-    }
+            const response = await fetch(doc);
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
 
+            const link = window.document.createElement('a');
+            link.href = blobUrl;
+            link.setAttribute('download', `${docName}`); // Nome do arquivo a ser baixado
+            window.document.body.appendChild(link);
+            link.click();
+            window.document.body.removeChild(link)
+        } catch (error) {
+            setFlashMessage(msgText, msgType)
+        }
+    }
+    console.log(document?.doc[0]);
     return (
         <div className="w-full h-full ">
             <Title className="text-center text-secondary dark:text-light " text={formatName(document?.name)} />
-            <div className="flex gap-[10px] mt-[30px] items-center ">
+            <div className="flex gap-[10px] mt-[20px] items-center ">
                 <TitleH2 text="Data:" />
                 <TitleH3 text={new Date(document?.date).toLocaleDateString()} />
             </div>
-            <div className="flex gap-[10px] my-[10px] items-center">
+            <div className="flex gap-[10px] my-[5px] items-center">
                 <TitleH2 text="Descrição:" />
                 <TitleH3 text={formatFirstWordToUpperCase(document?.description)} />
             </div>
-            <div className="text-right text-sm p-2">
-                <button onClick={() => download(document?.doc[0])} className="bg-primary p-2 rounded text-light">{isDownloading ? "BAIXANDO...": "BAIXAR DOCUMENTO"}</button>
-                <Link target="_blank" className="underline" href={`${document?.doc[0]}`}>
-                    Abrir arquivo em outra janela
-                </Link>
-            </div>
-            <div className="flex items-center bg-mygray justify-center p-1">
-                {document?.doc[0].includes(".png", ".jpg", ".jpeg") ?
-                    <div className="h-full sm:h-[400px] md:h-[330px]">
+            <Button text="Baixar documento" className="bg-primary mx-auto h-[30px] my-[10px]" onClick={() => download(document?.doc[0])} />
+            <div className="flex items-center overflow-hidden bg-mygray justify-center p-1">
+                {document?.doc[0]?.includes(".pdf") ? (
+                    <div className="flex justify-center items-center w-[400px] h-full">
+                        <iframe className="h-[600px] sm:h-[400px] md:h-[330px]" src={`${document?.doc[0]}`} title="W3Schools Free Online Web Tutorials"></iframe>
+                    </div>
+                ):(
+                    <div className="sm:h-[400px] md:h-[330px]">
                         <Image height={350} width={350} alt={document?.name} src={`${document?.doc}`} />
                     </div>
-                    : (
-                        <div className="flex justify-center items-center w-[400px] h-full">
-                            <iframe className="h-[600px] sm:h-[400px] md:h-[330px]" src={`${document?.doc[0]}`} title="W3Schools Free Online Web Tutorials"></iframe>
-                        </div>
-                    )}
+                )}
             </div>
         </div>
     );

@@ -40,7 +40,6 @@ const NewCategory = () => {
 
     const saveNewCategory = async () => {
         setIsSetting(true)
-        console.log("AQUI");
         let msgText;
         let msgType = 'success'
         const data = { name, type, icon: info?.childNodes[1].id }
@@ -81,14 +80,14 @@ const NewCategory = () => {
                         <div className="flex items-center justify-between w-full">
                             <div className="flex items-center  gap-4">
                                 <Image id={info?.childNodes[1]?.id} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
-                                <span className="text-secondary dark:text-light">alterar ícone</span>
+                                <span className="text-secondary dark:text-light">Alterar ícone</span>
                             </div>
                             <ChevronRightIcon />
                         </div>
 
-                    ) :
+                    ):
                     (
-                        <span>click para selecionar o ícone</span>
+                        <span>Selecionar ícone</span>
                     )}
             </div>
 

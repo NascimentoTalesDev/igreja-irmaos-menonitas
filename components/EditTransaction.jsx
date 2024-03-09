@@ -91,8 +91,24 @@ const EditCategory = ({ transaction }) => {
                         </>
                     )}
                     {transaction?.type === "receita" && (
-                        <span className="rounded-full px-[5px] text-[10px] text-dark font-bold bg-success">recebido</span>
-                    )}
+                        <>
+                            {transaction.paid ? (
+                                <div className="flex items-center w-full justify-between ">
+                                    <Button icon={<PencilIcon className="text-secondary dark:text-light" />} onClick={() => updateTransaction(transaction?.paid)} text={`Não recebi`} className={"text-secondary dark:text-light "} />
+                                    <div onClick={() => updateTransaction(transaction?.paid)} className="cursor-pointer">
+                                        {transaction.paid ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}
+                                    </div>
+                                </div>
+                            ) :
+                                (
+                                    <div className="flex items-center w-full justify-between ">
+                                        <Button icon={<PencilIcon className="text-secondary dark:text-light" />} onClick={() => updateTransaction(transaction?.paid)} text={`Já recebi`} className={"text-secondary dark:text-light "} />
+                                        <div onClick={() => updateTransaction(transaction?.paid)} className="cursor-pointer">
+                                            {transaction.paid ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}
+                                        </div>
+                                    </div>
+                                )}
+                        </>                    )}
                 </div>
 
                 <Button icon={<TrashIcon />} onClick={deleteTransaction} text={`${isDeleting ? "Excluindo..." : "Excluir movimentação"}`} className={"mt-[24px] text-red-400 "} />

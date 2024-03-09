@@ -1,6 +1,7 @@
 import CardLinkHome from "@/components/CardLinkHome";
 import sumNumbers from "@/lib/sumNumbers";
 import MoneyIcon from "./icons/MoneyIcon";
+import checkDecimalNumbers from "@/lib/checkDecimalNumbers";
 
 const CashBalance = ({ data }) => {
     let month = { receita : [], despesa : [] }
@@ -28,7 +29,7 @@ const CashBalance = ({ data }) => {
     let res = rec - des
 
     return (
-        <CardLinkHome icon={<MoneyIcon />} text="Saldo em caixa" data={res} bg="bg-success" />
+        <CardLinkHome icon={<MoneyIcon />} text="Saldo em caixa" data={res.toFixed(2)} bg="bg-success" />
     );
 }
  

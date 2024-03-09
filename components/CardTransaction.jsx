@@ -21,26 +21,27 @@ const CardTransaction = ({ transaction }) => {
                         {transaction?.type === "despesa" && (
                             <div>
                                 {transaction.paid ? (
-                                    <span className="rounded-full px-[5px] text-[10px] text-dark font-bold bg-success">pago</span>
+                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-dark font-bold bg-success">pago</span>
                                 ):
                                 (
-                                    <span className="rounded-full px-[5px] text-[10px] text-dark font-bold bg-danger">não pago</span>
+                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-dark font-bold bg-danger">não pago</span>
                                 )}
                             </div>
                         )}
                         {transaction?.type === "receita" && (
-                            <span className="rounded-full px-[5px] text-[10px] text-dark font-bold bg-success">recebido</span>
-                        )}
+                            <div>
+                                {transaction.paid ? (
+                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-dark font-bold bg-success">recebido</span>
+                                ):
+                                (
+                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-dark font-bold bg-danger">não recebido</span>
+                                )}
+                            </div>                        )}
                     </div>
                 </div>
             </div>
 
             <div className="text-right flex flex-col">
-                {transaction?.type === "despesa" && (
-                    <span className="text-[10px]">
-                        {transaction?.inInstallments && "parcelado"}
-                    </span>
-                )}
                 {transaction?.type === "despesa" ? (
                     <>
                         {transaction?.inInstallments ? (

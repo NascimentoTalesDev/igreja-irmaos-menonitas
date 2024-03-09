@@ -95,7 +95,7 @@ const EditCategory = ({ category }) => {
                         <div className="flex items-center justify-between w-full">
                             <div className="flex items-center  gap-4">
                                 <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + icon + ".png"} />
-                                <span className="text-secondary dark:text-light">alterar ícone</span>
+                                <span className="text-secondary dark:text-light">Alterar ícone</span>
                             </div>
                             <ChevronRightIcon />
                         </div>
@@ -107,7 +107,7 @@ const EditCategory = ({ category }) => {
                         <div className="flex items-center justify-between w-full">
                             <div className="flex items-center  gap-4">
                                 <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
-                                <span className="text-secondary dark:text-light">alterar ícone</span>
+                                <span className="text-secondary dark:text-light">Alterar ícone</span>
                             </div>
                             <ChevronRightIcon />
                         </div>

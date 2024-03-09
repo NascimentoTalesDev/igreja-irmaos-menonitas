@@ -19,7 +19,6 @@ export default async function Transactions(req, res) {
         let value = parseInt(accountValue)
 
         try {
-
             if(inInstallments){
                 const inInstallmentValue = accountValue / inInstallmentsQtt
                 const dateOfFirstInstallment = new Date(date)
@@ -43,6 +42,22 @@ export default async function Transactions(req, res) {
                         inInstallmentValue: inInstallmentValue.toFixed(2),
                     });
                 }
+                return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
+            }
+
+            if(type === "Receita"){
+                await Transaction.create({
+                    name,
+                    icon,
+                    type,
+                    accountValue: value.toFixed(2),
+                    date,
+                    doc,
+                    inInstallments,
+                    recurrent,
+                    inInstallmentsQtt,
+                    paid: true
+                })
                 return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
             }
 

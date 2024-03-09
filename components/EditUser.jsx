@@ -54,8 +54,8 @@ const EditUser = ({ user, rules }) => {
             <TitleH3 text="Nome" />
             <InputContainerModal required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
                         
-            <TitleH3 text="Email" />
-            <InputContainerModal required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Nome" />
+            <TitleH3 text="Email ou celular" />
+            <InputContainerModal required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Email ou celular" />
         
             <TitleH3 text="Senha" />
             <InputContainerModal look={true} required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={password} onChange={(ev) => setPassword(ev.target.value)} placeholder="Senha" />

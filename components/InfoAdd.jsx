@@ -101,7 +101,7 @@ const InfoAdd = ({ valueCalc, type }) => {
 
                             ) :
                             (
-                                <span>click para selecionar o ícone</span>
+                                <span>Selecionar ícone</span>
                             )}
                     </div>
 
@@ -157,7 +157,7 @@ const InfoAdd = ({ valueCalc, type }) => {
 
                             ) :
                             (
-                                <span>click para selecionar o ícone</span>
+                                <span>Selecionar ícone</span>
                             )}
                     </div>
 

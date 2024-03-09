@@ -24,9 +24,11 @@ const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo }) => {
                 <CashBalance data={monthsFour} />
                 <CardLinkHome icon="" text="Saldo no banco" bg="bg-success" />
             </div>
-            <div className="w-full mb-[16px]">
-                <CardLinkHome data={dizimo?.accountValue} icon="" text={`Dízimo do último culto: ${formatDate(dizimo.createdAt)}`} bg="bg-success" className={" w-full"}  />
-            </div>
+            {dizimo && (
+                <div className="w-full mb-[16px]">
+                    <CardLinkHome data={dizimo?.accountValue} icon="" text={`Dízimo do último culto: ${formatDate(dizimo.createdAt)}`} bg="bg-success" className={" w-full"}  />
+                </div>
+            )}
             <Spreadsheet monthsFour={monthsFour} monthTree={monthTree} monthTwo={monthTwo} monthOne={monthOne} actualMonth={actualMonth} />
         </Layout>
     );

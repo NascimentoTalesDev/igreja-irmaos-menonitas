@@ -1,7 +1,7 @@
 import Image from "next/image";
 import formatDate from "@/lib/formatDate"
 import formatName from "@/lib/formatName";
-import checkDecimalNumbers from "@/lib/checkDecimalNumbers";
+import formatLocalCurrency from "@/lib/formatLocalCurrency";
 import EditTransaction from "@/components/EditTransaction";
 import { ModalContext } from "@/providers/ModalProvider";
 import { useContext } from "react";
@@ -21,20 +21,20 @@ const CardTransaction = ({ transaction }) => {
                         {transaction?.type === "despesa" && (
                             <div>
                                 {transaction.paid ? (
-                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-dark font-bold bg-success">pago</span>
+                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-light dark:text-light font-bold bg-success">Pago</span>
                                 ):
                                 (
-                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-dark font-bold bg-danger">não pago</span>
+                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-light dark:text-light font-bold bg-danger">Não pago</span>
                                 )}
                             </div>
                         )}
                         {transaction?.type === "receita" && (
                             <div>
                                 {transaction.paid ? (
-                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-dark font-bold bg-success">recebido</span>
+                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-light dark:text-light font-bold bg-success">Recebido</span>
                                 ):
                                 (
-                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-dark font-bold bg-danger">não recebido</span>
+                                    <span className="rounded-full px-[7px] py-[2px] text-[10px] text-light dark:text-light font-bold bg-danger">Não recebido</span>
                                 )}
                             </div>                        )}
                     </div>
@@ -45,13 +45,22 @@ const CardTransaction = ({ transaction }) => {
                 {transaction?.type === "despesa" ? (
                     <>
                         {transaction?.inInstallments ? (
-                            <span className="text-danger">{checkDecimalNumbers(transaction?.inInstallmentValue)}</span>
+                            <div className="flex items-center justify-end gap-[2px]">
+                                <span className="text-[10px]">R$</span>
+                                <span className="text-danger">{formatLocalCurrency(transaction?.inInstallmentValue)}</span>
+                            </div>
                         ):(
-                            <span className="text-danger">{checkDecimalNumbers(transaction?.accountValue)}</span>
+                            <div className="flex items-center justify-end gap-[2px]">
+                                <span className="text-[10px]">R$</span>
+                                <span className="text-danger">{formatLocalCurrency(transaction?.accountValue)}</span>
+                            </div>
                         )}
                     </>
                 ):(
-                    <span className="text-success">{checkDecimalNumbers(transaction?.accountValue)}</span>
+                    <div className="flex items-center justify-end gap-[2px]">
+                        <span className="text-[10px]">R$</span>
+                        <span className="text-success min-w-[60px]">{formatLocalCurrency(transaction?.accountValue)}</span>
+                    </div>
                 )}
                 <div>
                     <span className="text-[10px] ">

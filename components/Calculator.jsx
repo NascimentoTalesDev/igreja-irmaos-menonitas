@@ -5,12 +5,26 @@ import RemoveCalc from "./icons/RemoveCalc";
 import InfoAdd from "./InfoAdd";
 import { ModalThirdContext } from "@/providers/ModalThirdProvider";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
+import CheckIcon from "./icons/CheckIcon";
 
 const Add = ({ type }) => {
     const {setDataModalThird, toggleModalThird} = useContext(ModalThirdContext)
     const { toggleModalSecond, setDataModalSecond } = useContext(ModalSecondContext)
 
     const [initialState, setInitialState] = useState([0])
+
+    function formatCurrency(valor) {
+        return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
+    }
+      
+    function formatCurrentList(list) {
+        const sum = list.reduce((total, number) => total + number, 0);
+        const formattedValue = formatCurrency(sum);
+        return formattedValue;
+    }
+
+    const formattedResult = formatCurrentList(initialState);
+
 
     const addValue = (value) => {
         if (initialState[0] === 0) {
@@ -45,9 +59,7 @@ const Add = ({ type }) => {
         <div className="w-full max-w-[320px] h-full flex flex-col">
             <TitleH3 className="text-center" text={`Qual o valor ${type === "Rendimentos" ? `dos seus ${type}` : `da sua ${type}`}?`} />
             <div className="mt-[80px] flex items-end">
-                <b className="font-bold text-lg">R$</b>
-                <h2 className="ml-[10px] font-bold text-3xl ">{initialState}</h2>
-                <b className="font-bold text-lg">,00</b>                        
+                <h2 className="ml-[10px] font-bold text-3xl ">{formattedResult}</h2>
             </div>
             <div className="absolute left-0 bottom-0 mb-[20px] flex items-center w-full">
                 <div className="parent mx-auto">
@@ -63,7 +75,7 @@ const Add = ({ type }) => {
                     <button value={0} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div13 flex items-center justify-center">0</button>
                     <button onClick={( )=> removeValue()} className="bg-slate-300 text-secondary div10 flex items-center justify-center"><RemoveCalc /></button>
                     <button onClick={( )=> clearDisplay()} className="bg-slate-300 font-bold text-secondary div11 flex items-center justify-center">AC</button>
-                    <button onClick={()=> {toggleModalSecond(), setDataModalSecond(""), toggleModalThird(), setDataModalThird(<InfoAdd valueCalc={initialState} type={type} />) }} className="div12 flex items-center justify-center h-full bg-success">enter</button>
+                    <button onClick={()=> {toggleModalSecond(), setDataModalSecond(""), toggleModalThird(), setDataModalThird(<InfoAdd valueCalc={initialState} type={type} />) }} className="div12 flex items-center justify-center h-full bg-success"><CheckIcon /></button>
                 </div>
             </div>
         </div>

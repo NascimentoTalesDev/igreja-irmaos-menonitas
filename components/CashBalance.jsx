@@ -1,7 +1,7 @@
 import CardLinkHome from "@/components/CardLinkHome";
 import sumNumbers from "@/lib/sumNumbers";
 import MoneyIcon from "./icons/MoneyIcon";
-import checkDecimalNumbers from "@/lib/checkDecimalNumbers";
+import formatLocalCurrency from "@/lib/formatLocalCurrency";
 
 const CashBalance = ({ data }) => {
     let month = { receita : [], despesa : [] }

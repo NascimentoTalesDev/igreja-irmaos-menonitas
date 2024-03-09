@@ -34,7 +34,7 @@ const AllCategories = () => {
                 <CategoryCard id="redizimo" onClick={(ev) => { toggleModalSecond(), setInfo(ev.target.offsetParent) }} className="cursor-pointer hover:bg-gray-200 bg-gray-100  dark:hover:bg-secondary dark:bg-secondary_less" img="/categories/redizimo.png" text="Redízimo" />
                 <CategoryCard id="salario-pastor"  onClick={(ev) => { toggleModalSecond(), setInfo(ev.target.offsetParent) }} className="cursor-pointer hover:bg-gray-200 bg-gray-100  dark:hover:bg-secondary dark:bg-secondary_less" img="/categories/salario-pastor.png" text="Salário Pastor" />
                 {myCategories?.length > 0 && myCategories.map(category => (
-                    <CategoryCard key={category?._id} id={category?.icon}  onClick={(ev) => { toggleModalSecond(), setInfo(ev.target.offsetParent) }} className="cursor-pointer bg-gray-100 dark:bg-secondary_less" img={`/categories/${category?.icon}.png`} text={formatName(category?.name)} />
+                    <CategoryCard key={category?._id} id={category?.icon}  onClick={(ev) => { toggleModalSecond(), setInfo(ev.target.offsetParent) }} className="cursor-pointer hover:bg-gray-200 bg-gray-100 dark:hover:bg-secondary dark:bg-secondary_less" img={`/categories/${category?.icon}.png`} text={formatName(category?.name)} />
                 ))}
             </div>
         </section>

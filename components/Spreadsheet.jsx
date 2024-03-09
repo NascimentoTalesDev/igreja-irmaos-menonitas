@@ -1,7 +1,6 @@
 import { Chart } from "react-google-charts";
 import getMonth from "@/lib/getMonth"
 import sumNumbers from "@/lib/sumNumbers"
-import { useEffect, useState } from "react";
 
 const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth }) => {
     
@@ -9,17 +8,6 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
     let monthTreeChart = { despesa : [], receita : [] }
     let monthTwoChart = { despesa : [], receita : [] }
     let monthOneChart = { despesa : [], receita : [] }
-    
-    const [chartI, setChartI ] = useState()
-    
-    
-    function getChart() {
-        let chart = document.getElementById('reactgooglegraph-2');
-        let chart1 = document.getElementById('reactgooglegraph-1');
-        setChartI(chart)
-        console.log(chart);
-        console.log(chart1);
-    }
 
     monthsFour.forEach(element => {
         switch (element.type) {
@@ -109,9 +97,9 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
         vAxis: { format: 'decimal' },
         bars: 'vertical',
     };
-    console.log(chartI);
+
     return (
-        <div onLoad={getChart} id="chart" className="border-[10px] border-gray-100 dark:border-secondary_less  rounded overflow-hidden">
+        <div className="border-[10px] border-gray-100 dark:border-secondary_less rounded overflow-hidden">
             <Chart
                 chartType="Bar"
                 width="100%"

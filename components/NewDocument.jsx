@@ -11,6 +11,10 @@ import TitleH2 from "./TitleH2";
 import { ModalContext } from "@/providers/ModalProvider";
 import { getCurrentUser } from "@/helpers/getCurrentUser"
 import UploadFiles from "./UploadFiles";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import ChevronDownIcon from "./icons/ChevronDownIcon";
+import ptBR from 'date-fns/locale/pt-BR';
 
 const NewDocument = () => {
     const { setFlashMessage } = useFlashMessage()
@@ -25,17 +29,25 @@ const NewDocument = () => {
     },[])
 
     const [name, setName] = useState("")
-    const [date, setDate] = useState("")
+    const [startDate, setStartDate] = useState(new Date());
     const [description, setDescription] = useState("")
     const [doc, setDoc] = useState([])
     
     const [isSaving, setIsSaving] = useState(false)
 
+    const MyContainerDate = ({ children }) => {
+        return (
+            <div className="absolute text-sm top-0 -left-5 px-[10px] bg-gray-100 border-[4px] rounded border-gray-200 " >
+                {children}
+            </div>
+        );
+    };
+
     const saveNewDocument = async () => {
         setIsSaving(true)
         let msgText;
         let msgType = 'success'
-        const data = { name, date, description, doc }
+        const data = { name, date: startDate, description, doc }
 
         try {
             await axios.post(`${api}/${versionApi}/documents?userId=${user?._id}`, data).then(response => {
@@ -65,10 +77,9 @@ const NewDocument = () => {
             <InputContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
                         
             <TitleH3 text="Data" />
-            <div className="w-full my-[5px]">
-                <div className={`px-[10px] flex items-center justify-between h-[44px] rounded bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500`}>
-                    <input value={date} onChange={(ev)=> setDate(ev.target.value)} className="custom-input w-[50%] bg-gray-100 dark:bg-secondary h-full text-secondary dark:text-light tracking-wide text-sm md:text-base placeholder:text-placeholder" type="date" name="date" id="date" />    
-                </div>    
+            <div className="mb-[10px] w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
+                <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
+                <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
             </div>
 
             <TitleH3 text="Descrição" />

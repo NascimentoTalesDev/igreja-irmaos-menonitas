@@ -8,22 +8,49 @@ export default async function Transactions(req, res) {
     if (method === "POST") {
         
         const { type, name, icon, accountValue, date, doc, inInstallments, recurrent, inInstallmentsQtt, paid } = req.body;
-        console.log("TYPE", type);
         console.log(name, icon, type, accountValue, date, doc, inInstallments, recurrent, inInstallmentsQtt, paid);
 
         if (!name) return res.status(422).json({ message: { type: "error", data: "Nome não pode ficar vazio" } });
         if (!accountValue || accountValue == 0) return res.status(422).json({ message: { type: "error", data: "Valor não pode ficar vazio" } });
         if (!date) return res.status(422).json({ message: { type: "error", data: "Selecione uma data" } });
-        if (!doc || !doc.length) return res.status(422).json({ message: { type: "error", data: "Insira um comprovante" } });
+        //if (!doc || !doc.length) return res.status(422).json({ message: { type: "error", data: "Insira um comprovante" } });
         if (inInstallments && !inInstallmentsQtt) return res.status(422).json({ message: { type: "error", data: "Selecione as parcelas" } });
 
+        let value = parseInt(accountValue)
 
         try {
-            const transaction = await Transaction.create({
+
+            if(inInstallments){
+                const inInstallmentValue = accountValue / inInstallmentsQtt
+                const dateOfFirstInstallment = new Date(date)
+
+                for (let i = 1; i <= inInstallmentsQtt; i++) {
+                    const expirationData = new Date(dateOfFirstInstallment);
+                    expirationData.setMonth(expirationData.getMonth() + i - 1); // Adiciona 'i-1' meses à data da primeira parcela
+        
+                    await Transaction.create({
+                        name,
+                        icon,
+                        type,
+                        accountValue: value.toFixed(2) ,
+                        date: expirationData,
+                        doc,
+                        inInstallments,
+                        recurrent,
+                        inInstallmentsQtt,
+                        paid,
+                        inInstallmentNumber: i,
+                        inInstallmentValue: inInstallmentValue.toFixed(2),
+                    });
+                }
+                return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
+            }
+
+            await Transaction.create({
                 name,
                 icon,
                 type,
-                accountValue,
+                accountValue: value.toFixed(2),
                 date,
                 doc,
                 inInstallments,
@@ -32,7 +59,7 @@ export default async function Transactions(req, res) {
                 paid
             })
 
-            return res.json({ transaction, message: { type: "success", data: "Transação criada com sucesso" } })
+            return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
         } catch (error) {
             console.log(error);
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });

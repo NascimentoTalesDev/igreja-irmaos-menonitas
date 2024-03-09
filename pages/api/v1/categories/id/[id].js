@@ -1,6 +1,5 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Category } from "@/models/Category";
-import { error } from "console";
 
 export default async function CategoryId(req, res) {
     await mongooseConnect()

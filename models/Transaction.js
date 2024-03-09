@@ -6,11 +6,14 @@ const TransactionSchema = new Schema ({
     type: { type: String, lowercase: true, required: true },
     accountValue: { type: Number, required: true },
     date: { type: Date, required: true },
-    doc: { type: Array, required: true },
-    inInstallments: { type: Boolean, required: true },
-    recurrent: { type: Boolean, required: true },
+    doc: { type: Array },
+    inInstallments: { type: Boolean },
+    recurrent: { type: Boolean },
+    paid: { type: Boolean },
     inInstallmentsQtt: { type: Number },
-    paid: { type: Boolean, required: true },
+    inInstallmentValue: { type: Number },
+    inInstallmentNumber: { type: Number },
+    
 }, {
     timestamps: true,
 });

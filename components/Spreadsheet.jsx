@@ -13,7 +13,11 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
     monthsFour.forEach(element => {
         switch (element.type) {
             case "despesa":
+                if(element.inInstallmentValue > 1){
+                    monthsFourChart.despesa.push(element.inInstallmentValue)
+                }else{
                     monthsFourChart.despesa.push(element.accountValue)
+                }
                 break;
                 case "receita":
                     monthsFourChart.receita.push(element.accountValue)
@@ -26,7 +30,11 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
     monthTree.forEach(element => {
         switch (element.type) {
             case "despesa":
+                if(element.inInstallmentValue > 1){
+                    monthTreeChart.despesa.push(element.inInstallmentValue)
+                }else{
                     monthTreeChart.despesa.push(element.accountValue)
+                }
                 break;
                 case "receita":
                     monthTreeChart.receita.push(element.accountValue)
@@ -39,7 +47,11 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
     monthTwo.forEach(element => {
         switch (element.type) {
             case "despesa":
+                if(element.inInstallmentValue > 1){
+                    monthTwoChart.despesa.push(element.inInstallmentValue)
+                }else{
                     monthTwoChart.despesa.push(element.accountValue)
+                }
                 break;
                 case "receita":
                     monthTwoChart.receita.push(element.accountValue)
@@ -52,7 +64,11 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
     monthOne.forEach(element => {
         switch (element.type) {
             case "despesa":
+                if(element.inInstallmentValue > 1){
+                    monthOneChart.despesa.push(element.inInstallmentValue)
+                }else{
                     monthOneChart.despesa.push(element.accountValue)
+                }
                 break;
                 case "receita":
                     monthOneChart.receita.push(element.accountValue)
@@ -67,7 +83,7 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
     let month2 = getMonth(actualMonth -1 )
 
     var data = ([
-        [`${new Date().getFullYear()}`, 'Receita', 'Despesa', 'Saldo'],
+        ['', 'Receita', 'Despesa', 'Saldo'],
         [formatCharacterLimit(3, month4), sumNumbers(monthOneChart.receita), sumNumbers(monthOneChart.despesa), 0],
         [formatCharacterLimit(3, month3), sumNumbers(monthTwoChart.receita), sumNumbers(monthTwoChart.despesa), 0],
         [formatCharacterLimit(3, month2), sumNumbers(monthTreeChart.receita), sumNumbers(monthTreeChart.despesa), 0],
@@ -76,22 +92,26 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
 
     var options = {
         chart: {
-          title: 'Igreja Irmãos Menonitas',
-          subtitle: 'Despesa, Expenses, and Profit: 2014-2017',
-        }
+          title: 'Últimos 4 meses',
+        },
+        vAxis: { format: 'decimal' },
+        bars: 'vertical',
+        colors: ['#1CD174', '#FF5658', '#171C22'],
     };
 
     return (
-        <div>
+        <div className="border-[10px] border-gray-100 dark:border-secondary_less  rounded overflow-hidden">
             <Chart
                 chartType="Bar"
                 width="100%"
                 height="400px"
                 data={data}
+                padding={"10px"}
                 options={options}
             />
         </div>
     );
+    
 }
  
 export default Spreadsheet;

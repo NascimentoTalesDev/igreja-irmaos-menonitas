@@ -42,7 +42,7 @@ const Add = ({ type }) => {
     }
 
     return (
-        <div onKeyDown={(ev)=> console.log(ev)} className="w-full h-full flex flex-col">
+        <div className="w-full max-w-[320px] h-full flex flex-col">
             <TitleH3 className="text-center" text={`Qual o valor ${type === "Rendimentos" ? `dos seus ${type}` : `da sua ${type}`}?`} />
             <div className="mt-[80px] flex items-end">
                 <b className="font-bold text-lg">R$</b>

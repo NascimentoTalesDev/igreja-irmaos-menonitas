@@ -19,7 +19,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import ChevronDownIcon from "./icons/ChevronDownIcon";
 import ptBR from 'date-fns/locale/pt-BR';
 
-
 const InfoAdd = ({ valueCalc, type }) => {
     const { setFlashMessage } = useFlashMessage()
     const { setDataModalSecond, toggleModalSecond, info, setInfo } = useContext(ModalSecondContext)
@@ -75,7 +74,15 @@ const InfoAdd = ({ valueCalc, type }) => {
         setFlashMessage(msgText, msgType)
         setIsSaving(false)
     }
-    console.log(startDate);
+
+    const MyContainerDate = ({ children }) => {
+        return (
+            <div className="absolute text-sm top-0 -left-5 px-[10px] bg-gray-100 border-[4px] rounded border-gray-200 " >
+                {children}
+            </div>
+        );
+    };
+
     return (
         <div>
             {type === "Despesa" && (
@@ -100,7 +107,7 @@ const InfoAdd = ({ valueCalc, type }) => {
 
                     <TitleH3 text="Data" className="my-[5px]" />
                     <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
-                        <DatePicker dateFormat="dd/MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)}  />
+                        <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
                         <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
                     </div>
 
@@ -129,7 +136,7 @@ const InfoAdd = ({ valueCalc, type }) => {
                             <button onClick={(ev) => setPaid(!paid)}>{paid ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
                         </div>
                     )}
-                    
+
                     <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
                 </>
             )}
@@ -155,8 +162,8 @@ const InfoAdd = ({ valueCalc, type }) => {
                     </div>
 
                     <TitleH3 text="Data" className="my-[5px]" />
-                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-secondary overflow-hidden flex items-center justify-center">
-                        <DatePicker dateFormat="dd/MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)}  />
+                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
+                        <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
                         <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
                     </div>
 
@@ -167,7 +174,7 @@ const InfoAdd = ({ valueCalc, type }) => {
                 </>
             )}
 
-            
+
         </div>
 
     );

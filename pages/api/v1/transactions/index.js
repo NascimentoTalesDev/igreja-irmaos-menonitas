@@ -1,7 +1,8 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Transaction } from "@/models/Transaction";
+import { Document } from "@/models/Document";
 
-export default async function Transactions(req, res) {
+export default async function Transactions(req, res, next) {
     await mongooseConnect();
     const { method } = req;
 
@@ -19,6 +20,19 @@ export default async function Transactions(req, res) {
         let value = parseInt(accountValue)
 
         try {
+            if (doc.length > 0) {
+                try {
+                    Document.create({
+                        name,
+                        date,
+                        description: `${name} R$${value.toFixed(2)} ${new Date().toLocaleString('pt-BR')}`,
+                        doc,
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+
             if(inInstallments){
                 const inInstallmentValue = accountValue / inInstallmentsQtt
                 const dateOfFirstInstallment = new Date(date)
@@ -26,7 +40,9 @@ export default async function Transactions(req, res) {
                 for (let i = 1; i <= inInstallmentsQtt; i++) {
                     const expirationData = new Date(dateOfFirstInstallment);
                     expirationData.setMonth(expirationData.getMonth() + i - 1); // Adiciona 'i-1' meses à data da primeira parcela
-        
+                    
+                    const paidStatus = paid && i === 1
+
                     await Transaction.create({
                         name,
                         icon,
@@ -37,7 +53,7 @@ export default async function Transactions(req, res) {
                         inInstallments,
                         recurrent,
                         inInstallmentsQtt,
-                        paid,
+                        paid: paidStatus,
                         inInstallmentNumber: i,
                         inInstallmentValue: inInstallmentValue.toFixed(2),
                     });

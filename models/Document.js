@@ -5,7 +5,6 @@ const DocumentSchema = new Schema ({
     date: { type: Date, required: true },
     description: { type: String, lowercase: true, required: true },
     doc: { type: Array, required: true},
-    user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 }, {
     timestamps: true,
 });

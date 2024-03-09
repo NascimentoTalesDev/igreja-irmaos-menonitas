@@ -7,7 +7,6 @@ export default async function Documents(req, res){
     
     if (method === "POST"){
 
-        const {userId} = req.query
         const {name, date, description, doc} = req.body;
 
         if (!name) return res.status(422).json({ message: { type: "error", data: "Nome não pode ficar vazio"} });
@@ -19,15 +18,14 @@ export default async function Documents(req, res){
             const documentExists = await Document.findOne({ name })
             if(documentExists) return res.status(401).json({ message: { type: "error", data: "Já existe documento com este nome."} });
 
-            const document = await Document.create({
+            await Document.create({
                 name,
                 date,
                 description,
                 doc,
-                user: userId
             })
 
-            return res.json({ document, message: { type: "success", data: "Documento registrado com sucesso" }  })
+            return res.json({ message: { type: "success", data: "Documento registrado com sucesso" }  })
 
         } catch (error) {
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });

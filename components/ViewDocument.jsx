@@ -39,11 +39,11 @@ const ViewDocument = ({ document }) => {
             <Title className="text-center text-secondary dark:text-light " text={formatName(document?.name)} />
             <div className="flex gap-[10px] mt-[20px] items-center ">
                 <TitleH2 text="Data:" />
-                <TitleH3 text={formatDate(document?.date)} />
+                <TitleH3 className="mt-[3px]" text={formatDate(document?.date)} />
             </div>
-            <div className="flex gap-[10px] my-[5px] items-center">
+            <div className="flex gap-[10px] my-[5px] ">
                 <TitleH2 text="Descrição:" />
-                <TitleH3 text={formatFirstWordToUpperCase(document?.description)} />
+                <TitleH3 className="mt-[3px]" text={formatFirstWordToUpperCase(document?.description)} />
             </div>
             <Button text="Baixar documento" className="bg-primary mx-auto h-[30px] my-[10px]" onClick={() => download(document?.doc[0])} />
             <div className="flex items-center overflow-hidden bg-mygray justify-center p-1">

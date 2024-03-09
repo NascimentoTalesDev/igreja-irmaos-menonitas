@@ -9,7 +9,6 @@ import { api, versionApi } from "@/lib/configApi";
 import { useRouter } from "next/router";
 import TitleH2 from "./TitleH2";
 import { ModalContext } from "@/providers/ModalProvider";
-import { getCurrentUser } from "@/helpers/getCurrentUser"
 import UploadFiles from "./UploadFiles";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,13 +19,6 @@ const NewDocument = () => {
     const { setFlashMessage } = useFlashMessage()
     const { toggleModal, setDataModal } = useContext(ModalContext)
     const router = useRouter()
-
-    const [user, setUser] = useState("")
-
-    useEffect(()=>{
-        let currentUser = getCurrentUser()
-        setUser(currentUser)
-    },[])
 
     const [name, setName] = useState("")
     const [startDate, setStartDate] = useState(new Date());
@@ -50,7 +42,7 @@ const NewDocument = () => {
         const data = { name, date: startDate, description, doc }
 
         try {
-            await axios.post(`${api}/${versionApi}/documents?userId=${user?._id}`, data).then(response => {
+            await axios.post(`${api}/${versionApi}/documents`, data).then(response => {
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type

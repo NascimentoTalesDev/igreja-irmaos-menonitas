@@ -47,19 +47,19 @@ const CardTransaction = ({ transaction }) => {
                         {transaction?.inInstallments ? (
                             <div className="flex items-center justify-end gap-[2px]">
                                 <span className="text-[10px]">R$</span>
-                                <span className="text-danger">{formatLocalCurrency(transaction?.inInstallmentValue)}</span>
+                                <span className="text-danger min-w-[50px]">{formatLocalCurrency(transaction?.inInstallmentValue)}</span>
                             </div>
                         ):(
                             <div className="flex items-center justify-end gap-[2px]">
                                 <span className="text-[10px]">R$</span>
-                                <span className="text-danger">{formatLocalCurrency(transaction?.accountValue)}</span>
+                                <span className="text-danger min-w-[50px]">{formatLocalCurrency(transaction?.accountValue)}</span>
                             </div>
                         )}
                     </>
                 ):(
                     <div className="flex items-center justify-end gap-[2px]">
                         <span className="text-[10px]">R$</span>
-                        <span className="text-success min-w-[60px]">{formatLocalCurrency(transaction?.accountValue)}</span>
+                        <span className="text-success min-w-[50px]">{formatLocalCurrency(transaction?.accountValue)}</span>
                     </div>
                 )}
                 <div>

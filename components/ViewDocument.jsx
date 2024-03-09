@@ -7,6 +7,7 @@ import Link from "next/link";
 import formatFirstWordToUpperCase from "@/lib/formatFirstWordToUpperCase";
 import useFlashMessage from "@/hooks/useFlashMessage";
 import Button from "./Button";
+import formatDate from "@/lib/formatDate";
 
 const ViewDocument = ({ document }) => {
     const { setFlashMessage } = useFlashMessage()
@@ -38,7 +39,7 @@ const ViewDocument = ({ document }) => {
             <Title className="text-center text-secondary dark:text-light " text={formatName(document?.name)} />
             <div className="flex gap-[10px] mt-[20px] items-center ">
                 <TitleH2 text="Data:" />
-                <TitleH3 text={new Date(document?.date).toLocaleDateString()} />
+                <TitleH3 text={formatDate(document?.date)} />
             </div>
             <div className="flex gap-[10px] my-[5px] items-center">
                 <TitleH2 text="Descrição:" />

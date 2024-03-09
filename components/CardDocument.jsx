@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { ModalContext } from "@/providers/ModalProvider";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
 import WarnMessage from "./WarnMessage";
+import formatDate from "@/lib/formatDate";
 
 const CardDocument = ({ documents }) => {
     const { toggleModal, setDataModal } = useContext(ModalContext)
@@ -26,7 +27,7 @@ const CardDocument = ({ documents }) => {
                         <span className="text-sm text-secondary dark:text-light ">{formatCharacterLimit(15, formatName(document.name))}</span>
                     </div>
                     <div className="flex items-center gap-[10px]">
-                        <span className="text-sm text-secondary dark:text-light ">{new Date(document.date).toLocaleDateString()}</span>
+                        <span className="text-sm text-secondary dark:text-light ">{formatDate(document.date)}</span>
                         <EyeIcon onClick={() => {toggleModalSecond(), setDataModalSecond(<ViewDocument document={document} />)}} className="text-secondary dark:text-light cursor-pointer"/>
                         <TrashIcon  onClick={() => { toggleModal(), setDataModal(<WarnMessage item={document} path={`/documents/id/${document?._id}`} back={"documents"} />)}} className="cursor-pointer"/>
                     </div>

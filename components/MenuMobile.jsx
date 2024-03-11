@@ -14,10 +14,13 @@ import LogIcon from "./icons/LogIcon";
 import Overlay from "./Overlay";
 import { contextUserAuth } from "@/providers/userAuthProvider";
 import LogoColorful from "./LogoColorful";
-import TitleH1 from "./TitleH1";
+import ToggleThemeOffIcon from "@/components/icons/ToggleThemeOffIcon"
+import ToggleThemeOnIcon from "@/components/icons/ToggleThemeOnIcon"
+import Sun from "./icons/Sun";
+import Moon from "./icons/Moon";
 
 const MenuMobile = () => {
-    const { logout, themeUser } = useContext(contextUserAuth)
+    const { logout, themeUser, toggleTheme } = useContext(contextUserAuth)
     const { showMenuMobile, toggleMenuMobile } = useContext(NavContext)
     const [user, setUser] = useState("")
 
@@ -120,6 +123,10 @@ const MenuMobile = () => {
                                     <ChevronRightIcon className="w-4 h-4" />
                                 </Link>
                             </li>
+                            <div className="flex m-[15px] gap-[13px] items-center">
+                                <h2>{themeUser ? <Sun /> : <Moon />}</h2>
+                                <button onClick={() => toggleTheme()}>{themeUser ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon /> }</button>
+                            </div>
                         </ul>
                     </div>
                 </menu>
@@ -134,7 +141,7 @@ const MenuMobile = () => {
                                 Sair
                             </Link>
                         </li>
-                        <li className="text-left ml-[10px]">
+                        <li className="text-center">
                             <span className="text-[10px] ">Versão 1.0.0</span>
                         </li>
                     </ul>

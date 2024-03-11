@@ -8,6 +8,10 @@ import Revenue from "@/components/Revenue";
 import Expense from "@/components/Expense";
 import CashBalance from "@/components/CashBalance";
 import formatDate from "@/lib/formatDate";
+import dynamic from "next/dynamic"
+const Spreadsheet2 = dynamic(()=> import("@/components/Spreadsheet2"), {
+    ssr: false
+})
 
 const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo }) => {
     let actualMonth = new Date().getMonth()+1
@@ -29,7 +33,8 @@ const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo }) => {
                     <CardLinkHome data={dizimo?.accountValue} icon="" text={`Dízimo do último culto: ${formatDate(dizimo.createdAt)}`} bg="bg-success" className={" w-full"}  />
                 </div>
             )}
-            <Spreadsheet monthsFour={monthsFour} monthTree={monthTree} monthTwo={monthTwo} monthOne={monthOne} actualMonth={actualMonth} />
+
+            <Spreadsheet2 monthsFour={monthsFour} monthTree={monthTree} monthTwo={monthTwo} monthOne={monthOne} actualMonth={actualMonth} />    
         </Layout>
     );
 }

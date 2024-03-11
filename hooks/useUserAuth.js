@@ -23,15 +23,6 @@ export default function useUserAuth() {
 
     async function authUser(data) {
         
-        const theme = localStorage.getItem('theme')
-        const ExistClass = window.document.querySelector('.dark')
-
-        if (theme || ExistClass) {
-            window.document.documentElement.classList.add('dark')
-        }else{
-            window.document.documentElement.classList.remove('dark')
-        }
-
         localStorage.setItem('token', JSON.stringify(data?.token))
         Cookies.set("user", JSON.stringify(data?.user))
         

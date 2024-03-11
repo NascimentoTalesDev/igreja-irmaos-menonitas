@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import useUserAuth from "@/hooks/useUserAuth"
 
 const contextUserAuth = createContext()
@@ -6,7 +6,7 @@ const contextUserAuth = createContext()
 function UserAuthProvider({ children }) {
 
     const { login, user, logout } = useUserAuth()
-    const [themeUser, setThemeUser] = useState(true)
+    const [themeUser, setThemeUser] = useState(false)
 
     function toggleTheme(){
         let theme = localStorage.getItem('theme')
@@ -20,6 +20,10 @@ function UserAuthProvider({ children }) {
             document.documentElement.classList.remove('dark')
         }
     }
+
+    useEffect(()=>{
+        toggleTheme()
+    },[])
 
     async function checkTheme(){
         const theme = localStorage.getItem('theme')

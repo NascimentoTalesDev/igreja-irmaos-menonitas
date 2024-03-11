@@ -2,7 +2,6 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Transaction } from "@/models/Transaction";
 import Layout from "@/components/Layout";
 import getMonth from "@/lib/getMonth";
-import Spreadsheet from "@/components/Spreadsheet";
 import CardLinkHome from "@/components/CardLinkHome";
 import Revenue from "@/components/Revenue";
 import Expense from "@/components/Expense";

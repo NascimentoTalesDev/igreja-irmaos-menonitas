@@ -10,7 +10,8 @@ function UserAuthProvider({ children }) {
 
     function toggleTheme(){
         let theme = localStorage.getItem('theme')
-        if (!theme) {
+        
+        if (theme) {
             setThemeUser(true)
             localStorage.setItem('theme', 'dark' )
             document.documentElement.classList.add('dark')

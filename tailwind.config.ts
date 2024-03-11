@@ -29,6 +29,7 @@ const config: Config = {
         dark:"#000000",
         black_rgba:'rgba(0, 0, 0, 0.7)',
         gray_rgba:'rgba(46, 52, 59, 0.7)',
+        white_rgba:'rgba(255, 255, 255, 0.7)',
         secondary_rgba:'rgba(23,28,34, 0.9)',
         placeholder:'#9CA3AF'
       }

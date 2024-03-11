@@ -29,17 +29,17 @@ const MenuMobile = () => {
     const logoutUser = async () => {
         await logout()
     }
-    console.log(themeUser);
+    console.log(user?.rule?.name);
 
     return (
         <div className={`w-screen h-screen fixed top-0 z-[99] transition-all duration-500 ${showMenuMobile ? "left-[0%] " : "-left-[100%]"}`}>
             <Overlay onClick={toggleMenuMobile} />
-            <div className={`absolute h-full py-[30px] justify-between backdrop-blur-[2px] flex flex-col w-[350px] bg-light shadow-lg dark:bg-gray_rgba left-0`}>
+            <div className={`absolute h-full py-[30px] justify-between backdrop-blur-[2px] flex flex-col w-[350px] bg-white_rgba shadow-lg dark:bg-gray_rgba left-0`}>
                 <menu>
                     <div className="flex px-[30px] w-full gap-2">
                         {themeUser ? (
                             <Logo height={39} width={27} onclick={toggleMenuMobile} path="/dashboard" />
-                            ):(
+                        ) : (
                             <LogoColorful height={39} width={27} onclick={toggleMenuMobile} path="/dashboard" />
                         )}
                         <div>
@@ -55,15 +55,19 @@ const MenuMobile = () => {
 
                     <div className="mt-[30px] w-full">
                         <ul className="flex flex-col justify-center">
-                            <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
-                                <Link className="flex p-3 h-full justify-between items-center" href={"/dashboard/documents"}>
-                                    <div className="flex items-center gap-2">
-                                        <DocsIcon />
-                                        Documentos
-                                    </div>
-                                    <ChevronRightIcon className="w-4 h-4" />
-                                </Link>
-                            </li>
+                            {user?.rule?.name === "membro" ? (
+                                ""
+                            ) : (
+                                <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
+                                    <Link className="flex p-3 h-full justify-between items-center" href={"/dashboard/documents"}>
+                                        <div className="flex items-center gap-2">
+                                            <DocsIcon />
+                                            Documentos
+                                        </div>
+                                        <ChevronRightIcon className="w-4 h-4" />
+                                    </Link>
+                                </li>
+                            )}
                             <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
                                 <Link className="flex p-3 justify-between items-center" href={"/dashboard/transactions"}>
                                     <div className="flex items-center gap-2">
@@ -73,24 +77,40 @@ const MenuMobile = () => {
                                     <ChevronRightIcon className="w-4 h-4" />
                                 </Link>
                             </li>
-                            <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
-                                <Link className="flex p-3 justify-between items-center" href={"/dashboard/manage-accounts"}>
-                                    <div className="flex items-center gap-2">
-                                        <UsersIcon />
-                                        Gerenciar contas
-                                    </div>
-                                    <ChevronRightIcon className="w-4 h-4" />
-                                </Link>
-                            </li>
-                            <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
-                                <Link className="flex p-3 justify-between items-center" href={"/dashboard/system-log"}>
-                                    <div className="flex items-center gap-2">
-                                        <LogIcon />
-                                        Log do sistema
-                                    </div>
-                                    <ChevronRightIcon className="w-4 h-4" />
-                                </Link>
-                            </li>
+                            {user?.rule?.name === "administrador" && (
+                                <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
+                                    <Link className="flex p-3 justify-between items-center" href={"/dashboard/manage-accounts"}>
+                                        <div className="flex items-center gap-2">
+                                            <UsersIcon />
+                                            Gerenciar contas
+                                        </div>
+                                        <ChevronRightIcon className="w-4 h-4" />
+                                    </Link>
+                                </li>
+                            )}
+                            {user?.rule?.name === "administrador" ? (
+                                <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
+                                    <Link className="flex p-3 justify-between items-center" href={"/dashboard/system-log"}>
+                                        <div className="flex items-center gap-2">
+                                            <LogIcon />
+                                            Log do sistema
+                                        </div>
+                                        <ChevronRightIcon className="w-4 h-4" />
+                                    </Link>
+                                </li>
+                            ) : user?.rule?.name === "presidente" ? (
+                                <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
+                                    <Link className="flex p-3 justify-between items-center" href={"/dashboard/system-log"}>
+                                        <div className="flex items-center gap-2">
+                                            <LogIcon />
+                                            Log do sistema
+                                        </div>
+                                        <ChevronRightIcon className="w-4 h-4" />
+                                    </Link>
+                                </li>
+                            ) :
+                                ("")
+                            }
                             <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
                                 <Link className="flex p-3 justify-between items-center" href={"/dashboard/settings"}>
                                     <div className="flex items-center gap-2">
@@ -109,7 +129,7 @@ const MenuMobile = () => {
                         <li className="py-1 text-[14px]">
                             <span className="font-normal dark:font-thin">Logado como </span><span className="">{formatName(user?.name)}</span>
                         </li>
-                        <li onClick={()=> {toggleMenuMobile(), logoutUser()}} className="py-1">
+                        <li onClick={() => { toggleMenuMobile(), logoutUser() }} className="py-1">
                             <Link className="" href={"/dashboard"}>
                                 Sair
                             </Link>

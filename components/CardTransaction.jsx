@@ -17,7 +17,7 @@ const CardTransaction = ({ transaction }) => {
                     <span className="">
                         {formatName(transaction?.name)}
                     </span>
-                    <div>
+                    <div className="-mt-[5px]">
                         {transaction?.type === "despesa" && (
                             <div>
                                 {transaction.paid ? (
@@ -62,7 +62,7 @@ const CardTransaction = ({ transaction }) => {
                         <span className="text-success min-w-[50px]">{formatLocalCurrency(transaction?.accountValue)}</span>
                     </div>
                 )}
-                <div>
+                <div className="-mt-[2px] flex flex-col justify-end sm:flex-row ">
                     <span className="text-[10px] ">
                         {formatDate(transaction?.date)}
                     </span>

@@ -1,4 +1,3 @@
-
 const CardError = ({ message }) => {
     return (
         <div className={`mt-[30px] text-center`}>

@@ -11,10 +11,12 @@ import { useState } from "react";
 import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import axios from "axios";
 import { api, versionApi } from "@/lib/configApi";
+import CardError from "../../../components/CardError";
 
 const Transactions = ({ transactionsDb }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [transactions, setTransactions] = useState(transactionsDb);
+  const [nodata, setNodata] = useState(false);
 
   const getData = (date) => {
     let year = date.getFullYear()
@@ -22,15 +24,21 @@ const Transactions = ({ transactionsDb }) => {
     const data = { month, year }
 
     axios.post(`${api}/${versionApi}/transactions/get-by-year-and-month`, data).then(response => {
-      setTransactions(response.data);
+      if (!response.data.length) {
+        setTransactions([])
+        setNodata(true)
+      }else{
+        setNodata(false)
+        setTransactions(response.data);
+      }
     })
   }
   return (
     <Layout>
       <Title text="Movimentações" className="mb-[24px]" />
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2 mb-[20px]">
         <TitleH3 text="Buscar por data" className="my-[5px]" />
-        <div className="w-[150px] mb-[20px] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
+        <div className="w-[150px] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
           <DatePicker showMonthYearPicker dateFormat="MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => { setStartDate(date), getData(date) }} />
           <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
         </div>
@@ -41,6 +49,9 @@ const Transactions = ({ transactionsDb }) => {
             <CardTransaction key={transaction?._id} transaction={transaction} />
           ))}
         </Card>
+      )}
+      {nodata && (
+        <CardError message="Nenhum dado encontrado." />
       )}
     </Layout>
   );

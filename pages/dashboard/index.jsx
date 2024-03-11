@@ -9,7 +9,7 @@ import Expense from "@/components/Expense";
 import CashBalance from "@/components/CashBalance";
 import formatDate from "@/lib/formatDate";
 import dynamic from "next/dynamic"
-const Spreadsheet2 = dynamic(()=> import("@/components/Spreadsheet2"), {
+const Spreadsheet = dynamic(()=> import("@/components/Spreadsheet"), {
     ssr: false
 })
 
@@ -34,7 +34,7 @@ const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo }) => {
                 </div>
             )}
 
-            <Spreadsheet2 monthsFour={monthsFour} monthTree={monthTree} monthTwo={monthTwo} monthOne={monthOne} actualMonth={actualMonth} />    
+            <Spreadsheet monthsFour={monthsFour} monthTree={monthTree} monthTwo={monthTwo} monthOne={monthOne} actualMonth={actualMonth} />    
         </Layout>
     );
 }

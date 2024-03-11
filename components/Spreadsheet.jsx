@@ -1,10 +1,13 @@
-import { Chart } from "react-google-charts";
-import getMonth from "@/lib/getMonth"
-import sumNumbers from "@/lib/sumNumbers"
+import getMonth from "@/lib/getMonth";
+import sumNumbers from "@/lib/sumNumbers";
+import { contextUserAuth } from "@/providers/userAuthProvider";
+import { useContext } from "react";
+import Chart from "react-apexcharts";
 
 const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth }) => {
-    
-    let monthsFourChart = { despesa : [], receita : [] }
+    const {themeUser} = useContext(contextUserAuth)
+
+    let monthFourChart = { despesa : [], receita : [] }
     let monthTreeChart = { despesa : [], receita : [] }
     let monthTwoChart = { despesa : [], receita : [] }
     let monthOneChart = { despesa : [], receita : [] }
@@ -13,13 +16,13 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
         switch (element.type) {
             case "despesa":
                 if(element.inInstallmentValue > 1){
-                    monthsFourChart.despesa.push(element.inInstallmentValue)
+                    monthFourChart.despesa.push(element.inInstallmentValue)
                 }else{
-                    monthsFourChart.despesa.push(element.accountValue)
+                    monthFourChart.despesa.push(element.accountValue)
                 }
                 break;
                 case "receita":
-                    monthsFourChart.receita.push(element.accountValue)
+                    monthFourChart.receita.push(element.accountValue)
                 break;
             default:
                 break;
@@ -81,30 +84,80 @@ const Spreadsheet = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth })
     let month3 = getMonth(actualMonth - 2)
     let month2 = getMonth(actualMonth -1 )
 
-    var data = ([
-        ['', 'Receita', 'Despesa'],
-        [ month4, sumNumbers(monthOneChart.receita), sumNumbers(monthOneChart.despesa)],
-        [ month3, sumNumbers(monthTwoChart.receita), sumNumbers(monthTwoChart.despesa)],
-        [ month2, sumNumbers(monthTreeChart.receita), sumNumbers(monthTreeChart.despesa)],
-        [ getMonth(actualMonth), sumNumbers(monthsFourChart.receita), sumNumbers(monthsFourChart.despesa)],
-    ]);
+    const options = {
+        chart: {
+            id: "basic-bar",
+            fontFamily: 'Roboto, Helvetica, Arial',
+            foreColor: `${themeUser ? "#FFF" : "#171C22" }`,
+            toolbar: {
+                show: false,  
+            },
+        },
+        xaxis: {
+            categories: [month4, month3, month2, getMonth(actualMonth)]
+        },
+        colors: ["#1CD174", "#FF5658"],
+        title: {
+            text: "Últimos 4 meses",
+            align: 'left',
+            style: {
+                fontSize:  '16px',
+                fontWeight:  'normal',
+            },
+        },
+        legend: {
+            showForNullSeries: true,
+            showForZeroSeries: true,
+            position: 'top',
+            horizontalAlign: 'center', 
+            floating: false,
+            fontSize: '14px',
+            fontWeight: 400,
+            itemMargin: {
+                horizontal: 10,
+                vertical: 10
+            },
+        },
+        yaxis: {
+            show: false,
+        },
+        dataLabels: {
+            enabled: false,
+        },
+        grid:{
+            show: false,
+        }, 
+        plotOptions: {
+            bar: {
+                borderRadius: 5,
+                borderRadiusApplication: 'end',
+                columnWidth: '70%',
+            }
+        },
+        tooltip: {
+            enabled: true,
+            theme: `${themeUser ? 'dark' : 'light' }`,
+        },   
+    }
 
-    var options = {
-        chart: { title: 'Últimos 4 meses' },
-        chart: { backgroundColor: 'red' },
-        legend: { position: 'none' },
-        colors: ['#1CD174', '#FF5658'],
-        vAxis: { format: 'decimal' },
-        bars: 'vertical',
-    };
+    const series = [
+        {
+            name: "Receita", 
+            data: [sumNumbers(monthOneChart.receita), sumNumbers(monthTwoChart.receita), sumNumbers(monthTreeChart.receita), sumNumbers(monthFourChart.receita)]
+        },
+        {
+            name: "Despesa", 
+            data: [sumNumbers(monthOneChart.despesa), sumNumbers(monthTwoChart.despesa), sumNumbers(monthTreeChart.despesa), sumNumbers(monthFourChart.despesa)]
+        },
+    ]
 
     return (
-        <div className="border-[10px] border-gray-100 dark:border-secondary_less rounded overflow-hidden">
+        <div className="bg-gray-100 p-[10px] dark:bg-secondary_less rounded">
             <Chart
-                chartType="Bar"
+                type="bar"
                 width="100%"
                 height="400px"
-                data={data}
+                series={series}
                 padding={"10px"}
                 options={options}
             />

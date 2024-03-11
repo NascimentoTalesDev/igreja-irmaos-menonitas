@@ -91,6 +91,9 @@ const Spreadsheet2 = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth }
             id: "basic-bar",
             fontFamily: 'Roboto, Helvetica, Arial',
             foreColor: `${themeUser ? "#FFF" : "#171C22" }`,
+            toolbar: {
+                show: false,  
+            },
         },
         xaxis: {
             categories: [month4, month3, month2, getMonth(actualMonth)]
@@ -101,7 +104,7 @@ const Spreadsheet2 = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth }
             align: 'left',
             style: {
                 fontSize:  '16px',
-                fontWeight:  'bold',
+                fontWeight:  'normal',
             },
         },
         legend: {
@@ -136,7 +139,7 @@ const Spreadsheet2 = ({ monthsFour, monthTree, monthTwo, monthOne, actualMonth }
         tooltip: {
             enabled: true,
             theme: `${themeUser ? 'dark' : 'light' }`,
-        }   
+        },   
     }
 
     const series = [

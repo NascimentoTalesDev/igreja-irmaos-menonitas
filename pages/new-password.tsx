@@ -1,10 +1,11 @@
-import LinkItem from "@/components/Link";
+import LinkItem from "@/components/ButtonLink";
 import Logo from "@/components/Logo";
 import TitleH1 from "@/components/TitleH1";
 import Input from "@/components/InputContainer";
 import { useState } from "react";
 import Button from "@/components/Button";
 import Head from "next/head";
+import checkMatchPassword from "@/lib/checkMatchPassword";
 
 export default function Home() {
   const [matchPassword, setMatchPassword] = useState(false)
@@ -12,18 +13,6 @@ export default function Home() {
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
   const [isCreatingNewPassword, setIsCreatingNewPassword] = useState(false)
-
-  function checkMatchPassword() {
-    if (newPassword.length && confirmNewPassword.length) {
-      if (newPassword !== confirmNewPassword) {
-        setMatchPassword(true)
-      } else {
-        setMatchPassword(false)
-      }
-    } else {
-      setMatchPassword(false)
-    }
-  }
 
   return (
     <section className="bg-secondary h-full w-full overflow-y-hidden flex justify-center items-center">
@@ -42,10 +31,10 @@ export default function Home() {
         </div>
         <TitleH1 className="text-center mt-[20px]" text="Criar Nova Senha" />
         <p className="text-center text-sm text-light font-light tracking-wide ">Igreja Irmãos Menonitas</p>
-        <Input onKeyUp={checkMatchPassword} className={"mt-[16px]"} padlock={true} look={true} type="password" value={newPassword} onChange={(ev) => setNewPassword(ev.target.value)} text="Senha" placeholder="Senha" />
-        <Input onKeyUp={checkMatchPassword} className={"mt-[16px]"} padlock={true} look={true} type="password" value={confirmNewPassword} onChange={(ev) => setConfirmNewPassword(ev.target.value)} text="Senha" placeholder="Confirme a senha" />
+        <Input onKeyUp={()=> checkMatchPassword(newPassword, confirmNewPassword, setMatchPassword)} className={"mt-[16px]"} padlock={true} look={true} type="password" value={newPassword} onChange={(ev) => setNewPassword(ev.target.value)} text="Senha" placeholder="Senha" />
+        <Input onKeyUp={()=> checkMatchPassword(newPassword, confirmNewPassword, setMatchPassword)} className={"mt-[16px]"} padlock={true} look={true} type="password" value={confirmNewPassword} onChange={(ev) => setConfirmNewPassword(ev.target.value)} text="Senha" placeholder="Confirme a senha" />
         {matchPassword ?
-          <p className='mt-2 text-danger text-sm md:text-base'>As senhas não conferem.</p>
+          <p className='mt-2 text-danger text-sm md:text-base'>As senhas não con, ferem.</p>
           :
           ""
         }

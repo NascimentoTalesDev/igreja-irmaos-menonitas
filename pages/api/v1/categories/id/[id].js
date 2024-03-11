@@ -20,8 +20,6 @@ export default async function CategoryId(req, res) {
     }
 
     if (method === "PATCH") {
-
-        console.log("AQUI");
         const { id } = req.query
         const { name, type, icon } = req.body
 

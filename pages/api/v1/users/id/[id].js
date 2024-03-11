@@ -25,6 +25,8 @@ export default async function UserId(req, res) {
         const { id } = req.query
         const { name, email, password, rule } = req.body
 
+        console.log(name, email, password, rule);
+
         try {
             const user = await User.findById(id)
             if(!user) return res.json({ message: { type: "error", data: "Falha ao atualizar o usuário" } })

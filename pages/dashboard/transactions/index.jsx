@@ -64,16 +64,16 @@ export async function getServerSideProps(req) {
 
   let anoAtual = new Date().getFullYear();
 
-  function primeiroDiaDoMes(ano, mes) {
+  function firstDayOfMonth(ano, mes) {
     return new Date(ano, mes - 1, 1);
   }
 
-  function ultimoDiaDoMes(ano, mes) {
+  function lastDayOfMonth(ano, mes) {
     return new Date(ano, mes, 1);
   }
 
   const transactionsDb = await Transaction.find({
-    date: { $gte: primeiroDiaDoMes(anoAtual, new Date().getMonth() + 1), $lt: ultimoDiaDoMes(anoAtual, new Date().getMonth() + 1) }
+    date: { $gte: firstDayOfMonth(anoAtual, new Date().getMonth() + 1), $lt: lastDayOfMonth(anoAtual, new Date().getMonth() + 1) }
   }).sort({ "date": -1 })
 
   return {

@@ -1,4 +1,4 @@
-import LinkItem from "@/components/Link";
+import LinkItem from "@/components/ButtonLink";
 import Logo from "@/components/Logo";
 import TitleH1 from "@/components/TitleH1";
 import InputContainer from "@/components/InputContainer";

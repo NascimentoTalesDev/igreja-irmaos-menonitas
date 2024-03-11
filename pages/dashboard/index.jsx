@@ -45,28 +45,28 @@ export async function getServerSideProps(req) {
 
     var anoAtual = new Date().getFullYear();
 
-    function primeiroDiaDoMes(ano, mes) {
+    function firstDayOfMonth(ano, mes) {
         return new Date(ano, mes - 1, 1);
     }
 
-    function ultimoDiaDoMes(ano, mes) {
+    function lastDayOfMonth(ano, mes) {
         return new Date(ano, mes, 1);
     }
 
     const monthsFour = await Transaction.find({
-        date: { $gte: primeiroDiaDoMes(anoAtual, new Date().getMonth() + 1), $lt: ultimoDiaDoMes(anoAtual, new Date().getMonth() + 1) }
+        date: { $gte: firstDayOfMonth(anoAtual, new Date().getMonth() + 1), $lt: lastDayOfMonth(anoAtual, new Date().getMonth() + 1) }
     })
 
     const monthTree = await Transaction.find({
-        date: { $gte: primeiroDiaDoMes(anoAtual, new Date().getMonth()), $lt: ultimoDiaDoMes(anoAtual, new Date().getMonth()) }
+        date: { $gte: firstDayOfMonth(anoAtual, new Date().getMonth()), $lt: lastDayOfMonth(anoAtual, new Date().getMonth()) }
     })
 
     const monthTwo = await Transaction.find({
-        date: { $gte: primeiroDiaDoMes(anoAtual, new Date().getMonth() - 1), $lt: ultimoDiaDoMes(anoAtual, new Date().getMonth() - 1) }
+        date: { $gte: firstDayOfMonth(anoAtual, new Date().getMonth() - 1), $lt: lastDayOfMonth(anoAtual, new Date().getMonth() - 1) }
     })
 
     const monthOne = await Transaction.find({
-        date: { $gte: primeiroDiaDoMes(anoAtual, new Date().getMonth() - 2), $lt: ultimoDiaDoMes(anoAtual, new Date().getMonth() - 2) }
+        date: { $gte: firstDayOfMonth(anoAtual, new Date().getMonth() - 2), $lt: lastDayOfMonth(anoAtual, new Date().getMonth() - 2) }
     })
 
     const dizimo = await Transaction.findOne({ name: "dízimo igreja" }, null, {sort: { "createdAt": -1 }, limit: 1,});
@@ -81,5 +81,3 @@ export async function getServerSideProps(req) {
         }
     }
 }
-
-// const months = await Transaction.find

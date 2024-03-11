@@ -14,6 +14,7 @@ import LogIcon from "./icons/LogIcon";
 import Overlay from "./Overlay";
 import { contextUserAuth } from "@/providers/userAuthProvider";
 import LogoColorful from "./LogoColorful";
+import TitleH1 from "./TitleH1";
 
 const MenuMobile = () => {
     const { logout, themeUser } = useContext(contextUserAuth)
@@ -35,18 +36,23 @@ const MenuMobile = () => {
             <Overlay onClick={toggleMenuMobile} />
             <div className={`absolute h-full py-[30px] justify-between backdrop-blur-[2px] flex flex-col w-[350px] bg-light shadow-lg dark:bg-gray_rgba left-0`}>
                 <menu>
-                    <div className="flex px-[30px] justify-between w-full">
+                    <div className="flex px-[30px] w-full gap-2">
                         {themeUser ? (
                             <Logo height={39} width={27} onclick={toggleMenuMobile} path="/dashboard" />
                             ):(
                             <LogoColorful height={39} width={27} onclick={toggleMenuMobile} path="/dashboard" />
                         )}
+                        <div>
+                            <Link onClick={toggleMenuMobile} href={'/dashboard'}>
+                                <h2 className="text-secondary dark:text-light font-bold text-xl">Sistema Financeiro</h2>
+                                <p className="text-secondary dark:text-light font-normal text-[14px] -mt-1">Igreja Irmãos Menonitas</p>
+                            </Link>
+                        </div>
                         <div className="h-fit w-fit absolute top-[20px] right-[20px] cursor-pointer" onClick={toggleMenuMobile} >
                             <CloseIcon />
                         </div>
                     </div>
 
-                    {/* Options to admin */}
                     <div className="mt-[30px] w-full">
                         <ul className="flex flex-col justify-center">
                             <li onClick={toggleMenuMobile} className="border-b border-mygray_more">

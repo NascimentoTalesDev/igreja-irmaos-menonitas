@@ -6,21 +6,19 @@ export default async function getByYearAndMonth(req, res) {
     const { method } = req;
 
     if (method === "POST") {
-
-        console.log("AQUI");
         const {month, year } = req.body
 
-        function primeiroDiaDoMes(ano, mes) {
+        function firstDayOfMonth(ano, mes) {
             return new Date(ano, mes - 1, 1);
         }
 
-        function ultimoDiaDoMes(ano, mes) {
+        function lastDayOfMonth(ano, mes) {
             return new Date(ano, mes, 1);
         }
 
         try {  
             const transactions = await Transaction.find({
-                date: { $gte: primeiroDiaDoMes(year, month), $lt: ultimoDiaDoMes(year, month) }
+                date: { $gte: firstDayOfMonth(year, month), $lt: lastDayOfMonth(year, month) }
             }).sort({ "date": -1 })
             
             return res.json(transactions)

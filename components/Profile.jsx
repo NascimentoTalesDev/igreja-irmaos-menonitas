@@ -12,9 +12,9 @@ const Profile = () => {
     useEffect(()=>{
         let currentUser = getCurrentUser()
         setUser(currentUser)
+        console.log("TEMA", themeUser);
     },[])
 
-    
     return (
         <div className="flex flex-col text-sm">
             <h2 className="text-lg font-bold">Meus dados</h2> 
@@ -22,7 +22,7 @@ const Profile = () => {
             <h2 className="mt-[20px]">Função: {formatName(user?.rule?.name)}</h2>
             <div className="flex mt-[20px] justify-between items-center">
                 <h2>Modo escuro:</h2> 
-                <button onClick={toggleTheme}>{themeUser ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon /> }</button>
+                <button onClick={()=> toggleTheme()}>{themeUser ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon /> }</button>
             </div>
         </div>
     );

@@ -10,8 +10,7 @@ function UserAuthProvider({ children }) {
 
     function toggleTheme(){
         let theme = localStorage.getItem('theme')
-        
-        if (theme) {
+        if (!theme) {
             setThemeUser(true)
             localStorage.setItem('theme', 'dark' )
             document.documentElement.classList.add('dark')
@@ -22,19 +21,22 @@ function UserAuthProvider({ children }) {
         }
     }
 
-    useEffect(()=>{
-        toggleTheme()
-    },[])
-
-    async function checkTheme(){
+    function checkTheme(){
         const theme = localStorage.getItem('theme')
 
-        if (!theme) {
-            window.document.documentElement.classList.remove('dark')
+        if (theme) {
+            setThemeUser(true)
+            document.documentElement.classList.add('dark')
         }else{
-            window.document.documentElement.classList.add('dark')
+            setThemeUser(false)
+            document.documentElement.classList.remove('dark')
         }
     }
+
+    useEffect(()=>{
+        checkTheme()
+    },[])
+
 
     return <contextUserAuth.Provider value={{ login, user, logout, toggleTheme, themeUser, checkTheme }} >{children}</contextUserAuth.Provider>
 }

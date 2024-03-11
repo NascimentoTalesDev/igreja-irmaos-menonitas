@@ -39,7 +39,7 @@ const Transactions = ({ transactionsDb }) => {
       <div className="flex items-center gap-2 mb-[20px]">
         <TitleH3 text="Buscar por data" className="my-[5px]" />
         <div className="w-[150px] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
-          <DatePicker showMonthYearPicker dateFormat="MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => { setStartDate(date), getData(date) }} />
+          <DatePicker showMonthYearPicker showFullMonthYearPicker showFourColumnMonthYearPicker dateFormat="MM/yyyy" locale={ptBR} className="custom-datepicker bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => { setStartDate(date), getData(date) }} />
           <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
         </div>
       </div>

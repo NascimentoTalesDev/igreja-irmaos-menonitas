@@ -6,7 +6,7 @@ import { NavContext } from "@/providers/NavbarProvider";
 
 const Header = () => {
     const [user, setUser] = useState("")
-    const { showMenuMobile, toggleMenuMobile } = useContext(NavContext)
+    const { toggleMenuMobile } = useContext(NavContext)
 
     useEffect(()=>{
         let currentUser = getCurrentUser()
@@ -14,7 +14,7 @@ const Header = () => {
     },[])
     
     return (
-        <div className="fixed z-[9] flex items-center justify-between h-[80px] w-full left-0 top-0 bg-primary dark:bg-secondary_more px-[15px]">
+        <div className="fixed z-[9] flex items-center justify-between h-[80px] w-full left-0 top-0  bg-primary backdrop-blur-[2px] dark:bg-secondary_rgba px-[15px]">
             <div className="cursor-pointer" onClick={toggleMenuMobile}>
                 <HamburgerIcon />
             </div>

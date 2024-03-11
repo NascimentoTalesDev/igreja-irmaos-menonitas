@@ -70,7 +70,7 @@ const NewDocument = () => {
                         
             <TitleH3 text="Data" />
             <div className="my-[5px] w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
-                <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
+                <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="custom-datepicker bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
                 <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
             </div>
 

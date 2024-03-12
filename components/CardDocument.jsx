@@ -17,7 +17,7 @@ const CardDocument = ({ documents }) => {
     return (
         <div className="flex flex-col gap-[10px]">
             {documents.map(document  => (
-                <div key={document?._id} className="flex items-center justify-between">
+                <div key={document?._id} className="flex items-center justify-between border-b-[0.5px] border-b-gray-300 dark:border-b-secondary pb-1 ">
                     <div className="flex items-center gap-[10px]">
                         {document?.doc[0]?.includes(".pdf") ? (
                             <Image alt="pdf" width={30} height={30} className="object-contain" src={"/images/pdf.png"} />

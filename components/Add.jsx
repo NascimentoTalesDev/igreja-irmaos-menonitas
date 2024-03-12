@@ -3,6 +3,9 @@ import AddCardButton from "./AddCardButton";
 import TitleH2 from "./TitleH2";
 import Calculator from "./Calculator";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
+import ChevronDownCircleIcon from "./icons/ChevronDownCircleIcon";
+import ChevronUpCircleIcon from "./icons/ChevronUpCircleIcon";
+import TrendingUpOutlineIcon from "./icons/TrendingUpOutlineIcon";
 
 const Add = () => {
     const {setDataModalSecond, toggleModalSecond} = useContext(ModalSecondContext)
@@ -10,11 +13,11 @@ const Add = () => {
     return (
         <div>
             <TitleH2 text="O que você quer adicionar?" className="mb-[30px]" />
-            <div className="flex flex-wrap gap-[16px]">
-                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Despesa" />) }} className="border border-red-500" text="Despesa" icon=""  />
-                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Receita" />) }} className="border border-green-500" text="Receita" icon="" />
-                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Transferencia" />) }} className="border border-green-500" text="Transferência" icon="" />
-                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Rendimentos" />) }} className="border border-green-500" text="Rendimentos" icon="" />
+            <div className="grid grid-cols-2 gap-[16px] mx-auto w-fit">
+                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Despesa" />) }} className="border border-danger bg-danger " text="Despesa" icon={<ChevronDownCircleIcon />}  />
+                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Receita" />) }} className="border border-success bg-success" text="Receita" icon={<ChevronUpCircleIcon />} />
+                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Transferencia" />) }} className="border border-success" text="Transferência" icon={<TrendingUpOutlineIcon />} />
+                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Rendimentos" />) }} className="border border-success" text="Rendimentos" icon={<TrendingUpOutlineIcon />} />
             </div>          
         </div>
     );

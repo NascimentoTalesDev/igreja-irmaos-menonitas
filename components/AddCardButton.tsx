@@ -12,9 +12,9 @@ const AddCardButton: React.FC<AddCardButtonProps> = ({ onClick, text, icon, clas
     return (
         <div onClick={onClick} className={`flex cursor-pointer justify-center items-center w-[76px] h-[76px] rounded p-2 flex-col sm:w-[80px] sm:h-[80px] md:w-[90px] md:h-[90px] ${className}`}>
             {icon}
-            <div className="leading-tight text-center font-bold text-secondary dark:text-light">
-                <span className="text-[10px]">adicionar</span><br />
-                <h2 className="text-[10px] text-center">{text}</h2>
+            <div className="leading-tight text-center text-secondary dark:text-light">
+                <span className="text-[10px] md:text-[11px] font-bold">adicionar</span><br />
+                <h2 className="text-[10px] md:text-[11px] font-bold text-center">{text}</h2>
             </div>
         </div>
     );

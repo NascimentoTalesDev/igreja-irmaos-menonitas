@@ -29,7 +29,7 @@ const CashBalance = ({ data }) => {
     let res = rec - des
 
     return (
-        <CardLinkHome icon={<MoneyIcon />} text="Saldo em caixa" data={res.toFixed(2)} bg="bg-success" />
+        <CardLinkHome icon={<MoneyIcon />} text="Saldo em caixa" data={res.toFixed(2)} bg="bg-success" path={"dashboard/transactions"} />
     );
 }
  

@@ -82,7 +82,7 @@ const InfoAdd = ({ valueCalc, type }) => {
             </div>
         );
     };
-
+    
     return (
         <div>
             {type === "Despesa" && (
@@ -173,7 +173,74 @@ const InfoAdd = ({ valueCalc, type }) => {
                     <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
                 </>
             )}
+            {type === "Rendimentos" && (
+                <>
+                    <TitleH3 text="Nome por categoria" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        {info ?
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
+                                        <span className="text-secondary dark:text-light">{info?.childNodes[2]?.innerText}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
 
+                            ) :
+                            (
+                                <span>Selecionar ícone</span>
+                            )}
+                    </div>
+
+                    <TitleH3 text="Data" className="my-[5px]" />
+                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
+                        <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="custom-datepicker bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
+                    </div>
+
+                    <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
+                </>
+            )}
+
+            {type === "Transferencia" && (
+                <>
+                <TitleH3 text="De:" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        {info ?
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
+                                        <span className="text-secondary dark:text-light">{info?.childNodes[2]?.innerText}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+
+                            ) :
+                            (
+                                <span>Selecionar ícone</span>
+                            )}
+                    </div>
+                    <TitleH3 text="Para?" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        {info ?
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
+                                        <span className="text-secondary dark:text-light">{info?.childNodes[2]?.innerText}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+
+                            ) :
+                            (
+                                <span>Selecionar ícone</span>
+                            )}
+                    </div>
+                </>
+            )}
 
         </div>
 

@@ -18,6 +18,7 @@ import ToggleThemeOffIcon from "@/components/icons/ToggleThemeOffIcon"
 import ToggleThemeOnIcon from "@/components/icons/ToggleThemeOnIcon"
 import Sun from "./icons/Sun";
 import Moon from "./icons/Moon";
+import LogoutIcon from "./icons/LogOutIcon";
 
 const MenuMobile = () => {
     const { logout, themeUser, toggleTheme } = useContext(contextUserAuth)
@@ -136,13 +137,12 @@ const MenuMobile = () => {
                         <li className="py-1 text-[14px]">
                             <span className="font-normal dark:font-thin">Logado como </span><span className="">{formatName(user?.name)}</span>
                         </li>
-                        <li onClick={() => { toggleMenuMobile(), logoutUser() }} className="py-1">
-                            <Link className="" href={"/dashboard"}>
-                                Sair
-                            </Link>
+                        <li onClick={() => { toggleMenuMobile(), logoutUser() }} className="py-1 flex gap-[6px] items-center w-fit mx-auto cursor-pointer">
+                            <LogoutIcon />
+                            <span>Sair</span>
                         </li>
                         <li className="text-center">
-                            <span className="text-[10px] ">Versão 1.0.0</span>
+                            <span className="text-[12px] ">V.1.0</span>
                         </li>
                     </ul>
                 </div>

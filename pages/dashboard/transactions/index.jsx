@@ -32,7 +32,7 @@ const Transactions = ({ transactionsDb }) => {
       if (!response.data.length) {
         setTransactions([])
         setNodata(true)
-      }else{
+      } else {
         setNodata(false)
         setTransactions(response.data);
       }
@@ -41,6 +41,7 @@ const Transactions = ({ transactionsDb }) => {
   return (
     <Layout>
       <Title text="Movimentações" className="mb-[24px]" />
+
       <div className="flex items-center gap-2 mb-[20px]">
         <TitleH3 text="Buscar por data" className="my-[5px] text-[12px]" />
         <div className="w-[120px] h-[40px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
@@ -48,7 +49,17 @@ const Transactions = ({ transactionsDb }) => {
           <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
         </div>
       </div>
-      <h2 className="mb-[10px] text-[16px]">Receitas e despesas do mês {actualMonth === newMonth ? "atual" : `de ${getMonth(newMonth)}`}</h2>
+
+      <h2 className="mb-[10px] text-[16px]">
+        Receitas e despesas do mês
+        {newMonth ? (
+          <>
+            {newMonth === actualMonth ? " atual" : ` de ${getMonth(newMonth)}`}
+          </>
+        ) : (
+          " atual"
+        )}
+      </h2>
       {transactions.length > 0 && (
         <Card>
           {transactions.map(transaction => (

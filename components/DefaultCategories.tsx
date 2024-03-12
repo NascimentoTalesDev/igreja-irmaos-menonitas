@@ -17,6 +17,8 @@ const DefaultCategories = () => {
             <CategoryCard classNameH2="md:text-[12px]" className="bg-gray-100 sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] dark:bg-secondary_less" img="/categories/oferta-extra.png" text="Oferta Extra" />
             <CategoryCard classNameH2="md:text-[12px]" className="bg-gray-100 sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] dark:bg-secondary_less" img="/categories/redizimo.png" text="Redízimo" />
             <CategoryCard classNameH2="md:text-[12px]" className="bg-gray-100 sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] dark:bg-secondary_less" img="/categories/salario-pastor.png" text="Salário Pastor" />
+            <CategoryCard classNameH2="md:text-[12px]" className="bg-gray-100 sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] dark:bg-secondary_less" img="/categories/banknote.png" text="Rendimento" />
+            <CategoryCard classNameH2="md:text-[12px]" className="bg-gray-100 sm:w-[90px] sm:h-[90px] md:w-[110px] md:h-[110px] dark:bg-secondary_less" img="/categories/transference.png" text="Transferência" />
         </GridLayout>
     );
 }

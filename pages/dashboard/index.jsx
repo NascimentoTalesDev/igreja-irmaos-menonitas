@@ -6,9 +6,12 @@ import CardLinkHome from "@/components/CardLinkHome";
 import Revenue from "@/components/Revenue";
 import Expense from "@/components/Expense";
 import CashBalance from "@/components/CashBalance";
+import CashInTheBank from "@/components/CashInTheBank";
 import formatDate from "@/lib/formatDate";
 import dynamic from "next/dynamic"
 import TitleH3 from "@/components/TitleH3";
+import DizimoIcon from "@/components/icons/DizimoIcon";
+
 const Spreadsheet = dynamic(() => import("@/components/Spreadsheet"), {
     ssr: false
 })
@@ -17,9 +20,9 @@ const Spreadsheet2 = dynamic(() => import("@/components/Spreadsheet2"), {
     ssr: false
 })
 
-const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categories }) => {
+const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categories, performance }) => {
     let actualMonth = new Date().getMonth() + 1
-console.log(categories.length);
+
     return (
         <Layout>
             <div className="flex h-fi items-end mb-[24px]">
@@ -30,15 +33,17 @@ console.log(categories.length);
                 <Revenue data={monthsFour} />
                 <Expense data={monthsFour} />
                 <CashBalance data={monthsFour} />
-                <CardLinkHome icon="" text="Saldo no banco" bg="bg-success" />
+                <CashInTheBank  data={performance} />
+
             </div>
             {dizimo && (
                 <div className="w-full mb-[16px]">
-                    <CardLinkHome data={dizimo?.accountValue} icon="" text={`Dízimo do último culto: ${formatDate(dizimo.createdAt)}`} bg="bg-success" className={" w-full"} />
+                    <CardLinkHome data={dizimo?.accountValue} icon={<DizimoIcon />} text={`Dízimo do último culto: ${formatDate(dizimo.createdAt)}`} bg="bg-success" path={"dashboard/transactions"} className={" w-full"} />
                 </div>
             )}
 
             <Spreadsheet monthsFour={monthsFour} monthTree={monthTree} monthTwo={monthTwo} monthOne={monthOne} actualMonth={actualMonth} />
+            
             {categories?.length > 0 && (
                 <>
                     <TitleH3 text="Top 5 gastos por categoria"  className="my-[16px]" />
@@ -118,7 +123,20 @@ export async function getServerSideProps(req) {
         }
     ])
 
-    console.log(categories);
+    const performance =  await Transaction.aggregate([
+        {
+            $match: {
+                name: "rendimento",
+                type: "rendimentos",
+            },
+        },
+        {
+            $group: {
+                _id: "$name", // Não agrupa as transações, queremos somar todas
+              total: { $sum: "$accountValue" } // Calcula o valor total somando todos os valores das transações
+            }
+        }
+    ])
 
     return {
         props: {
@@ -128,6 +146,7 @@ export async function getServerSideProps(req) {
             monthOne: JSON.parse(JSON.stringify(monthOne)),
             dizimo: JSON.parse(JSON.stringify(dizimo)),
             categories: JSON.parse(JSON.stringify(categories)),
+            performance: JSON.parse(JSON.stringify(performance)),
         }
     }
 }

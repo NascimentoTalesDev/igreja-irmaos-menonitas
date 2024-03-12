@@ -10,7 +10,7 @@ const CardTransaction = ({ transaction }) => {
     const { toggleModal, setDataModal } = useContext(ModalContext)
    
     return (
-        <div onClick={() => { toggleModal(), setDataModal(<EditTransaction transaction={transaction}/>)}} className="flex cursor-pointer mb-[2px] justify-between items-center min-h-[60px] border-b-[0.5px] border-b-gray-300 ">
+        <div onClick={() => { toggleModal(), setDataModal(<EditTransaction transaction={transaction}/>)}} className="flex cursor-pointer mb-[2px] justify-between items-center min-h-[60px] border-b-[0.5px] border-b-gray-300 dark:border-b-secondary  ">
             <div className="flex justify-center items-center">
                 <Image id={transaction?.icon} width={30} height={30} alt="Image" src={`/categories/${transaction?.icon}.png`} />
                 <div className="flex flex-col ml-[10px]">

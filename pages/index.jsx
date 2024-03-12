@@ -2,7 +2,7 @@ import ButtonLink from "@/components/ButtonLink";
 import Logo from "@/components/Logo";
 import TitleH1 from "@/components/TitleH1";
 import InputContainer from "@/components/InputContainer";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "@/components/Button";
 import Head from "next/head";
 import { contextUserAuth } from "@/providers/userAuthProvider";
@@ -14,14 +14,21 @@ export default function Home() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLogin, setIsLogin] = useState(false)
-
+  const [rememberMe, setRememberMe] = useState(false)
+    
   const loginUser = async () => {
     setIsLogin(true)
-    const data = { email, password }
+    const data = { email, password, rememberMe }
     await login(data)
     setIsLogin(false)
   }
   
+  useEffect(()=>{
+    setEmail(JSON.parse(localStorage.getItem("email")))
+    setPassword(JSON.parse(localStorage.getItem("password")))
+    setRememberMe(localStorage.getItem("remember-me"))
+  },[])
+
   return (
     <section onKeyDown={(ev) => checkKey(ev, loginUser)} className="bg-secondary h-full w-full flex justify-center items-center">
       <Head>
@@ -49,7 +56,7 @@ export default function Home() {
         )}
 
         <div className="flex mt-[14px] md:mt-[10px]">
-          <input className="cursor-pointer" type="checkbox" id="password-remember" name="password-remember" value="password-remember" />
+          <input className="cursor-pointer" type="checkbox" id="password-remember" name="password-remember" value="password-remember" checked={rememberMe ? true : false } onChange={() => setRememberMe(!rememberMe)} />
           <label htmlFor="password-remember" className="cursor-pointer ml-[10px] text-light text-sm md:text-xs">Lembrar email e senha</label>
         </div>
       </div>

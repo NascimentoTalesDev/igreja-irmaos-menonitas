@@ -1,3 +1,4 @@
+import formatLocalCurrency from "@/lib/formatLocalCurrency";
 import getMonth from "@/lib/getMonth";
 import sumNumbers from "@/lib/sumNumbers";
 import { contextUserAuth } from "@/providers/userAuthProvider";

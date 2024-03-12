@@ -21,8 +21,17 @@ export default function useUserAuth() {
         }
     }, [authenticated])
 
-    async function authUser(data) {
-        
+    async function authUser(data, user) {
+        if (user?.rememberMe) {
+            localStorage.setItem('remember-me', JSON.stringify(user?.rememberMe))
+            localStorage.setItem('email', JSON.stringify(user?.email))
+            localStorage.setItem('password', JSON.stringify(user?.password))
+        }else{
+            localStorage.removeItem('remember-me')
+            localStorage.removeItem('email')
+            localStorage.removeItem('password')
+        }
+
         localStorage.setItem('token', JSON.stringify(data?.token))
         Cookies.set("user", JSON.stringify(data?.user))
         
@@ -46,7 +55,7 @@ export default function useUserAuth() {
             const data = await api.post('/users/login', user).then((response) => {
                 return response.data
             })
-            await authUser(data)
+            await authUser(data, user)
             
         } catch (error) {
             msgText = error?.response?.data?.message?.data

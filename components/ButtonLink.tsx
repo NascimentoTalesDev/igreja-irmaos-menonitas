@@ -10,7 +10,7 @@ interface ButtonLinkProps{
 
 const ButtonLink:React.FC<ButtonLinkProps> = ({ text, path, className, onClick }) => {
     return (
-        <Link onClick={onClick} href={path} className={`flex text-sm md:text-base rounded justify-center items-center text-light font-bold ${className}`}>
+        <Link onClick={onClick} href={path} className={`flex items-center justify-center text-sm md:text-base rounded text-light ${className}`}>
             {text}
         </Link>
     );

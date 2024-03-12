@@ -1,4 +1,4 @@
-import LinkItem from "@/components/ButtonLink";
+import ButtonLink from "@/components/ButtonLink";
 import Logo from "@/components/Logo";
 import TitleH1 from "@/components/TitleH1";
 import InputContainer from "@/components/InputContainer";
@@ -41,7 +41,7 @@ export default function Home() {
         <p className="text-center text-sm text-light font-light tracking-wide ">Igreja Irmãos Menonitas</p>
         <InputContainer required={true} className={"mt-[24px]"} user={true} value={email} type="email" onChange={(ev) => setEmail(ev.target.value)} text="Email" placeholder="Email" />
         <InputContainer required={true} className={"mt-[16px]"} padlock={true} look={true} type="password" value={password} onChange={(ev) => setPassword(ev.target.value)} text="Senha" placeholder="Senha" />
-        <LinkItem path="/forgot-password" className="text-right text-sm mt-[16px] underline md:text-xs" text="Esqueci minha senha" />
+        <ButtonLink path="/forgot-password" className="text-sm mt-[16px] underline md:text-xs w-fit ml-auto" text="Esqueci minha senha" />
         {isLogin ? (
           <Button text="Acessando..." className="bg-primary_less mt-[14px]" />
         ) : (

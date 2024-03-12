@@ -1,4 +1,4 @@
-import LinkItem from "@/components/ButtonLink";
+import ButtonLink from "@/components/ButtonLink";
 import Logo from "@/components/Logo";
 import TitleH1 from "@/components/TitleH1";
 import Input from "@/components/InputContainer";
@@ -37,7 +37,7 @@ export default function Home() {
 
         <div className="flex mt-[14px] md:mt-[10px]">
           <span className="cursor-pointer text-light text-sm md:text-xs">Lembrou a senha?</span>
-          <LinkItem path="/" className="text-right ml-[10px] text-sm underline md:text-xs" text="Fazer login" />
+          <ButtonLink path="/" className="text-right ml-[10px] text-sm underline md:text-xs" text="Fazer login" />
         </div>
       </div>
     </section>

@@ -5,6 +5,7 @@ import Title from "@/components/Title";
 import Card from "@/components/Card";
 import CardTransaction from "@/components/CardTransaction";
 import TitleH3 from "@/components/TitleH3";
+import getMonth from "@/lib/getMonth";
 import DatePicker from "react-datepicker";
 import ptBR from 'date-fns/locale/pt-BR';
 import { useState } from "react";
@@ -17,10 +18,14 @@ const Transactions = ({ transactionsDb }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [transactions, setTransactions] = useState(transactionsDb);
   const [nodata, setNodata] = useState(false);
+  const [newMonth, setNewMonth] = useState("");
+
+  let actualMonth = new Date().getMonth() + 1
 
   const getData = (date) => {
     let year = date.getFullYear()
     let month = date.getMonth() + 1
+    setNewMonth(month)
     const data = { month, year }
 
     axios.post(`${api}/${versionApi}/transactions/get-by-year-and-month`, data).then(response => {
@@ -37,12 +42,13 @@ const Transactions = ({ transactionsDb }) => {
     <Layout>
       <Title text="Movimentações" className="mb-[24px]" />
       <div className="flex items-center gap-2 mb-[20px]">
-        <TitleH3 text="Buscar por data" className="my-[5px]" />
-        <div className="w-[150px] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
-          <DatePicker showMonthYearPicker showFullMonthYearPicker showFourColumnMonthYearPicker dateFormat="MM/yyyy" locale={ptBR} className="custom-datepicker bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => { setStartDate(date), getData(date) }} />
+        <TitleH3 text="Buscar por data" className="my-[5px] text-[12px]" />
+        <div className="w-[120px] h-[40px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
+          <DatePicker showMonthYearPicker showFullMonthYearPicker showFourColumnMonthYearPicker dateFormat="dd/MM/yyyy" locale={ptBR} className="custom-datepicker bg-transparent w-full mx-[10px] text-sm" selected={startDate} onChange={(date) => { setStartDate(date), getData(date) }} />
           <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
         </div>
       </div>
+      <h2 className="mb-[10px] text-[16px]">Receitas e despesas do mês {actualMonth === newMonth ? "atual" : `de ${getMonth(newMonth)}`}</h2>
       {transactions.length > 0 && (
         <Card>
           {transactions.map(transaction => (

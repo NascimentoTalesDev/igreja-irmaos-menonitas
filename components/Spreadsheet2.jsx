@@ -32,6 +32,7 @@ const Spreadsheet2 = ({ categories, className }) => {
                   },
                   value: {
                     show: true,
+                    color: "#FFF",
                     offsetY: 46,
                     formatter: function (val) {
                       return `R$ ${formatLocalCurrency(val)}`

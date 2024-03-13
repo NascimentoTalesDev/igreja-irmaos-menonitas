@@ -2,7 +2,7 @@ import TitleH3 from "./TitleH3";
 import Button from "./Button";
 import PencilIcon from "./icons/PencilIcon";
 import TrashIcon from "./icons/TrashIcon";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ModalContext } from "@/providers/ModalProvider";
 import useFlashMessage from "@/hooks/useFlashMessage";
 import { api, versionApi } from "@/lib/configApi";
@@ -10,6 +10,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import EditCategory from "./EditCategory";
 import { ModalThirdContext } from "@/providers/ModalThirdProvider";
+import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const CategoryOptions = ({ category }) => {
     const { toggleModal} = useContext(ModalContext)
@@ -20,13 +21,20 @@ const CategoryOptions = ({ category }) => {
 
     const [isDeleting, setIsDeleting] = useState(false)
 
+    const [user, setUser] = useState("")
+
+    useEffect(()=>{
+        let currentUser = getCurrentUser()
+        setUser(currentUser)
+    },[])
+
     const deleteCategory = async() =>{
         setIsDeleting(true)
         let msgText;
         let msgType = 'success'
         
         try {
-            await axios.delete(`${api}/${versionApi}/categories/id/${category?._id}`).then(response => { 
+            await axios.delete(`${api}/${versionApi}/categories/id/${category?._id}?userId=${user?._id}`).then(response => { 
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type

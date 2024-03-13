@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TitleH2 from "./TitleH2";
 import { ModalContext } from "@/providers/ModalProvider";
 import Button from "./Button";
@@ -6,6 +6,7 @@ import useFlashMessage from "@/hooks/useFlashMessage";
 import { useRouter } from "next/router";
 import axios from "axios";
 import { api, versionApi } from "@/lib/configApi";
+import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const WarnMessage = ({ item, path, back }) => {
     const { setFlashMessage } = useFlashMessage()
@@ -14,13 +15,20 @@ const WarnMessage = ({ item, path, back }) => {
 
     const [isRemoving, setIsRemoving] = useState(false)
 
+    const [user, setUser] = useState("")
+
+    useEffect(()=>{
+        let currentUser = getCurrentUser()
+        setUser(currentUser)
+    },[])
+
     const remove = async () => {
         setIsRemoving(true)
         let msgText;
         let msgType = 'success'
 
         try {
-            await axios.delete(`${api}/${versionApi}/${path}`).then(response => {
+            await axios.delete(`${api}/${versionApi}/${path}?userId=${user?._id}`).then(response => {
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type

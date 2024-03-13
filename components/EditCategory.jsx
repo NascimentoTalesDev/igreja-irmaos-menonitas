@@ -13,6 +13,7 @@ import { ModalContext } from "@/providers/ModalProvider";
 import { useRouter } from "next/router";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
 import MoreCategories from "./MoreCategories";
+import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const EditCategory = ({ category }) => {
     const { setFlashMessage } = useFlashMessage()
@@ -40,6 +41,13 @@ const EditCategory = ({ category }) => {
 
     const [isSetting, setIsSetting] = useState(false)
 
+    const [user, setUser] = useState("")
+
+    useEffect(()=>{
+        let currentUser = getCurrentUser()
+        setUser(currentUser)
+    },[])
+
     const updateCategory = async () => {
         setIsSetting(true)
         let msgText;
@@ -51,7 +59,7 @@ const EditCategory = ({ category }) => {
 
         const data = { name, type, icon: iconInfo }
         try {
-            await axios.patch(`${api}/${versionApi}/categories/id/${category?._id}`, data).then(response => {
+            await axios.patch(`${api}/${versionApi}/categories/id/${category?._id}?userId=${user?._id}`, data).then(response => {
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type

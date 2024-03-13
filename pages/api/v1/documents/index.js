@@ -1,5 +1,6 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Document } from "@/models/Document";
+import { Log } from "@/models/Log";
 
 export default async function Documents(req, res){
     await mongooseConnect();
@@ -7,6 +8,7 @@ export default async function Documents(req, res){
     
     if (method === "POST"){
 
+        const {userId} = req.query;
         const {name, date, description, doc} = req.body;
 
         if (!name) return res.status(422).json({ message: { type: "error", data: "Nome não pode ficar vazio"} });
@@ -24,6 +26,16 @@ export default async function Documents(req, res){
                 description,
                 doc,
             })
+
+            try {
+                Log.create({
+                    message: `adicionou um documento - ${name}`,
+                    date,
+                    user: userId
+                })
+            } catch (error) {
+                console.log(error);
+            }
 
             return res.json({ message: { type: "success", data: "Documento registrado com sucesso" }  })
 

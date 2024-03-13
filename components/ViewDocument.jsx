@@ -3,7 +3,6 @@ import Title from "./Title";
 import TitleH2 from "./TitleH2";
 import TitleH3 from "./TitleH3";
 import Image from "next/image";
-import Link from "next/link";
 import formatFirstWordToUpperCase from "@/lib/formatFirstWordToUpperCase";
 import useFlashMessage from "@/hooks/useFlashMessage";
 import Button from "./Button";
@@ -33,7 +32,7 @@ const ViewDocument = ({ document }) => {
             setFlashMessage(msgText, msgType)
         }
     }
-    console.log(document?.doc[0]);
+
     return (
         <div className="w-full h-full ">
             <Title className="text-center text-secondary dark:text-light " text={formatName(document?.name)} />

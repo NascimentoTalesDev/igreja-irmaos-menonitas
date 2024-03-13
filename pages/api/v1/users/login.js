@@ -24,10 +24,14 @@ export default async function login(req, res){
             
             user.rule = await Rule.findById(user.rule)
 
-            await Log.create({
-                message : "Fez login no sistema",
-                user: user?._id
-            })
+            try {
+                Log.create({
+                    message : "Fez login no sistema",
+                    user: user?._id
+                })
+            } catch (error) {
+                console.log(error);
+            }
 
             await createToken(user, req, res)
 

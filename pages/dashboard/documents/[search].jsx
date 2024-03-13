@@ -1,13 +1,8 @@
 import Layout from "@/components/Layout";
-import Title from "@/components/Title";
 import BackIconLink from "@/components/BackIconLink";
 import Card from "@/components/Card";
-import Button from "@/components/Button";
-import NewDocument from "@/components/NewDocument";
 import SearchContainer from "@/components/SearchContainer";
-import PlusIcon from "@/components/icons/PlusIcon";
-import { useContext, useEffect, useState } from "react";
-import { ModalContext } from "@/providers/ModalProvider";
+import { useEffect, useState } from "react";
 import CardDocument from "../../../components/CardDocument";
 import checkKey from '@/lib/checkKey'
 import CardError from "../../../components/CardError";
@@ -15,21 +10,21 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { api, versionApi } from "@/lib/configApi";
 import TitleH2 from "../../../components/TitleH2";
+import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const SearchPage = () => {
-  const { toggleModal, setDataModal } = useContext(ModalContext)
   const { query } = useRouter()
   const router = useRouter()
 
   const [search, setSearch] = useState('')
   const [documents, setDocuments] = useState('')
   const [message, setMessage] = useState('')
-  const [isSearching, setIsSearching] = useState(false)
 
   useEffect(() => {
+    let currentUser = getCurrentUser()
+
     const getItems = async () => {
-      setIsSearching(true)
-      await axios.get(`${api}/${versionApi}/documents/${query.search}`).then(response => {
+      await axios.get(`${api}/${versionApi}/documents/${query.search}?userId=${currentUser?._id}`).then(response => {
         if (!response?.data?.length) {
           setMessage("Nemhum documento encontrado")
           setDocuments([])
@@ -37,7 +32,6 @@ const SearchPage = () => {
           setDocuments(response?.data)
         }
       })
-      setIsSearching(false)
     }
     getItems()
   }, [query.search])
@@ -53,7 +47,7 @@ const SearchPage = () => {
         <BackIconLink className="absolute left-0" path="/dashboard/documents" />
         <TitleH2 text={`Busca por: ${query.search}`} className="mx-[30px]" />
       </div>
-      
+
       <SearchContainer value={search} onchange={(ev) => setSearch(ev.target.value)} onClick={searchItem} placeholder="Está procurando algo específico?" />
       {documents.length > 0 ?
         (
@@ -67,7 +61,7 @@ const SearchPage = () => {
         (
           <CardError message={message} />
         )
-      }    
+      }
     </Layout>
   );
 }

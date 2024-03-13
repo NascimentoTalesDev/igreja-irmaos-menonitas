@@ -7,13 +7,14 @@ export default async function LogIndex(req, res, next){
         
     if (method === "POST") {
         
+        const { userId } = req.query;
         const { message } = req.body;
 
         try {
-            await Log.create({
-                message
+            Log.create({
+                message,
+                user: userId,
             })
-            
         } catch (error) {
             console.log(error);
         }

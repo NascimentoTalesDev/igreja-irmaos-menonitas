@@ -18,7 +18,7 @@ export default async function Transactions(req, res, next) {
         if (inInstallments && !inInstallmentsQtt) return res.status(422).json({ message: { type: "error", data: "Selecione as parcelas" } });
 
         let value = parseInt(accountValue)
-        console.log(date);
+
         try {
             if (doc.length > 0) {
                 try {
@@ -27,6 +27,11 @@ export default async function Transactions(req, res, next) {
                         date,
                         description: `${name} R$${value.toFixed(2)} ${new Date().toLocaleString('pt-BR')}`,
                         doc,
+                    })
+                    Log.create({
+                        message: `criou uma ${type} ${name} com documento `,
+                        date,
+                        user: userId
                     })
                 } catch (error) {
                     console.log(error);
@@ -89,6 +94,33 @@ export default async function Transactions(req, res, next) {
                 try {
                     Log.create({
                         message: `criou uma ${type} - ${name}/${value.toFixed(2)}`,
+                        date,
+                        user: userId
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+
+                return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
+            }
+
+            if(type === "Rendimentos"){
+                await Transaction.create({
+                    name,
+                    icon,
+                    type,
+                    accountValue: value.toFixed(2),
+                    date,
+                    doc,
+                    inInstallments,
+                    recurrent,
+                    inInstallmentsQtt,
+                    paid: true
+                })
+
+                try {
+                    Log.create({
+                        message: `adicionou um rendimento - ${value.toFixed(2)}`,
                         date,
                         user: userId
                     })

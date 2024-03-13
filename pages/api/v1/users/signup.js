@@ -1,5 +1,7 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { User } from "@/models/User";
+import { Rule } from "@/models/Rule";
+import { Log } from "@/models/Log";
 import bcrypt from "bcrypt"
 
 export default async function signup (req, res) {
@@ -8,6 +10,7 @@ export default async function signup (req, res) {
 
     if (method === "POST") {            
         
+        const { userId } = req.query;
         const { name, email, password, rule } = req.body;
 
         if(!name) return res.status(422).json({ message: { type: "error", data: "Nome não pode ficar vazio" } })
@@ -27,8 +30,18 @@ export default async function signup (req, res) {
                 password: hash,
                 rule
             })
-
+            
             user.password = undefined
+            
+            const ruleBb = await Rule.findById(rule)
+            try {
+                Log.create({
+                    message: `cadastrou o usuário ${name} como ${ruleBb?.name}`,
+                    user: userId,
+                })
+            } catch (error) {
+                console.log(error);
+            }
 
             return res.json({user, message: { type: "success", data: "Usuário registrado com sucesso"} })
 

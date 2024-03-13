@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TitleH3 from "./TitleH3";
 import InputContainerModal from "@/components/InputContainerModal";
 import Button from "./Button";
@@ -9,6 +9,7 @@ import { api, versionApi } from "@/lib/configApi";
 import { useRouter } from "next/router";
 import TitleH2 from "./TitleH2";
 import { ModalContext } from "@/providers/ModalProvider";
+import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const NewUser = ({ rules }) => {
     const { setFlashMessage } = useFlashMessage()
@@ -21,6 +22,13 @@ const NewUser = ({ rules }) => {
     const [rule, setRule] = useState("")
     const [isSaving, setIsSaving] = useState("")
     
+    const [user, setUser] = useState("")
+
+    useEffect(()=>{
+        let currentUser = getCurrentUser()
+        setUser(currentUser)
+    },[])
+
     const saveNewUser = async () => {
         setIsSaving(true)
         let msgText;
@@ -28,7 +36,7 @@ const NewUser = ({ rules }) => {
         const data = { name, email, password, rule }
 
         try {
-            await axios.post(`${api}/${versionApi}/users/signup`, data).then(response => {
+            await axios.post(`${api}/${versionApi}/users/signup?userId=${user?._id}`, data).then(response => {
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type

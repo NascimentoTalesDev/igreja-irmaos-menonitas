@@ -17,7 +17,7 @@ const Spreadsheet2 = ({ actualMonth, categories, className }) => {
             foreColor: `${themeUser ? "#FFF" : "#171C22"}`,
         },
         labels: [formatName(categories[0]?._id), formatName(categories[1]?._id), formatName(categories[2]?._id), formatName(categories[3]?._id), formatName(categories[4]?._id)],
-        colors: ['#FF5658', '#1CD174', '#171C22', '#FF6B05', '#9c9f9e'],
+        colors: ['#680000', '#8C0007', '#B20021', '#D8303C', '#FF5658'],
         stroke: {
             show: false,
         },

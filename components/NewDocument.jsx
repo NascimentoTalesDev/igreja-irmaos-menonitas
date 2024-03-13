@@ -14,6 +14,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ChevronDownIcon from "./icons/ChevronDownIcon";
 import ptBR from 'date-fns/locale/pt-BR';
+import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const NewDocument = () => {
     const { setFlashMessage } = useFlashMessage()
@@ -35,6 +36,13 @@ const NewDocument = () => {
         );
     };
 
+    const [user, setUser] = useState("")
+
+    useEffect(()=>{
+        let currentUser = getCurrentUser()
+        setUser(currentUser)
+    },[])
+
     const saveNewDocument = async () => {
         setIsSaving(true)
         let msgText;
@@ -42,7 +50,7 @@ const NewDocument = () => {
         const data = { name, date: startDate, description, doc }
 
         try {
-            await axios.post(`${api}/${versionApi}/documents`, data).then(response => {
+            await axios.post(`${api}/${versionApi}/documents?userId=${user?._id}`, data).then(response => {
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type

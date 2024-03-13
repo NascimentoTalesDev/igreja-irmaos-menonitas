@@ -19,6 +19,8 @@ import ToggleThemeOnIcon from "@/components/icons/ToggleThemeOnIcon"
 import Sun from "./icons/Sun";
 import Moon from "./icons/Moon";
 import LogoutIcon from "./icons/LogOutIcon";
+import axios from "axios";
+import { api, versionApi } from "@/lib/configApi";
 
 const MenuMobile = () => {
     const { logout, themeUser, toggleTheme } = useContext(contextUserAuth)
@@ -32,6 +34,9 @@ const MenuMobile = () => {
 
     const logoutUser = async () => {
         await logout()
+        let message = "deslogou do sistema"
+        const data = { message }
+        await axios.post(`${api}/${versionApi}/log?userId=${user?._id}`, data)
     }
     console.log(user?.rule?.name);
 

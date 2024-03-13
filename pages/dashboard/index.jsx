@@ -11,6 +11,9 @@ import formatDate from "@/lib/formatDate";
 import dynamic from "next/dynamic"
 import TitleH3 from "@/components/TitleH3";
 import DizimoIcon from "@/components/icons/DizimoIcon";
+import { useEffect } from "react";
+import axios from "axios";
+import { api, versionApi } from "@/lib/configApi";
 
 const Spreadsheet = dynamic(() => import("@/components/Spreadsheet"), {
     ssr: false
@@ -22,6 +25,12 @@ const Spreadsheet2 = dynamic(() => import("@/components/Spreadsheet2"), {
 
 const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categories, performance }) => {
     let actualMonth = new Date().getMonth() + 1
+
+    // useEffect(()=> {
+    //     const message = "Acessou a página inicial"
+    //     const data = {message}
+    //     axios.post(`${api}/${versionApi}/log`, data)
+    // },[])
 
     return (
         <Layout>

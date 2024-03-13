@@ -1,6 +1,7 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Transaction } from "@/models/Transaction";
 import { Document } from "@/models/Document";
+import { Log } from "@/models/Log";
 
 export default async function Transactions(req, res, next) {
     await mongooseConnect();
@@ -9,16 +10,15 @@ export default async function Transactions(req, res, next) {
     if (method === "POST") {
         
         const { type, name, icon, accountValue, date, doc, inInstallments, recurrent, inInstallmentsQtt, paid } = req.body;
-        console.log(name, icon, type, accountValue, date, doc, inInstallments, recurrent, inInstallmentsQtt, paid);
+        const { userId } = req.query
 
         if (!name) return res.status(422).json({ message: { type: "error", data: "Nome não pode ficar vazio" } });
         if (!accountValue || accountValue == 0) return res.status(422).json({ message: { type: "error", data: "Valor não pode ficar vazio" } });
         if (!date) return res.status(422).json({ message: { type: "error", data: "Selecione uma data" } });
-        //if (!doc || !doc.length) return res.status(422).json({ message: { type: "error", data: "Insira um comprovante" } });
         if (inInstallments && !inInstallmentsQtt) return res.status(422).json({ message: { type: "error", data: "Selecione as parcelas" } });
 
         let value = parseInt(accountValue)
-
+        console.log(date);
         try {
             if (doc.length > 0) {
                 try {
@@ -58,6 +58,17 @@ export default async function Transactions(req, res, next) {
                         inInstallmentValue: inInstallmentValue.toFixed(2),
                     });
                 }
+
+                try {
+                    Log.create({
+                        message: `criou uma ${type} parcelada em ${inInstallmentsQtt}x${inInstallmentValue.toFixed(2)} - ${name}/${value.toFixed(2)}`,
+                        date,
+                        user: userId
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+
                 return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
             }
 
@@ -74,6 +85,17 @@ export default async function Transactions(req, res, next) {
                     inInstallmentsQtt,
                     paid: true
                 })
+
+                try {
+                    Log.create({
+                        message: `criou uma ${type} - ${name}/${value.toFixed(2)}`,
+                        date,
+                        user: userId
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+
                 return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
             }
 
@@ -89,6 +111,16 @@ export default async function Transactions(req, res, next) {
                 inInstallmentsQtt,
                 paid
             })
+
+            try {
+                Log.create({
+                    message: `criou uma ${type} - ${name}/${value.toFixed(2)}`,
+                    date,
+                    user: userId
+                })
+            } catch (error) {
+                console.log(error);
+            }
 
             return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
         } catch (error) {

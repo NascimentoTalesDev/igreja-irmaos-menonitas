@@ -23,7 +23,7 @@ export default function useUserAuth() {
 
     async function authUser(data, user) {
         if (user?.rememberMe) {
-            localStorage.setItem('remember-me', JSON.stringify(user?.rememberMe))
+            localStorage.setItem('remember-me', true)
             localStorage.setItem('email', JSON.stringify(user?.email))
             localStorage.setItem('password', JSON.stringify(user?.password))
         }else{

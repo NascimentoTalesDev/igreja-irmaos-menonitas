@@ -5,8 +5,8 @@ import { getCurrentUser } from "@/helpers/getCurrentUser"
 import { NavContext } from "@/providers/NavbarProvider";
 
 const Header = () => {
-    const [user, setUser] = useState("")
     const { toggleMenuMobile } = useContext(NavContext)
+    const [user, setUser] = useState("")
 
     useEffect(()=>{
         let currentUser = getCurrentUser()

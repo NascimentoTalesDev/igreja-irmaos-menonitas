@@ -1,6 +1,6 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Category } from "@/models/Category";
-import { error } from "console";
+import { Log } from "@/models/Log";
 
 export default async function Categories (req, res) {
     await mongooseConnect()
@@ -9,7 +9,8 @@ export default async function Categories (req, res) {
     if (method === "POST") {            
         
         const { name, type, icon } = req.body;
-        
+        const { userId } = req.query
+
         if(!name) return res.status(422).json({ message: { type: "error", data: "Nome não pode ficar vazio" } })
         if(!type) return res.status(422).json({ message: { type: "error", data: "Tipo não pode ficar vazio"} });
         if(!icon) return res.status(422).json({ message: { type: "error", data: "Ícone não pode ficar vazio"} });
@@ -23,6 +24,16 @@ export default async function Categories (req, res) {
                 type,
                 icon
             })
+
+            try {
+                Log.create({
+                    message: `criou uma categoria - ${name} - do tipo`,
+                    category_type: type,
+                    user: userId
+                })
+            } catch (error) {
+                console.log(error);
+            }
 
             return res.json({category, message: { type: "success", data: "Categoria cadastrada com sucesso"}})
 

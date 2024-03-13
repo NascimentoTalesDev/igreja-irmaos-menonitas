@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TitleH3 from "./TitleH3";
 import InputContainerModal from "@/components/InputContainerModal";
 import MoreCategories from "@/components/MoreCategories";
@@ -12,6 +12,7 @@ import useFlashMessage from "@/hooks/useFlashMessage";
 import { api, versionApi } from "@/lib/configApi";
 import { ModalContext } from "@/providers/ModalProvider";
 import { useRouter } from "next/router";
+import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const NewCategory = () => {
     const { setDataModalSecond, toggleModalSecond, info, setInfo } = useContext(ModalSecondContext)
@@ -38,6 +39,13 @@ const NewCategory = () => {
 
     const [isSetting, setIsSetting] = useState(false)
 
+    const [user, setUser] = useState("")
+
+    useEffect(()=>{
+        let currentUser = getCurrentUser()
+        setUser(currentUser)
+    },[])
+
     const saveNewCategory = async () => {
         setIsSetting(true)
         let msgText;
@@ -45,7 +53,7 @@ const NewCategory = () => {
         const data = { name, type, icon: info?.childNodes[1].id }
 
         try {
-            await axios.post(`${api}/${versionApi}/categories`, data).then(response => {
+            await axios.post(`${api}/${versionApi}/categories?userId=${user?._id}`, data).then(response => {
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type

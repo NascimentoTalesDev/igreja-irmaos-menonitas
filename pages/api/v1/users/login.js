@@ -1,6 +1,7 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { User } from "@/models/User";
 import { Rule } from "@/models/Rule";
+import { Log } from "@/models/Log";
 import bcrypt from "bcrypt"
 import createToken from "@/helpers/create-token";
 
@@ -22,6 +23,11 @@ export default async function login(req, res){
             if (!passwordMatch) return res.status(401).json({ message: { type: "error", data: "Email e/ou senha inválidos"} });
             
             user.rule = await Rule.findById(user.rule)
+
+            await Log.create({
+                message : "Fez login no sistema",
+                user: user?._id
+            })
 
             await createToken(user, req, res)
 

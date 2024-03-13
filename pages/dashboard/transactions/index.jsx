@@ -38,6 +38,7 @@ const Transactions = ({ transactionsDb }) => {
       }
     })
   }
+  
   return (
     <Layout>
       <Title text="Movimentações" className="mb-[24px]" />

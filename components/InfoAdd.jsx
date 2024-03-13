@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TitleH3 from "./TitleH3";
 import UploadFiles from "./UploadFiles";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
@@ -18,6 +18,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ChevronDownIcon from "./icons/ChevronDownIcon";
 import ptBR from 'date-fns/locale/pt-BR';
+import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const InfoAdd = ({ valueCalc, type }) => {
     const { setFlashMessage } = useFlashMessage()
@@ -39,6 +40,13 @@ const InfoAdd = ({ valueCalc, type }) => {
 
     const [isSaving, setIsSaving] = useState(false)
 
+    const [user, setUser] = useState("")
+
+    useEffect(()=>{
+        let currentUser = getCurrentUser()
+        setUser(currentUser)
+    },[])
+
     const saveTransaction = async () => {
         setIsSaving(true)
 
@@ -55,7 +63,7 @@ const InfoAdd = ({ valueCalc, type }) => {
         const data = { type, name, icon, accountValue, date: startDate, doc, inInstallments, recurrent, inInstallmentsQtt, paid }
 
         try {
-            await axios.post(`${api}/${versionApi}/transactions`, data).then(response => {
+            await axios.post(`${api}/${versionApi}/transactions?userId=${user?._id}`, data).then(response => {
                 if (response?.data?.message?.type === "error") {
                     msgText = response?.data?.message?.data
                     msgType = response?.data?.message?.type

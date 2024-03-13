@@ -6,18 +6,27 @@ import Title from "@/components/Title";
 import Card from "@/components/Card";
 import CardError from "@/components/CardError";
 import CardLog from "../../../components/CardLog";
+import Paginate from "../../../components/Paginate";
+import { useState } from "react";
 
-const SystemLog = ({logs}) => {
+const SystemLog = ({ logs }) => {
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+  const lastIndex = currentPage * itemsPerPage;
+  const firstIndex = lastIndex - itemsPerPage;
+  const currentItem = logs.slice(firstIndex, lastIndex);
 
   return (
     <Layout>
       <Title text="Log do sistema" className="mb-[24px]" />
       {logs.length > 0 ? (
-        <Card>
-          {logs.map(log => (
-            <CardLog key={log?._id} log={log} />
-          ))}
-        </Card>
+        <>
+          <Card>
+              <CardLog logs={currentItem} />
+          </Card>
+          <Paginate itemsToPaginate={logs} itemsPerPage={itemsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} firstIndex={firstIndex} />
+        </>
       ):(
         <CardError message="Nenhum log encontrado." />
       )}

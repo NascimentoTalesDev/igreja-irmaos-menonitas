@@ -5,7 +5,6 @@ import sumNumbers from "@/lib/sumNumbers";
 import { contextUserAuth } from "@/providers/userAuthProvider";
 import { useContext } from "react";
 import ReactApexChart from "react-apexcharts";
-import Chart from "react-apexcharts";
 
 const Spreadsheet2 = ({ actualMonth, categories, className }) => {
     const { themeUser } = useContext(contextUserAuth)

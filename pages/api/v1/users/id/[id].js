@@ -1,5 +1,6 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { User } from "@/models/User";
+import { Log } from "@/models/Log";
 import bcrypt from "bcrypt"
 
 export default async function UserId(req, res) {
@@ -7,13 +8,20 @@ export default async function UserId(req, res) {
     const { method } = req
 
     if (method === "DELETE") {
-        const { id } = req.query
+        const { id, userId } = req.query
 
         try {
             const user = await User.findById(id)
 
             await user.deleteOne()
-
+            try {
+                Log.create({
+                    message: `excluiu o usuário ${user?.name}`,
+                    user: userId,
+                })
+            } catch (error) {
+                console.log(error);
+            }
             return res.send({ message: { type: "success", data: "Usuário excluido com sucesso" } })
         } catch (error) {
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
@@ -23,11 +31,20 @@ export default async function UserId(req, res) {
     if (method === "PATCH") {
 
         const { id } = req.query
-        const { name, email, password, rule } = req.body
+        const { name, email, password, rule, userId } = req.body
 
         try {
             const user = await User.findById(id)
             if(!user) return res.json({ message: { type: "error", data: "Falha ao atualizar o usuário" } })
+
+            try {
+                Log.create({
+                    message: `editou o usuário ${user?.name}`,
+                    user: userId,
+                })
+            } catch (error) {
+                console.log(error);
+            }
 
             if(name) user.name = name
             if(email) user.email = email
@@ -39,6 +56,7 @@ export default async function UserId(req, res) {
             }
 
             await user.save()
+
 
             return res.send({ message: { type: "success", data: "Usuário atualizado com sucesso" } })
         } catch (error) {

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TitleH3 from "./TitleH3";
 import InputContainerModal from "@/components/InputContainerModal";
 import Button from "./Button";
@@ -9,6 +9,7 @@ import { api, versionApi } from "@/lib/configApi";
 import { useRouter } from "next/router";
 import TitleH2 from "./TitleH2";
 import { ModalContext } from "@/providers/ModalProvider";
+import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const EditUser = ({ user, rules }) => {
     const { setFlashMessage } = useFlashMessage()
@@ -21,11 +22,18 @@ const EditUser = ({ user, rules }) => {
     const [rule, setRule] = useState("")
     const [isSaving, setIsSaving] = useState("")
     
+    const [currentUser, setCurrentUser] = useState("")
+
+    useEffect(()=>{
+        let current = getCurrentUser()
+        setCurrentUser(current)
+    },[])
+
     const updateUser = async () => {
         setIsSaving(true)
         let msgText;
         let msgType = 'success'
-        const data = { name, email, password, rule }
+        const data = { name, email, password, rule, userId: currentUser?._id }
 
         try {
             await axios.patch(`${api}/${versionApi}/users/id/${user?._id}?hash=${user?.password}`, data).then(response => {

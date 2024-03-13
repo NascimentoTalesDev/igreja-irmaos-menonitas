@@ -6,7 +6,7 @@ import { contextUserAuth } from "@/providers/userAuthProvider";
 import { useContext } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const Spreadsheet2 = ({ actualMonth, categories, className }) => {
+const Spreadsheet2 = ({ categories, className }) => {
     const { themeUser } = useContext(contextUserAuth)
 
     const options = {

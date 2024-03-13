@@ -26,12 +26,6 @@ const Spreadsheet2 = dynamic(() => import("@/components/Spreadsheet2"), {
 const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categories, performance }) => {
     let actualMonth = new Date().getMonth() + 1
 
-    // useEffect(()=> {
-    //     const message = "Acessou a página inicial"
-    //     const data = {message}
-    //     axios.post(`${api}/${versionApi}/log`, data)
-    // },[])
-
     return (
         <Layout>
             <div className="flex h-fi items-end mb-[24px]">
@@ -53,10 +47,10 @@ const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categori
 
             <Spreadsheet monthsFour={monthsFour} monthTree={monthTree} monthTwo={monthTwo} monthOne={monthOne} actualMonth={actualMonth} />
             
-            {categories?.length > 0 && (
+            {categories?.length > 4 && (
                 <>
                     <TitleH3 text="Top 5 gastos por categoria"  className="my-[16px]" />
-                    <Spreadsheet2 actualMonth={actualMonth} categories={categories}  />
+                    <Spreadsheet2 categories={categories}  />
                 </>
             )}
         </Layout>

@@ -2,6 +2,7 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Transaction } from "@/models/Transaction";
 import { Document } from "@/models/Document";
 import { Log } from "@/models/Log";
+import bcrypt from "bcrypt"
 
 export default async function Transactions(req, res, next) {
     await mongooseConnect();
@@ -41,7 +42,9 @@ export default async function Transactions(req, res, next) {
             if(inInstallments){
                 const inInstallmentValue = accountValue / inInstallmentsQtt
                 const dateOfFirstInstallment = new Date(date)
-
+                
+                const hash = await bcrypt.hash(name, 12)
+                
                 for (let i = 1; i <= inInstallmentsQtt; i++) {
                     const expirationData = new Date(dateOfFirstInstallment);
                     expirationData.setMonth(expirationData.getMonth() + i - 1); // Adiciona 'i-1' meses à data da primeira parcela
@@ -61,6 +64,7 @@ export default async function Transactions(req, res, next) {
                         paid: paidStatus,
                         inInstallmentNumber: i,
                         inInstallmentValue: inInstallmentValue.toFixed(2),
+                        hash,
                     });
                 }
 

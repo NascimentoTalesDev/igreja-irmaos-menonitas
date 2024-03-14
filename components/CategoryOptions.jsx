@@ -14,7 +14,7 @@ import { getCurrentUser } from "@/helpers/getCurrentUser";
 
 const CategoryOptions = ({ category }) => {
     const { toggleModal} = useContext(ModalContext)
-    const {setDataModalThird, toggleModalThird, info, setInfo} = useContext(ModalThirdContext)
+    const { setDataModalThird, toggleModalThird } = useContext(ModalThirdContext)
 
     const { setFlashMessage } = useFlashMessage()
     const router = useRouter()

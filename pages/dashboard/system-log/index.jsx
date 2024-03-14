@@ -12,7 +12,7 @@ import { useState } from "react";
 const SystemLog = ({ logs }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 20;
   const lastIndex = currentPage * itemsPerPage;
   const firstIndex = lastIndex - itemsPerPage;
   const currentItem = logs.slice(firstIndex, lastIndex);

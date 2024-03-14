@@ -2,15 +2,15 @@ import Image from "next/image";
 import formatDate from "@/lib/formatDate"
 import formatName from "@/lib/formatName";
 import formatLocalCurrency from "@/lib/formatLocalCurrency";
-import EditTransaction from "@/components/EditTransaction";
 import { ModalContext } from "@/providers/ModalProvider";
 import { useContext } from "react";
+import InfoTransaction from "./InfoTransaction";
 
 const CardTransaction = ({ transaction }) => { 
     const { toggleModal, setDataModal } = useContext(ModalContext)
    
     return (
-        <div onClick={() => { toggleModal(), setDataModal(<EditTransaction transaction={transaction}/>)}} className="flex cursor-pointer mb-[2px] justify-between items-center min-h-[60px] border-b-[0.5px] border-b-gray-300 dark:border-b-secondary  ">
+        <div onClick={() => { toggleModal(), setDataModal(<InfoTransaction transaction={transaction}/>)}} className="flex cursor-pointer mb-[2px] justify-between items-center min-h-[60px] border-b-[0.5px] border-b-gray-300 dark:border-b-secondary  ">
             <div className="flex justify-center items-center">
                 <Image id={transaction?.icon} width={30} height={30} alt="Image" src={`/categories/${transaction?.icon}.png`} />
                 <div className="flex flex-col ml-[10px]">

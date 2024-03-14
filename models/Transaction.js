@@ -13,7 +13,7 @@ const TransactionSchema = new Schema ({
     inInstallmentsQtt: { type: Number },
     inInstallmentValue: { type: Number },
     inInstallmentNumber: { type: Number },
-    
+    hash: { type: String },
 }, {
     timestamps: true,
 });

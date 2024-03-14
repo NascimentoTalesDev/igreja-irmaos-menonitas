@@ -58,7 +58,7 @@ const Paginate = ({
         <li
           key={i}
           onClick={() => changeCPage(n)}
-          className={`rounded text-light px-1 min-w-[23px] text-center ${currentPage === n ? " bg-primary " : " cursor-pointer bg-secondary_less hover:bg-secondary_more"}`}
+          className={`rounded text-light px-1 min-w-[23px] text-center transition-all ${currentPage === n ? " bg-primary " : " cursor-pointer bg-mygray hover:bg-mygray_more dark:bg-secondary_less "}`}
         >
           <Link href="#">{n}</Link>
         </li>
@@ -72,7 +72,7 @@ const Paginate = ({
     <nav className="mt-[30px] flex items-center justify-center">
       <ul className="flex text-[16px] gap-2">
         {currentPage !== 1 && (
-          <li className="rounded bg-primary text-light px-1 hover:bg-primary_less" onClick={prePage}>
+          <li className="rounded bg-primary transition-all text-light px-1 hover:bg-primary_less" onClick={prePage}>
             <Link href="#">Anterior</Link>
           </li>
         )}
@@ -82,7 +82,7 @@ const Paginate = ({
         {npage !== currentPage && (
           <>
             {morepages}
-            <li className="rounded bg-primary text-light px-1 hover:bg-primary_less" onClick={nextPage}>
+            <li className="rounded bg-primary transition-all text-light px-1 hover:bg-primary_less" onClick={nextPage}>
               <Link href="#">Próximo</Link>
             </li>
           </>

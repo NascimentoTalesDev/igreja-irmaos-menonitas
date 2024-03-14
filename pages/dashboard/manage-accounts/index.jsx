@@ -13,7 +13,7 @@ import CardUser from "@/components/CardUser";
 
 const ManageAccounts = ({ usersDb, rulesDb }) => {
   const { toggleModal, setDataModal } = useContext(ModalContext)
-
+  
   return (
     <Layout>
       <div className="flex justify-between">
@@ -34,15 +34,29 @@ export default ManageAccounts;
 
 export async function getServerSideProps(req) {
   await mongooseConnect()
+  const categoryOrder = {
+    "administrador": 1,
+    "presidente": 2,
+    "tesoureiro": 3,
+    "pastor": 4,
+    "contabilidade": 5,
+    "membro": 6
+  };
+
   const usersDb = await User.find({}).sort({ "rule": 1 })
   const rulesDb = await Rule.find({})
   usersDb.docs = await Promise.all(usersDb.map(async (user) => {
     user.rule = await Rule.findById(user.rule).select("name")
     return user
   }))
+
+  const sortedData = usersDb.sort((a, b) => {
+    return categoryOrder[a.rule.name] - categoryOrder[b.rule.name];
+  });
+
   return {
     props: {
-      usersDb: JSON.parse(JSON.stringify(usersDb)),
+      usersDb: JSON.parse(JSON.stringify(sortedData)),
       rulesDb: JSON.parse(JSON.stringify(rulesDb)),
     }
   }

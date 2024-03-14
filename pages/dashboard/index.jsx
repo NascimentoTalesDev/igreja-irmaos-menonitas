@@ -14,6 +14,8 @@ import DizimoIcon from "@/components/icons/DizimoIcon";
 import { useEffect } from "react";
 import axios from "axios";
 import { api, versionApi } from "@/lib/configApi";
+import { useRouter } from "next/router";
+import useFlashMessage from "@/hooks/useFlashMessage";
 
 const Spreadsheet = dynamic(() => import("@/components/Spreadsheet"), {
     ssr: false
@@ -24,7 +26,18 @@ const Spreadsheet2 = dynamic(() => import("@/components/Spreadsheet2"), {
 })
 
 const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categories, performance }) => {
+    const { setFlashMessage } = useFlashMessage()
+
     let actualMonth = new Date().getMonth() + 1
+    const router = useRouter();
+    
+    useEffect(()=>{
+        let msgText = router.query.error || '';
+
+        if (msgText) {
+            setFlashMessage(msgText, 'error')
+        }
+    },[router, setFlashMessage])
 
     return (
         <Layout>

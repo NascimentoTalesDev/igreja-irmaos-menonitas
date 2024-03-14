@@ -15,6 +15,7 @@ const font = Roboto({
 });
 
 export default function App({ Component, pageProps }: AppProps) {
+
   return (
     <div className={`w-screen h-screen overflow-y-hidden ${font.className}`}>
       <UserAuthProvider>

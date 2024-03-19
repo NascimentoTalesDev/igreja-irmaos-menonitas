@@ -29,7 +29,7 @@ const NewCategory = () => {
         },
         {
             _id: 3,
-            name: "Investimento"
+            name: "Transferência"
         },
         {
             _id: 4,

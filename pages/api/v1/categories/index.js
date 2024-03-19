@@ -54,7 +54,7 @@ export default async function Categories (req, res) {
             case "Receita":
                 tipo = 2
                 break;
-            case "Investimento":
+            case "Transferência":
                 tipo = 3
                 break;
             case "Rendimento":

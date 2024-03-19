@@ -20,7 +20,7 @@ const CardLog = ({ logs }) => {
                         <span className="hidden md:inline-block md:ml-[4px]">{formatName(log?.user?.name?.split(" ")[2])}</span>
                         <span className="mx-[3px]">-</span>
                         <span>{log?.message}</span>
-                        <span className="ml-[3px]">{log?.category_type === 1 && "despesa"}{log?.category_type === 2 && "investimento"}{log?.category_type === 3 && "receita"}</span>
+                        <span className="ml-[3px]">{log?.category_type === 1 && "Despesa"}{log?.category_type === 2 && "Receita"}{log?.category_type === 3 && "Transferência"}{log?.category_type === 4 && "Rendimento"}</span>
                         <span className="-ml-[3px]">{log?.date && `/${formatDate(log?.date)}`}</span>
                     </div>
                 </div>

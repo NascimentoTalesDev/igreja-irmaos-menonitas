@@ -18,7 +18,7 @@ const Add = () => {
                 <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Despesa" />) }} className="border border-danger bg-danger " text="Despesa" icon={<ChevronDownCircleIcon />}  />
                 <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Receita" />) }} className="border border-success bg-success" text="Receita" icon={<ChevronUpCircleIcon />} />
                 <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Transferencia" />) }} className="border border-success" classNameH2="text-secondary" text="Transferência" icon={<TrendingUpOutlineIcon />} />
-                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Rendimentos" />) }} className="border border-success" classNameH2="text-secondary" text="Rendimentos" icon={<TrendingUpOutlineIcon />} />
+                <AddCardButton onClick={()=> {toggleModalSecond(), setDataModalSecond(<Calculator type="Rendimento" />) }} className="border border-success" classNameH2="text-secondary" text="Rendimento" icon={<TrendingUpOutlineIcon />} />
             </div>          
         </div>
     );

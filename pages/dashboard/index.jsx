@@ -12,8 +12,6 @@ import dynamic from "next/dynamic"
 import TitleH3 from "@/components/TitleH3";
 import DizimoIcon from "@/components/icons/DizimoIcon";
 import { useEffect } from "react";
-import axios from "axios";
-import { api, versionApi } from "@/lib/configApi";
 import { useRouter } from "next/router";
 import useFlashMessage from "@/hooks/useFlashMessage";
 
@@ -102,7 +100,7 @@ export async function getServerSideProps(req) {
         date: { $gte: firstDayOfMonth(actualYear, new Date().getMonth() - 2), $lt: lastDayOfMonth(actualYear, new Date().getMonth() - 2) }
     })
 
-    const dizimo = await Transaction.findOne({ name: "dízimo igreja" }, null, { sort: { "createdAt": -1 }, limit: 1, });
+    const dizimo = await Transaction.findOne({ name: "dízimo igreja", paid: true }, null, { sort: { "createdAt": -1 }, limit: 1, });
 
 
     const categories = await Transaction.aggregate([
@@ -143,7 +141,7 @@ export async function getServerSideProps(req) {
         {
             $match: {
                 name: "rendimento",
-                type: "rendimentos",
+                type: "rendimento",
             },
         },
         {

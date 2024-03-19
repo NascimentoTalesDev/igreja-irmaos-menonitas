@@ -10,7 +10,7 @@ export default async function Transactions(req, res, next) {
 
     if (method === "POST") {
         
-        const { type, name, icon, accountValue, date, doc, inInstallments, recurrent, inInstallmentsQtt, paid } = req.body;
+        const { type, name, name_two, icon, icon_two, accountValue, date, doc, inInstallments, recurrent, inInstallmentsQtt, paid, recurrentType } = req.body;
         const { userId } = req.query
 
         if (!name) return res.status(422).json({ message: { type: "error", data: "Nome não pode ficar vazio" } });
@@ -39,45 +39,135 @@ export default async function Transactions(req, res, next) {
                 }
             }
 
-            if(inInstallments){
-                const inInstallmentValue = accountValue / inInstallmentsQtt
-                const dateOfFirstInstallment = new Date(date)
-                
-                const hash = await bcrypt.hash(name, 12)
-                
-                for (let i = 1; i <= inInstallmentsQtt; i++) {
-                    const expirationData = new Date(dateOfFirstInstallment);
-                    expirationData.setMonth(expirationData.getMonth() + i - 1); // Adiciona 'i-1' meses à data da primeira parcela
-                    
-                    const paidStatus = paid && i === 1
+            if (type === "Despesa") {
 
-                    await Transaction.create({
-                        name,
-                        icon,
-                        type,
-                        accountValue: value.toFixed(2) ,
-                        date: expirationData,
-                        doc,
-                        inInstallments,
-                        recurrent,
-                        inInstallmentsQtt,
-                        paid: paidStatus,
-                        inInstallmentNumber: i,
-                        inInstallmentValue: inInstallmentValue.toFixed(2),
-                        hash,
-                    });
+                if(inInstallments){
+                    const inInstallmentValue = accountValue / inInstallmentsQtt
+                    const dateOfFirstInstallment = new Date(date)
+                    
+                    const hash = await bcrypt.hash(name, 12)
+                    
+                    for (let i = 1; i <= inInstallmentsQtt; i++) {
+                        const expirationData = new Date(dateOfFirstInstallment);
+                        expirationData.setMonth(expirationData.getMonth() + i - 1);
+                        
+                        const paidStatus = paid && i === 1
+    
+                        await Transaction.create({
+                            name,
+                            icon,
+                            type,
+                            accountValue: value.toFixed(2) ,
+                            date: expirationData,
+                            doc,
+                            inInstallments,
+                            recurrent,
+                            inInstallmentsQtt,
+                            paid: paidStatus,
+                            inInstallmentNumber: i,
+                            inInstallmentValue: inInstallmentValue.toFixed(2),
+                            hash,
+                        });
+                    }
+    
+                    try {
+                        Log.create({
+                            message: `criou uma ${type} parcelada em ${inInstallmentsQtt}x${inInstallmentValue.toFixed(2)} - ${name}/${value.toFixed(2)}`,
+                            date,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+    
+                    return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
                 }
+                
+                if(recurrent){
+                    const inInstallmentValue = accountValue / inInstallmentsQtt
+                    const dateOfFirstInstallment = new Date(date)
+                    
+                    const hash = await bcrypt.hash(name, 12)
+                    
+                    if (recurrentType === "monthly") {
+                        for (let i = 1; i <= 2; i++) {
+                            const expirationData = new Date(dateOfFirstInstallment);
+                            expirationData.setMonth(expirationData.getMonth() + i - 1); 
+                            
+                            const paidStatus = paid && i === 1
+        
+                            await Transaction.create({
+                                name,
+                                icon,
+                                type,
+                                accountValue: value.toFixed(2) ,
+                                date: expirationData,
+                                doc,
+                                inInstallments,
+                                recurrent,
+                                inInstallmentsQtt,
+                                paid: paidStatus,
+                                recurrentType,
+                                inInstallmentNumber: i,
+                                inInstallmentValue: inInstallmentValue.toFixed(2),
+                                hash,
+                            });
+                        }
+                        return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
+                    }
+
+                    if (recurrentType === "annually") {
+                        for (let i = 1; i <= 3; i++) {
+                            const expirationData = new Date(dateOfFirstInstallment);
+                            expirationData.setFullYear(expirationData.getFullYear() + i - 1);
+                            
+                            const paidStatus = paid && i === 1
+        
+                            await Transaction.create({
+                                name,
+                                icon,
+                                type,
+                                accountValue: value.toFixed(2) ,
+                                date: expirationData,
+                                doc,
+                                inInstallments,
+                                recurrent,
+                                inInstallmentsQtt,
+                                paid: paidStatus,
+                                recurrentType,
+                                inInstallmentNumber: i,
+                                inInstallmentValue: inInstallmentValue.toFixed(2),
+                                hash,
+                            });
+                        }
+                        return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
+                    }
+
+                }
+
+                await Transaction.create({
+                    name,
+                    icon,
+                    type,
+                    accountValue: value.toFixed(2),
+                    date,
+                    doc,
+                    inInstallments,
+                    recurrent,
+                    inInstallmentsQtt,
+                    paid
+                })
 
                 try {
                     Log.create({
-                        message: `criou uma ${type} parcelada em ${inInstallmentsQtt}x${inInstallmentValue.toFixed(2)} - ${name}/${value.toFixed(2)}`,
+                        message: `criou uma ${type} - ${name}/${value.toFixed(2)}`,
                         date,
                         user: userId
                     })
                 } catch (error) {
                     console.log(error);
                 }
-
+    
                 return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
             }
 
@@ -108,7 +198,7 @@ export default async function Transactions(req, res, next) {
                 return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
             }
 
-            if(type === "Rendimentos"){
+            if(type === "Rendimento"){
                 await Transaction.create({
                     name,
                     icon,
@@ -135,30 +225,31 @@ export default async function Transactions(req, res, next) {
                 return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
             }
 
-            await Transaction.create({
-                name,
-                icon,
-                type,
-                accountValue: value.toFixed(2),
-                date,
-                doc,
-                inInstallments,
-                recurrent,
-                inInstallmentsQtt,
-                paid
-            })
-
-            try {
-                Log.create({
-                    message: `criou uma ${type} - ${name}/${value.toFixed(2)}`,
+            if (type === "Transferencia") {
+                await Transaction.create({
+                    name,
+                    name_two,
+                    icon,
+                    icon_two,
+                    type,
+                    accountValue: value.toFixed(2),
                     date,
-                    user: userId
+                    doc,
                 })
-            } catch (error) {
-                console.log(error);
+
+                try {
+                    Log.create({
+                        message: `criou uma ${type} - de: ${name} para: ${name_two} valor - ${value.toFixed(2)}`,
+                        date,
+                        user: userId
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+    
+                return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
             }
 
-            return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
         } catch (error) {
             console.log(error);
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });

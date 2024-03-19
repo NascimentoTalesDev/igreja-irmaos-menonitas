@@ -43,9 +43,30 @@ export default async function Categories (req, res) {
     }
 
     if (method === "GET") {
+
+        const { type } = req.query
+        let tipo;
+
+        switch (type) {
+            case "Despesa":
+                tipo = 1
+                break;
+            case "Receita":
+                tipo = 2
+                break;
+            case "Investimento":
+                tipo = 3
+                break;
+            case "Rendimento":
+                tipo = 4
+                break;
+            default:
+                break;
+        }
+
         try {
-            const categories = await Category.find({})
-            
+            const categories = await Category.find({type : tipo})
+            console.log(categories);
             return res.json(categories)
         } catch (error) {
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });

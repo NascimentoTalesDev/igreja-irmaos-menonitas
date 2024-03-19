@@ -8,7 +8,9 @@ const Revenue = ({ data }) => {
     data.forEach(element => {
         switch (element.type) {
             case "receita":
-                monthsFourChart.receita.push(element.accountValue)
+                if (element.paid) {
+                    monthsFourChart.receita.push(element.accountValue)
+                }
             break;
             default:
                 break;

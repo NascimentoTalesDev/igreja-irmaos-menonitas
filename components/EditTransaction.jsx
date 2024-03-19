@@ -22,10 +22,10 @@ import formatName from "@/lib/formatName";
 import formatLocalCurrency from "@/lib/formatLocalCurrency";
 import sumNumbers from "@/lib/sumNumbers";
 
-const EditCategory = ({ transaction }) => {
+const EditTransaction = ({ transaction }) => {
     const { setFlashMessage } = useFlashMessage()
     const [isSaving, setIsSaving] = useState(false)
-    const { setDataModalSecond, toggleModalSecond, info, setInfo } = useContext(ModalSecondContext)
+    const { setDataModalSecond, toggleModalSecond, info, setInfo, infoSecondTwo, setInfoSecondTwo } = useContext(ModalSecondContext)
     const { infoThird, setInfoThird } = useContext(ModalThirdContext)
     const [startDate, setStartDate] = useState(new Date());
     const [doc, setDoc] = useState([])
@@ -34,10 +34,10 @@ const EditCategory = ({ transaction }) => {
     const [paid, setPaid] = useState(false)
     const [user, setUser] = useState("")
 
-    useEffect(()=>{
+    useEffect(() => {
         let currentUser = getCurrentUser()
         setUser(currentUser)
-    },[])
+    }, [])
 
     const updateTransaction = async () => {
         setIsSaving(true)
@@ -46,9 +46,17 @@ const EditCategory = ({ transaction }) => {
 
         let name;
         let icon;
+        let name_two;
+        let icon_two;
+
         if (info) {
             name = info?.childNodes[2].innerHTML
             icon = info?.childNodes[1]?.id
+        }
+
+        if (infoSecondTwo) {
+            name_two = infoSecondTwo?.childNodes[2].innerHTML
+            icon_two = infoSecondTwo?.childNodes[1]?.id
         }
 
         let accountValue;
@@ -56,7 +64,7 @@ const EditCategory = ({ transaction }) => {
             accountValue = infoThird?.join("");
         }
 
-        const data = { type:transaction?.type, name, icon, date: startDate, doc, paid, accountValue, updateAll, hash: transaction?.hash }
+        const data = { type: transaction?.type, name, name_two, icon, icon_two, date: startDate, doc, paid, accountValue, updateAll, hash: transaction?.hash }
 
         try {
             await axios.patch(`${api}/${versionApi}/transactions/id/${transaction?._id}?userId=${user?._id}`, data).then(response => {
@@ -87,6 +95,7 @@ const EditCategory = ({ transaction }) => {
 
     useEffect(() => {
         setInfo("")
+        setInfoSecondTwo("")
         setInfoThird("")
         setStartDate(transaction?.date)
         setDoc(transaction?.doc || [])
@@ -98,7 +107,7 @@ const EditCategory = ({ transaction }) => {
             {transaction?.type === "despesa" && (
                 <>
                     <TitleH3 text="Nome por categoria" className="my-[5px]" />
-                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={"Despesa"} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
                         {info ?
                             (
                                 <div className="flex items-center justify-between w-full">
@@ -130,15 +139,21 @@ const EditCategory = ({ transaction }) => {
                     <TitleH3 text="Comprovante" className="my-[5px]" />
                     <UploadFiles className={`flex gap-3 mb-[10px]`} files={doc} setFiles={setDoc} />
                     <div className={`flex mb-[10px] justify-between items-center ${recurrent ? "hidden " : "flex "}`}>
-                        {paid ? 
-                        (
-                            <TitleH3 text="Já paguei" />
-                        ):(
-                            <TitleH3 text="Não paguei" />
-                        )}
+                        {paid ?
+                            (
+                                <TitleH3 text="Já paguei" />
+                            ) : (
+                                <TitleH3 text="Não paguei" />
+                            )}
                         <button value={paid} onClick={() => setPaid(!paid)} >{paid ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
                     </div>
                     {transaction?.inInstallments && (
+                        <div className={`flex mb-[10px] justify-between items-center ${recurrent ? "hidden " : "flex "}`}>
+                            <span>Alterar todas as parcelas?</span>
+                            <button value={updateAll} onClick={() => setUpdateAll(!updateAll)} >{updateAll ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
+                        </div>
+                    )}
+                    {transaction?.recurrentType && (
                         <div className={`flex mb-[10px] justify-between items-center ${recurrent ? "hidden " : "flex "}`}>
                             <span>Alterar todas as parcelas?</span>
                             <button value={updateAll} onClick={() => setUpdateAll(!updateAll)} >{updateAll ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
@@ -151,7 +166,174 @@ const EditCategory = ({ transaction }) => {
                             {infoThird ?
                                 (
                                     <>
-                                       <span>{formatLocalCurrency(sumNumbers(infoThird))}</span> 
+                                        <span>{formatLocalCurrency(sumNumbers(infoThird))}</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>{transaction?.inInstallments ? formatLocalCurrency(transaction?.inInstallmentValue) : formatLocalCurrency(transaction?.accountValue)}</span>
+                                    </>
+                                )}
+                        </>
+                    </div>
+
+                    <Button onClick={updateTransaction} text={`${isSaving ? "Atualizando..." : "Atualizar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
+                </>
+            )}
+
+            {transaction?.type === "receita" && (
+                <>
+                    <TitleH3 text="Nome por categoria" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={"Receita"} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        {info ?
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
+                                        <span className="text-secondary dark:text-light">{info?.childNodes[2]?.innerText}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+
+                            ) : (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + transaction.icon + ".png"} />
+                                        <span className="text-secondary dark:text-light">{transaction.name}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+                            )}
+                    </div>
+
+                    <TitleH3 text="Data" className="my-[5px]" />
+                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
+                        <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="custom-datepicker bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
+                    </div>
+
+                    <TitleH3 text="Comprovante" className="my-[5px]" />
+                    <UploadFiles className={`flex gap-3 mb-[10px]`} files={doc} setFiles={setDoc} />
+
+                    <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
+                </>
+            )}
+
+            {transaction?.type === "rendimento" && (
+                <>
+                    <TitleH3 text="Nome por categoria" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={"Rendimento"} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        {info ?
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
+                                        <span className="text-secondary dark:text-light">{info?.childNodes[2]?.innerText}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+
+                            ) :
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + transaction?.icon + ".png"} />
+                                        <span className="text-secondary dark:text-light">{transaction?.name}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+                            )}
+                    </div>
+
+                    <TitleH3 text="Data" className="my-[5px]" />
+                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
+                        <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="custom-datepicker bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
+                    </div>
+
+                    <TitleH3 text="Valor" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<CalculatorEdit />) }} className="w-full text-mygray_more dark:text-light cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        <>
+                            {infoThird ?
+                                (
+                                    <>
+                                        <span>{formatLocalCurrency(sumNumbers(infoThird))}</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>{transaction?.inInstallments ? formatLocalCurrency(transaction?.inInstallmentValue) : formatLocalCurrency(transaction?.accountValue)}</span>
+                                    </>
+                                )}
+                        </>
+                    </div>
+
+                    <Button onClick={updateTransaction} text={`${isSaving ? "Atualizando..." : "Atualizar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
+                </>
+            )}
+
+            {transaction?.type === "transferencia" && (
+                <>
+                    <TitleH3 text="De:" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={"Transferencia"} choice={1} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        {info ?
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
+                                        <span className="text-secondary dark:text-light">{info?.childNodes[2]?.innerText}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+
+                            ) :
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + transaction.icon + ".png"} />
+                                        <span className="text-secondary dark:text-light">{transaction.name}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+                            )
+                        }
+                    </div>
+
+                    <TitleH3 text="Para:" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={"Transferencia"} choice={2} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        {infoSecondTwo ?
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={infoSecondTwo} width={30} height={30} alt="Image" src={"/categories/" + infoSecondTwo?.childNodes[1]?.id + ".png"} />
+                                        <span className="text-secondary dark:text-light">{infoSecondTwo?.childNodes[2]?.innerText}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+
+                            ) :
+                            (
+                                <div className="flex items-center justify-between w-full">
+                                    <div className="flex items-center  gap-4">
+                                        <Image id={infoSecondTwo} width={30} height={30} alt="Image" src={"/categories/" + transaction?.icon_two + ".png"} />
+                                        <span className="text-secondary dark:text-light">{transaction?.name_two}</span>
+                                    </div>
+                                    <ChevronRightIcon />
+                                </div>
+                            )}
+                    </div>
+
+                    <TitleH3 text="Data" className="my-[5px]" />
+                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
+                        <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="custom-datepicker bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
+                    </div>
+
+                    <TitleH3 text="Valor" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<CalculatorEdit />) }} className="w-full text-mygray_more dark:text-light cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        <>
+                            {infoThird ?
+                                (
+                                    <>
+                                        <span>{formatLocalCurrency(sumNumbers(infoThird))}</span>
                                     </>
                                 ) : (
                                     <>
@@ -168,4 +350,4 @@ const EditCategory = ({ transaction }) => {
     )
 }
 
-export default EditCategory;
+export default EditTransaction;

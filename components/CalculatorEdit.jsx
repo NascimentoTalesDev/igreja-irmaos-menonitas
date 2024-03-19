@@ -5,7 +5,7 @@ import { ModalThirdContext } from "@/providers/ModalThirdProvider";
 import CheckIcon from "./icons/CheckIcon";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
 
-const Add = ({ type }) => {
+const Add = () => {
     const { toggleModalSecond } = useContext(ModalSecondContext)
     const { setInfoThird } = useContext(ModalThirdContext)
 
@@ -55,7 +55,7 @@ const Add = ({ type }) => {
 
     return (
         <div className="w-full max-w-[320px] h-full flex flex-col">
-            <TitleH3 className="text-center" text={`Qual o valor ${type === "Rendimentos" ? `dos seus ${type}` : `da sua ${type}`}?`} />
+            <TitleH3 className="text-center" text={`Qual o é o novo valor?`} />
             <div className="mt-[80px] flex items-end">
                 <h2 className="ml-[10px] font-bold text-3xl ">{formattedResult}</h2>
             </div>

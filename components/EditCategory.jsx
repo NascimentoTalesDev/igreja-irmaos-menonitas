@@ -29,12 +29,17 @@ const EditCategory = ({ category }) => {
         },
         {
             _id: 2,
-            name: "Investimento"
+            name: "Receita"
         },
         {
             _id: 3,
-            name: "Receita"
-        }]
+            name: "Investimento"
+        },
+        {
+            _id: 4,
+            name: "Rendimento"
+        }
+    ]
     const [name, setName] = useState("")
     const [type, setType] = useState("")
     const [icon, setIcon] = useState("")

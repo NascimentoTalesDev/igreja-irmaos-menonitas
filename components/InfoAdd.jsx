@@ -19,10 +19,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import ChevronDownIcon from "./icons/ChevronDownIcon";
 import ptBR from 'date-fns/locale/pt-BR';
 import { getCurrentUser } from "@/helpers/getCurrentUser";
+import formatLocalCurrency from "@/lib/formatLocalCurrency";
 
 const InfoAdd = ({ valueCalc, type }) => {
     const { setFlashMessage } = useFlashMessage()
-    const { setDataModalSecond, toggleModalSecond, info, setInfo } = useContext(ModalSecondContext)
+    const { setDataModalSecond, toggleModalSecond, info, setInfo, infoSecondTwo, setInfoSecondTwo } = useContext(ModalSecondContext)
     const { setDataModalThird, toggleModalThird } = useContext(ModalThirdContext)
     const { toggleModal } = useContext(ModalContext)
 
@@ -35,6 +36,7 @@ const InfoAdd = ({ valueCalc, type }) => {
     const [inInstallments, setInInstallments] = useState(false)
 
     const [recurrent, setRecurrent] = useState(false)
+    const [recurrentType, setRecurrentType] = useState("annually")
 
     const [paid, setPaid] = useState(false)
 
@@ -42,10 +44,11 @@ const InfoAdd = ({ valueCalc, type }) => {
 
     const [user, setUser] = useState("")
 
-    useEffect(()=>{
+    useEffect(() => {
         let currentUser = getCurrentUser()
         setUser(currentUser)
-    },[])
+        setInInstallmentsQtt(0)
+    }, [])
 
     const saveTransaction = async () => {
         setIsSaving(true)
@@ -54,13 +57,20 @@ const InfoAdd = ({ valueCalc, type }) => {
         let msgType = 'success'
         let name;
         let icon;
+        let name_two;
+        let icon_two;
 
         if (info) {
             name = info?.childNodes[2]?.innerText;
             icon = info?.childNodes[1]?.id
         }
 
-        const data = { type, name, icon, accountValue, date: startDate, doc, inInstallments, recurrent, inInstallmentsQtt, paid }
+        if (infoSecondTwo) {
+            name_two = infoSecondTwo?.childNodes[2]?.innerText;
+            icon_two = infoSecondTwo?.childNodes[1]?.id
+        }
+
+        const data = { type, name, name_two, icon, icon_two, accountValue, date: startDate, doc, inInstallments, recurrent, inInstallmentsQtt, paid, recurrentType }
 
         try {
             await axios.post(`${api}/${versionApi}/transactions?userId=${user?._id}`, data).then(response => {
@@ -71,6 +81,7 @@ const InfoAdd = ({ valueCalc, type }) => {
                     msgText = response?.data?.message?.data
                     setDataModalThird("")
                     setInfo("")
+                    setInfoSecondTwo("")
                     toggleModalThird()
                     toggleModal()
                 }
@@ -90,13 +101,13 @@ const InfoAdd = ({ valueCalc, type }) => {
             </div>
         );
     };
-    
+
     return (
         <div>
             {type === "Despesa" && (
                 <>
                     <TitleH3 text="Nome por categoria" className="my-[5px]" />
-                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={type} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
                         {info ?
                             (
                                 <div className="flex items-center justify-between w-full">
@@ -124,10 +135,17 @@ const InfoAdd = ({ valueCalc, type }) => {
 
                     <div className={`flex mb-[10px] justify-between items-center ${recurrent ? "hidden " : "flex "}`}>
                         <span>É parcelado?</span>
-                        <button onClick={(ev) => setInInstallments(!inInstallments)}>{inInstallments ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
+                        <button onClick={(ev) => { setInInstallmentsQtt(1), setInInstallments(!inInstallments) }}>{inInstallments ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
                     </div>
                     {inInstallments && (
-                        <InInstallmentsPage onChange={(ev) => setInInstallmentsQtt(ev.target.value)} />
+                        <div className="flex justify-between items-center py-[16px] ">
+                            <InInstallmentsPage accountValue={accountValue} onChange={(ev) => setInInstallmentsQtt(ev.target.value)} />
+                            {inInstallmentsQtt > 1 ? (
+                                <span>{inInstallmentsQtt} parcelas de R$ {formatLocalCurrency(accountValue / inInstallmentsQtt)}</span>
+                            ) : (
+                                <span>1 parcela de R$ {formatLocalCurrency(accountValue / 1)}</span>
+                            )}
+                        </div>
                     )}
 
                     <div className={`flex mb-[10px] justify-between items-center ${inInstallments ? "hidden" : " flex"}`}>
@@ -135,7 +153,15 @@ const InfoAdd = ({ valueCalc, type }) => {
                         <button onClick={(ev) => setRecurrent(!recurrent)}>{recurrent ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
                     </div>
                     {recurrent && (
-                        <div>Selecione a recorrência</div>
+                        <div className="flex justify-between items-center mt-[20px] mb-[25px] ">
+                            <span>
+                                Selecione a recorrência
+                            </span>
+                            <select value={recurrentType} onChange={(ev) => setRecurrentType(ev.target.value)} className="bg-light  dark:bg-secondary_less" >
+                                <option value="annually">Anualmente</option>
+                                <option value="monthly">Mensalmente</option>
+                            </select>
+                        </div>
                     )}
 
                     {type === "Despesa" && (
@@ -152,7 +178,7 @@ const InfoAdd = ({ valueCalc, type }) => {
             {type === "Receita" && (
                 <>
                     <TitleH3 text="Nome por categoria" className="my-[5px]" />
-                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={type} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
                         {info ?
                             (
                                 <div className="flex items-center justify-between w-full">
@@ -181,10 +207,11 @@ const InfoAdd = ({ valueCalc, type }) => {
                     <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
                 </>
             )}
-            {type === "Rendimentos" && (
+
+            {type === "Rendimento" && (
                 <>
                     <TitleH3 text="Nome por categoria" className="my-[5px]" />
-                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={type} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
                         {info ?
                             (
                                 <div className="flex items-center justify-between w-full">
@@ -213,8 +240,8 @@ const InfoAdd = ({ valueCalc, type }) => {
 
             {type === "Transferencia" && (
                 <>
-                <TitleH3 text="De:" className="my-[5px]" />
-                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                    <TitleH3 text="De:" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={type} choice={1} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
                         {info ?
                             (
                                 <div className="flex items-center justify-between w-full">
@@ -225,28 +252,39 @@ const InfoAdd = ({ valueCalc, type }) => {
                                     <ChevronRightIcon />
                                 </div>
 
-                            ) :
+                            ):
                             (
                                 <span>Selecionar ícone</span>
-                            )}
+                            )
+                        }
                     </div>
-                    <TitleH3 text="Para?" className="my-[5px]" />
-                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
-                        {info ?
+
+                    <TitleH3 text="Para:" className="my-[5px]" />
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<AllCategories type={type} choice={2} />) }} className="w-full text-mygray_more dark:text-mygray_more cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        {infoSecondTwo ?
                             (
                                 <div className="flex items-center justify-between w-full">
                                     <div className="flex items-center  gap-4">
-                                        <Image id={info} width={30} height={30} alt="Image" src={"/categories/" + info?.childNodes[1]?.id + ".png"} />
-                                        <span className="text-secondary dark:text-light">{info?.childNodes[2]?.innerText}</span>
+                                        <Image id={infoSecondTwo} width={30} height={30} alt="Image" src={"/categories/" + infoSecondTwo?.childNodes[1]?.id + ".png"} />
+                                        <span className="text-secondary dark:text-light">{infoSecondTwo?.childNodes[2]?.innerText}</span>
                                     </div>
                                     <ChevronRightIcon />
                                 </div>
 
-                            ) :
+                            ):
                             (
                                 <span>Selecionar ícone</span>
                             )}
                     </div>
+
+                    <TitleH3 text="Data" className="my-[5px]" />
+                    <div className="w-[50%] h-[44px] rounded border border-gray-200 dark:border-gray-500 bg-gray-100 dark:bg-secondary overflow-hidden flex items-center justify-center">
+                        <DatePicker calendarContainer={MyContainerDate} dateFormat="dd/MM/yyyy" locale={ptBR} className="custom-datepicker bg-transparent w-full mx-[10px]" selected={startDate} onChange={(date) => setStartDate(date)} />
+                        <ChevronDownIcon className="w-4 h-4 mr-[8px]" />
+                    </div>
+
+                    <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
+
                 </>
             )}
 

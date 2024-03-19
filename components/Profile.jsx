@@ -19,7 +19,7 @@ const Profile = () => {
             <h2 className="mt-[30px]">Nome: {formatName(user?.name)}</h2>
             <h2 className="mt-[20px]">Função: {formatName(user?.rule?.name)}</h2>
             <h2 className="mt-[20px]">Email: {user?.email?.includes("@")? formatName(user?.email) : "Não utilizado"}</h2>
-            <h2 className="mt-[20px] mb-[30px]">Celular: {!user?.email?.includes("@") && user?.email }</h2>
+            <h2 className="mt-[20px] mb-[30px]">Celular: {user?.email?.includes("@")? "Não utilizado" : user?.email }</h2>
             
             <ButtonLink onClick={toggleModal} path="/dashboard/settings" text="Editar minhas informações" className=" bg-primary h-[44px]"/>
         </div>

@@ -1,7 +1,6 @@
 import CardLinkHome from "@/components/CardLinkHome";
 import sumNumbers from "@/lib/sumNumbers";
 import MoneyIcon from "./icons/MoneyIcon";
-import formatLocalCurrency from "@/lib/formatLocalCurrency";
 
 const CashBalance = ({ data }) => {
     let month = { receita : [], despesa : [] }
@@ -9,14 +8,16 @@ const CashBalance = ({ data }) => {
     data.forEach(element => {
         switch (element.type) {
             case "despesa":
-                if(element.inInstallmentValue > 1){
+                if(element.inInstallmentValue > 1 && element.paid){
                     month.despesa.push(element.inInstallmentValue)
-                }else{
+                }else if (element.paid) {
                     month.despesa.push(element.accountValue)
                 }
                 break;
                 case "receita":
-                    month.receita.push(element.accountValue)
+                    if (element.paid) {
+                        month.receita.push(element.accountValue)
+                    }
                 break;
             default:
                 break;

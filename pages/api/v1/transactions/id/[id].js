@@ -49,10 +49,10 @@ export default async function TransactionId(req, res) {
 
     if (method === "PATCH") {
         const { id, userId } = req.query
-        const { type, name, icon, date, doc, paid, accountValue, updateAll, hash } = req.body
+        const { type, name, name_two, icon, icon_two, date, doc, paid, accountValue, updateAll, hash } = req.body
 
         let value = parseInt(accountValue)
-
+        console.log("PAID", paid, type, updateAll);
         try {
             if (type === "despesa") {
                 if (updateAll) {
@@ -63,15 +63,26 @@ export default async function TransactionId(req, res) {
                         if (name && name !== transaction.name) transaction.name = name
                         if (icon && icon !== transaction.icon) transaction.icon = icon
                         if (accountValue) {
-                            transaction.accountValue = value * transaction.inInstallmentsQtt
-                            transaction.inInstallmentValue = value 
+                            if(transaction.inInstallmentValue){
+                                transaction.accountValue = value * transaction.inInstallmentsQtt
+                                transaction.inInstallmentValue = value 
+                            }
+                            if(transaction.recurrent){
+                                transaction.accountValue = value
+                            }
                         } 
                         if (doc && doc !== transaction.doc) transaction.doc = doc
                         
                         if (date && date !== transaction.date) {
-                            const expirationData = new Date(date)
-                            expirationData.setMonth(expirationData.getMonth() + i );
-                            transaction.date = expirationData
+                            if (transaction.recurrentType === "annually") {
+                                const expirationData = new Date(date)
+                                expirationData.setFullYear(expirationData.getFullYear() + i );
+                                transaction.date = expirationData    
+                            }else{
+                                const expirationData = new Date(date)
+                                expirationData.setMonth(expirationData.getMonth() + i );
+                                transaction.date = expirationData
+                            }
                         }
     
                         await transaction.save()
@@ -79,7 +90,7 @@ export default async function TransactionId(req, res) {
                     }))
                     try {
                         Log.create({
-                            message: `Atualizou a transação parcelada ${transaction?.name}`,
+                            message: `Atualizou a transação parcelada ${allTransaction[0]?.name}`,
                             user: userId
                         })
                     } catch (error) {
@@ -91,8 +102,7 @@ export default async function TransactionId(req, res) {
 
                 const transaction = await Transaction.findById(id)
 
-    
-                if (paid && paid !== transaction.paid) transaction.paid = paid
+                if (paid !== transaction.paid) transaction.paid = paid
                 if (name && name !== transaction.name) transaction.name = name
                 if (icon && icon !== transaction.icon) transaction.icon = icon
                 if (date && date !== transaction.date) transaction.date = date
@@ -104,7 +114,7 @@ export default async function TransactionId(req, res) {
                 if (doc && doc !== transaction.doc) transaction.doc = doc
     
                 await transaction.save()
-    
+
                 try {
                     Log.create({
                         message: `atualizou a transação ${transaction?.name}`,
@@ -116,7 +126,78 @@ export default async function TransactionId(req, res) {
     
                 return res.send({ message: { type: "success", data: "Transação atualizada com sucesso" } })
             }
-            
+
+            if (type === "rendimento") {
+                console.log("AQUI");
+                const transaction = await Transaction.findById(id)
+
+                if (name && name !== transaction.name) transaction.name = name
+                if (icon && icon !== transaction.icon) transaction.icon = icon
+                if (date && date !== transaction.date) transaction.date = date
+                if (accountValue && accountValue !== transaction.accountValue) transaction.accountValue = value
+
+                try {
+                    Log.create({
+                        message: `Atualizou a transação parcelada ${transaction.name}`,
+                        user: userId
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+                
+                await transaction.save()
+
+                return res.send({ message: { type: "success", data: "Transação atualizada com sucesso" } })
+            }
+
+            if (type === "receita") {
+                const transaction = await Transaction.findById(id)
+
+                if (paid !== transaction.paid) transaction.paid = paid
+                if (icon && icon !== transaction.icon) transaction.icon = icon
+                if (name && name !== transaction.name) transaction.name = name
+                if (date && date !== transaction.date) transaction.date = date
+                if (accountValue && accountValue !== transaction.accountValue) transaction.accountValue = value
+
+                await transaction.save()
+
+                try {
+                    Log.create({
+                        message: `atualizou a transação ${transaction?.name}`,
+                        user: userId
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+    
+                return res.send({ message: { type: "success", data: "Transação atualizada com sucesso" } })
+
+            }
+
+            if (type === "transferencia") {
+                const transaction = await Transaction.findById(id)
+                console.log("transferencia");
+                if (icon && icon !== transaction.icon) transaction.icon = icon
+                if (icon_two && icon_two !== transaction.icon_two) transaction.icon_two = icon_two
+                if (name && name !== transaction.name) transaction.name = name
+                if (name_two && name_two !== transaction.name_two) transaction.name_two = name_two
+                if (date && date !== transaction.date) transaction.date = date
+                if (accountValue && accountValue !== transaction.accountValue) transaction.accountValue = value
+
+                await transaction.save()
+
+                try {
+                    Log.create({
+                        message: `atualizou a transação ${transaction?.type} ${transaction?.name} - ${transaction?.name_two}`,
+                        user: userId
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+    
+                return res.send({ message: { type: "success", data: "Transação atualizada com sucesso" } })
+
+            }
             
         } catch (error) {
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });

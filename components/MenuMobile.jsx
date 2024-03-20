@@ -38,7 +38,6 @@ const MenuMobile = () => {
         const data = { message }
         await axios.post(`${api}/${versionApi}/log?userId=${user?._id}`, data)
     }
-    console.log(user?.rule?.name);
 
     return (
         <div className={`w-screen h-screen fixed top-0 z-[99] transition-all duration-500 ${showMenuMobile ? "left-[0%] " : "-left-[100%]"}`}>

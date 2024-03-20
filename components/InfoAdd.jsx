@@ -20,12 +20,14 @@ import ChevronDownIcon from "./icons/ChevronDownIcon";
 import ptBR from 'date-fns/locale/pt-BR';
 import { getCurrentUser } from "@/helpers/getCurrentUser";
 import formatLocalCurrency from "@/lib/formatLocalCurrency";
+import { useRouter } from "next/router";
 
 const InfoAdd = ({ valueCalc, type }) => {
     const { setFlashMessage } = useFlashMessage()
     const { setDataModalSecond, toggleModalSecond, info, setInfo, infoSecondTwo, setInfoSecondTwo } = useContext(ModalSecondContext)
     const { setDataModalThird, toggleModalThird } = useContext(ModalThirdContext)
-    const { toggleModal } = useContext(ModalContext)
+    const { toggleModal, saldoEmCaixa, saldoEmBanco } = useContext(ModalContext)
+    const router = useRouter()
 
     const accountValue = valueCalc?.join("");
     const [startDate, setStartDate] = useState(new Date());
@@ -71,6 +73,39 @@ const InfoAdd = ({ valueCalc, type }) => {
         }
 
         const data = { type, name, name_two, icon, icon_two, accountValue, date: startDate, doc, inInstallments, recurrent, inInstallmentsQtt, paid, recurrentType }
+        
+        if(data.type === "Transferencia"){
+
+            if (data.name_two === data.name ) {
+                setIsSaving(false)
+                setFlashMessage("As contas não podem ser iguais", "error")
+                return
+            }
+
+            if (!data.name_two) {
+                setIsSaving(false)
+                setFlashMessage("Insira a conta de destino", "error")
+                return
+            }
+
+            if (data.name === "Igreja") {
+                let value = parseInt(accountValue)
+                if (value > saldoEmCaixa) {
+                    setIsSaving(false)
+                    setFlashMessage(`Valor disponível em caixa é de R$ ${formatLocalCurrency(saldoEmCaixa)}`, "error")
+                    return
+                }
+            }
+
+            if (data.name === "Banco") {
+                let value = parseInt(accountValue)
+                if (value > saldoEmBanco) {
+                    setIsSaving(false)
+                    setFlashMessage(`Valor disponível no banco é de R$ ${formatLocalCurrency(saldoEmBanco)}`, "error")
+                    return
+                }
+            }    
+        }
 
         try {
             await axios.post(`${api}/${versionApi}/transactions?userId=${user?._id}`, data).then(response => {
@@ -84,6 +119,7 @@ const InfoAdd = ({ valueCalc, type }) => {
                     setInfoSecondTwo("")
                     toggleModalThird()
                     toggleModal()
+                    router.push("/dashboard")
                 }
             })
         } catch (error) {

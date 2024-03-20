@@ -52,8 +52,8 @@ const AllCategories = ({ type, choice }) => {
                 )}
                 {type === "Transferencia" && (
                     <>
-                        <CategoryCard id="bank"  onClick={(ev)=> chosen(ev.target.offsetParent)} className="cursor-pointer hover:bg-gray-200 bg-gray-100  dark:hover:bg-secondary dark:bg-secondary_less" img="/categories/bank.png" text="Banco" />
                         <CategoryCard id="church"  onClick={(ev)=> chosen(ev.target.offsetParent)} className="cursor-pointer hover:bg-gray-200 bg-gray-100  dark:hover:bg-secondary dark:bg-secondary_less" img="/categories/church.png" text="Igreja" />
+                        <CategoryCard id="bank"  onClick={(ev)=> chosen(ev.target.offsetParent)} className="cursor-pointer hover:bg-gray-200 bg-gray-100  dark:hover:bg-secondary dark:bg-secondary_less" img="/categories/bank.png" text="Banco" />
                     </>
                 )}
                 {type === "Rendimento" && (

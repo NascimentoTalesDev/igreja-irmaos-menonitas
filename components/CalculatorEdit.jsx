@@ -61,7 +61,7 @@ const Add = () => {
             </div>
             <div className="absolute left-0 bottom-0 mb-[20px] flex items-center w-full">
                 <div className="parent mx-auto">
-                    <button value={7} onKeyDown={(ev) => console.log(ev)}  onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div1 flex items-center justify-center">7</button>
+                    <button value={7} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div1 flex items-center justify-center">7</button>
                     <button value={8} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div2 flex items-center justify-center">8</button>
                     <button value={9} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div3 flex items-center justify-center">9</button>
                     <button value={4} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div4 flex items-center justify-center">4</button>

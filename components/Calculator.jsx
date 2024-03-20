@@ -6,10 +6,13 @@ import InfoAdd from "./InfoAdd";
 import { ModalThirdContext } from "@/providers/ModalThirdProvider";
 import { ModalSecondContext } from "@/providers/ModalSecondProvider";
 import CheckIcon from "./icons/CheckIcon";
+import { ModalContext } from "@/providers/ModalProvider";
+import formatLocalCurrency from "@/lib/formatLocalCurrency";
 
 const Add = ({ type }) => {
     const {setDataModalThird, toggleModalThird} = useContext(ModalThirdContext)
     const { toggleModalSecond, setDataModalSecond } = useContext(ModalSecondContext)
+    const { saldoEmCaixa, saldoEmBanco } = useContext(ModalContext)
 
     const [initialState, setInitialState] = useState([0])
 
@@ -58,12 +61,24 @@ const Add = ({ type }) => {
     return (
         <div className="w-full max-w-[320px] h-full flex flex-col">
             <TitleH3 className="text-center" text={`Qual o valor ${type === "Rendimento" ? `dos seus ${type}` : `da sua ${type}`}?`} />
-            <div className="mt-[80px] flex items-end">
+            {type === "Transferencia" && (
+                <div className="mt-[16px]">
+                    <div className="flex items-center">
+                        <TitleH3 text={`Disponível em caixa` } className="my-[5px] mr-[5px]" />
+                        <strong> R$ {formatLocalCurrency(saldoEmCaixa)}</strong>
+                    </div>
+                    <div className="flex items-center">
+                    <TitleH3 text={`Disponível no banco `} className="my-[5px] mr-[5px]" />
+                        <strong> R$ {formatLocalCurrency(saldoEmBanco)}</strong>
+                    </div>
+                </div>
+            )}
+            <div className={`flex items-end ${type === "Transferencia" ? "mt-[20px]":"mt-[80px]" }`}>
                 <h2 className="ml-[10px] font-bold text-3xl ">{formattedResult}</h2>
             </div>
             <div className="absolute left-0 bottom-0 mb-[20px] flex items-center w-full">
                 <div className="parent mx-auto">
-                    <button value={7} onKeyDown={(ev) => console.log(ev)}  onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div1 flex items-center justify-center">7</button>
+                    <button value={7} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div1 flex items-center justify-center">7</button>
                     <button value={8} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div2 flex items-center justify-center">8</button>
                     <button value={9} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div3 flex items-center justify-center">9</button>
                     <button value={4} onClick={(ev) => addValue(ev.target.value)} className="bg-slate-300 font-bold text-secondary div4 flex items-center justify-center">4</button>

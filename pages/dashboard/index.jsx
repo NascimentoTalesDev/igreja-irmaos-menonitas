@@ -11,9 +11,10 @@ import formatDate from "@/lib/formatDate";
 import dynamic from "next/dynamic"
 import TitleH3 from "@/components/TitleH3";
 import DizimoIcon from "@/components/icons/DizimoIcon";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import useFlashMessage from "@/hooks/useFlashMessage";
+import { ModalContext } from "@/providers/ModalProvider";
 
 const Spreadsheet = dynamic(() => import("@/components/Spreadsheet"), {
     ssr: false
@@ -23,19 +24,22 @@ const Spreadsheet2 = dynamic(() => import("@/components/Spreadsheet2"), {
     ssr: false
 })
 
-const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categories, performance }) => {
+const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categories, performance, saldoCaixa }) => {
     const { setFlashMessage } = useFlashMessage()
+    const { saldoEmCaixa, setSaldoEmCaixa, saldoEmBanco, setSaldoEmBanco } = useContext(ModalContext)
 
     let actualMonth = new Date().getMonth() + 1
     const router = useRouter();
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         let msgText = router.query.error || '';
 
         if (msgText) {
             setFlashMessage(msgText, 'error')
         }
-    },[router, setFlashMessage])
+        setSaldoEmCaixa(saldoCaixa || 0)
+        setSaldoEmBanco(performance || 0)
+    }, [router, setFlashMessage])
 
     return (
         <Layout>
@@ -46,8 +50,8 @@ const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categori
             <div className="grid grid-cols-2 gap-[16px] mb-[16px]">
                 <Revenue data={monthsFour} />
                 <Expense data={monthsFour} />
-                <CashBalance data={monthsFour} />
-                <CashInTheBank  data={performance} />
+                <CashBalance data={saldoEmCaixa} />
+                <CashInTheBank data={saldoEmBanco} />
 
             </div>
             {dizimo && (
@@ -57,11 +61,11 @@ const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categori
             )}
 
             <Spreadsheet monthsFour={monthsFour} monthTree={monthTree} monthTwo={monthTwo} monthOne={monthOne} actualMonth={actualMonth} />
-            
+
             {categories?.length > 4 && (
                 <>
-                    <TitleH3 text="Top 5 gastos por categoria"  className="my-[16px]" />
-                    <Spreadsheet2 categories={categories}  />
+                    <TitleH3 text="Top 5 gastos por categoria" className="my-[16px]" />
+                    <Spreadsheet2 categories={categories} />
                 </>
             )}
         </Layout>
@@ -102,14 +106,13 @@ export async function getServerSideProps(req) {
 
     const dizimo = await Transaction.findOne({ name: "dízimo igreja", paid: true }, null, { sort: { "createdAt": -1 }, limit: 1, });
 
-
     const categories = await Transaction.aggregate([
         {
             $match: {
                 type: "despesa",
                 date: {
-                    $gte: new Date(actualYear, actualMonth - 1, 1), 
-                    $lt: new Date(actualYear, actualMonth, 1) 
+                    $gte: new Date(actualYear, actualMonth - 1, 1),
+                    $lt: new Date(actualYear, actualMonth, 1)
                 }
             },
         },
@@ -120,7 +123,7 @@ export async function getServerSideProps(req) {
                     $sum: {
                         $cond: {
                             if: { $gt: ["$inInstallmentsQtt", 0] },
-                            then: "$inInstallmentValue", 
+                            then: "$inInstallmentValue",
                             else: "$accountValue"
                         }
                     }
@@ -129,7 +132,7 @@ export async function getServerSideProps(req) {
         },
         {
             $sort: {
-                total: -1 
+                total: -1
             }
         },
         {
@@ -137,20 +140,116 @@ export async function getServerSideProps(req) {
         }
     ])
 
-    const performance =  await Transaction.aggregate([
+    const performanceDb = await Transaction.aggregate([
         {
             $match: {
-                name: "rendimento",
-                type: "rendimento",
-            },
+                $or: [
+                    { name: "rendimento", type: "rendimento" },
+                    { type: "transferencia", name: "igreja" }
+                ]
+            }
         },
         {
             $group: {
-                _id: "$name", // Não agrupa as transações, queremos somar todas
-              total: { $sum: "$accountValue" } // Calcula o valor total somando todos os valores das transações
+                _id: null, 
+                total: { $sum: "$accountValue" }
             }
         }
     ])
+    
+    const saldoCaixaDb = await Transaction.aggregate([
+        {
+            $match: {
+                $or: [
+                    { type: "receita",  paid: true  },
+                    { $and: [{ type: "despesa" }, { paid: true }] },
+                ]
+            }
+        },
+        {
+            $group: {
+                _id: "$type",
+                total: {
+                    $sum: {
+                        $cond: [
+                            { $and: [{ $eq: ["$type", "despesa"] }, { $eq: ["$paid", true] }, { $gt: ["$inInstallmentsQtt", 0] }] },
+                            "$inInstallmentValue",
+                            "$accountValue"
+                        ]
+                    }
+                }
+            }
+        },
+        {
+            $group: {
+                _id: null,
+                receitas: {
+                    $sum: { $cond: { if: { $eq: ["$_id", "receita"] }, then: "$total", else: 0 } }
+                },
+                despesas: {
+                    $sum: { $cond: { if: { $eq: ["$_id", "despesa"] }, then: "$total", else: 0 } }
+                },
+            }
+        },
+        {
+            $project: {
+                _id: 0,
+                diferenca: { $subtract: ["$receitas", "$despesas"] }
+            }
+        }
+    ]);
+
+    const transferenciaBancoParaIgreja = await Transaction.aggregate([
+        {
+            $match: {
+                $or: [
+                    { type: "transferencia", name: "banco" }
+                ]
+            }
+        },
+        {
+            $group: {
+                _id: null, 
+                total: { $sum: "$accountValue" }
+            }
+        }
+    ]);
+
+    const transferenciaIgrejaParaBanco = await Transaction.aggregate([
+        {
+            $match: {
+                $or: [
+                    { type: "transferencia", name: "igreja" }
+                ]
+            }
+        },
+        {
+            $group: {
+                _id: null, 
+                total: { $sum: "$accountValue" }
+            }
+        }
+    ]);
+
+    let saldoCaixa = saldoCaixaDb[0]?.diferenca 
+    let performance = performanceDb[0]?.total
+
+    if (transferenciaBancoParaIgreja.length && transferenciaIgrejaParaBanco.length) {
+        saldoCaixa = (saldoCaixaDb[0]?.diferenca + transferenciaBancoParaIgreja[0]?.total) - transferenciaIgrejaParaBanco[0]?.total
+        performance = performanceDb[0]?.total - transferenciaBancoParaIgreja[0]?.total
+    }
+    
+    if (transferenciaBancoParaIgreja.length && !transferenciaIgrejaParaBanco.length) {
+        saldoCaixa = saldoCaixaDb[0]?.diferenca + transferenciaBancoParaIgreja[0]?.total
+        performance = performanceDb[0]?.total - transferenciaBancoParaIgreja[0]?.total
+        if(!saldoCaixaDb[0]?.diferenca){
+            saldoCaixa = transferenciaBancoParaIgreja[0]?.total
+        }
+    }
+
+    if (transferenciaIgrejaParaBanco.length && !transferenciaBancoParaIgreja.length) {
+        saldoCaixa = saldoCaixaDb[0]?.diferenca - transferenciaIgrejaParaBanco[0]?.total
+    }
 
     return {
         props: {
@@ -160,7 +259,8 @@ export async function getServerSideProps(req) {
             monthOne: JSON.parse(JSON.stringify(monthOne)),
             dizimo: JSON.parse(JSON.stringify(dizimo)),
             categories: JSON.parse(JSON.stringify(categories)),
-            performance: JSON.parse(JSON.stringify(performance)),
+            performance: JSON.parse(JSON.stringify(performance || 0)),
+            saldoCaixa: JSON.parse(JSON.stringify(saldoCaixa || 0)),
         }
     }
 }

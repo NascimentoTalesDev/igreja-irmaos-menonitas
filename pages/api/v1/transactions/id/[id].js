@@ -52,7 +52,7 @@ export default async function TransactionId(req, res) {
         const { type, name, name_two, icon, icon_two, date, doc, paid, accountValue, updateAll, hash } = req.body
 
         let value = parseInt(accountValue)
-        console.log("PAID", paid, type, updateAll);
+
         try {
             if (type === "despesa") {
                 if (updateAll) {
@@ -128,7 +128,6 @@ export default async function TransactionId(req, res) {
             }
 
             if (type === "rendimento") {
-                console.log("AQUI");
                 const transaction = await Transaction.findById(id)
 
                 if (name && name !== transaction.name) transaction.name = name

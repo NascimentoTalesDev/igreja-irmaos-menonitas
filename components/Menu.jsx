@@ -13,19 +13,19 @@ import useFlashMessage from "@/hooks/useFlashMessage";
 
 const Menu = () => {
     const { setFlashMessage } = useFlashMessage()
-    const {setDataModal, toggleModal} = useContext(ModalContext)
+    const { setDataModal, toggleModal } = useContext(ModalContext)
     const [user, setUser] = useState("")
 
-    useEffect(()=>{
+    useEffect(() => {
         let currentUser = getCurrentUser()
         setUser(currentUser)
-    },[])
+    }, [])
 
     const newAction = () => {
         if (user?.rule?.name === "tesoureiro" || user?.rule?.name === "administrador") {
             toggleModal()
             setDataModal(<Add />)
-        }else{
+        } else {
             setFlashMessage("Acesso liberado apenas a tesoureiros", "error")
         }
     }
@@ -52,9 +52,9 @@ const Menu = () => {
                     <Link className="flex flex-col items-center justify-center" href={"/dashboard/reports"}>
                         <ReportsIcon />
                         <span className="text-light text-sm">Relatórios</span>
-                    </Link> 
+                    </Link>
                 </li>
-                <li onClick={()=> {toggleModal(), setDataModal(<Profile />)}} className="w-[60px] h-[60px] flex flex-col items-center justify-center cursor-pointer">
+                <li onClick={() => { toggleModal(), setDataModal(<Profile />) }} className="w-[60px] h-[60px] flex flex-col items-center justify-center cursor-pointer">
                     <UserProfileIcon />
                     <span className="text-light text-sm">Perfil</span>
                 </li>

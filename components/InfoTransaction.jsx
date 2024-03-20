@@ -19,16 +19,39 @@ const InfoTransaction = ({ transaction }) => {
     const [isDeleting, setIsDeleting] = useState(false)
     const [isDeletingAll, setIsDeletingAll] = useState(false)
     const router = useRouter()
-    const { toggleModalThird, setDataModalThird } = useContext(ModalThirdContext)
-    const { toggleModal } = useContext(ModalContext)
+    const { toggleModalThird, setDataModalThird, setInfoThird } = useContext(ModalThirdContext)
+    const { toggleModal, setDataModal, saldoEmCaixa } = useContext(ModalContext)
     const [user, setUser] = useState("")
     const [paid, setPaid] = useState(false)
-
+    const [saldo, setSaldo] = useState("")
+    
     useEffect(() => {
+        setInfoThird("")
         let currentUser = getCurrentUser()
         setUser(currentUser)
         setPaid(transaction?.paid)
+        setSaldo(saldoEmCaixa)
     }, [])
+
+    const checkValueInBank = () => {
+        
+        if (transaction.inInstallmentsQtt > 0 && !transaction.paid) {
+            if(transaction.inInstallmentValue > saldoEmCaixa){
+                setFlashMessage("Verifique o saldo na pagina inicial, saldo insuficiente", "error")
+                return
+            }
+            setPaid(!paid),
+            paidTransaction(!paid)
+        }
+
+        if (transaction.accountValue > saldoEmCaixa && !transaction.paid) {
+            setFlashMessage("Verifique o saldo na pagina inicial, saldo insuficiente", "error")
+            return
+        }
+        setPaid(!paid),
+        paidTransaction(!paid)
+    }
+
 
     const paidTransaction = async (paid) => {
         let msgText;
@@ -42,8 +65,10 @@ const InfoTransaction = ({ transaction }) => {
                     msgType = response?.data?.message?.type
                 } else {
                     msgText = response?.data?.message?.data
-                    router.reload()
                     toggleModal()
+                    setDataModal("")
+                    setInfoThird("")
+                    router.push("/dashboard")
                 }
             })
         } catch (error) {
@@ -72,8 +97,8 @@ const InfoTransaction = ({ transaction }) => {
                     msgType = response?.data?.message?.type
                 } else {
                     msgText = response?.data?.message?.data
-                    router.reload()
                     toggleModal()
+                    router.push("/dashboard")
                 }
             })
         } catch (error) {
@@ -84,10 +109,10 @@ const InfoTransaction = ({ transaction }) => {
         setIsDeleting(false)
         setIsDeletingAll(false)
     }
-console.log("transaction.type", transaction.type);
+
     return (
         <div className="flex flex-col text-sm">
-            <TitleH3 text="Mais opções" className="" />
+            <TitleH3 text="Mais opções" />
             {transaction.type === "despesa" && (
                 <div className="flex flex-col items-start mt-[30px]">
                     <div className={`flex items-center w-full ml-[10px]`}>
@@ -99,9 +124,9 @@ console.log("transaction.type", transaction.type);
                                     <TitleH3 text="Não paguei" />
                                 )}
                         </div>
-                        <button value={paid} onClick={() => { setPaid(!paid), paidTransaction(!paid) }} >{paid ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
+                        <button value={paid} onClick={checkValueInBank} >{paid ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
                     </div>
-                    <Button icon={<PencilIcon />} onClick={() => { setDataModalThird(<EditTransaction transaction={transaction} />), toggleModalThird() }} text={`Editar movimentação`} className={"mt-[24px] text-secondary dark:text-light "} />
+                    <Button icon={<PencilIcon />} onClick={() => { setDataModalThird(<EditTransaction transaction={transaction} saldoEmCaixa={saldoEmCaixa} />), toggleModalThird() }} text={`Editar movimentação`} className={"mt-[24px] text-secondary dark:text-light "} />
                     <Button icon={<TrashIcon />} onClick={deleteTransaction} text={`${isDeleting ? "Excluindo..." : "Excluir esta movimentação"}`} className={"mt-[10px] text-red-400 "} />
                     {transaction.inInstallmentsQtt > 1 && (
                         <Button icon={<TrashIcon />} onClick={() => deleteTransaction(true)} text={`${isDeletingAll ? "Excluindo..." : "Excluir todas"}`} className={"mt-[10px] text-red-400 "} />

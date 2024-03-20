@@ -10,7 +10,6 @@ import TrendingUpOutlineIcon from "./icons/TrendingUpOutlineIcon";
 const Add = () => {
     const {setDataModalSecond, toggleModalSecond} = useContext(ModalSecondContext)
 
-    
     return (
         <div>
             <TitleH2 text="O que você quer adicionar?" className="mb-[30px]" />

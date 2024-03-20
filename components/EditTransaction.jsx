@@ -21,12 +21,17 @@ import { getCurrentUser } from "@/helpers/getCurrentUser";
 import formatName from "@/lib/formatName";
 import formatLocalCurrency from "@/lib/formatLocalCurrency";
 import sumNumbers from "@/lib/sumNumbers";
+import { ModalContext } from "@/providers/ModalProvider";
+import { useRouter } from "next/router";
 
-const EditTransaction = ({ transaction }) => {
+const EditTransaction = ({ transaction, saldoEmCaixa }) => {
     const { setFlashMessage } = useFlashMessage()
-    const [isSaving, setIsSaving] = useState(false)
     const { setDataModalSecond, toggleModalSecond, info, setInfo, infoSecondTwo, setInfoSecondTwo } = useContext(ModalSecondContext)
-    const { infoThird, setInfoThird } = useContext(ModalThirdContext)
+    const { infoThird, toggleModalThird, setDataModalThird } = useContext(ModalThirdContext)
+    const { toggleModal, setDataModal } = useContext(ModalContext)
+    const router = useRouter()
+
+    const [isSaving, setIsSaving] = useState(false)
     const [startDate, setStartDate] = useState(new Date());
     const [doc, setDoc] = useState([])
     const [recurrent, setRecurrent] = useState(false)
@@ -64,6 +69,40 @@ const EditTransaction = ({ transaction }) => {
             accountValue = infoThird?.join("");
         }
 
+        if(paid){
+            
+            if(updateAll){
+                let rest = transaction?.inInstallmentsQtt - transaction?.inInstallmentNumber + 1
+                if((rest * transaction?.inInstallmentValue) > saldoEmCaixa){
+                    setIsSaving(false)
+                    setFlashMessage("Verifique o saldo na pagina inicial, saldo insuficiente", "error")
+                    return
+                }
+            }
+
+            if(infoThird){
+                if(accountValue > saldoEmCaixa){
+                    setIsSaving(false)
+                    setFlashMessage("Verifique o saldo na pagina inicial, saldo insuficiente", "error")
+                    return
+                }
+            }
+
+            if (transaction?.inInstallmentsQtt > 0 ) {
+                if(transaction?.inInstallmentValue > saldoEmCaixa){
+                    setIsSaving(false)
+                    setFlashMessage("Verifique o saldo na pagina inicial, saldo insuficiente", "error")
+                    return
+                }
+            }
+
+            if(transaction?.inInstallmentsQtt < 1 && transaction?.accountValue > saldoEmCaixa){
+                setIsSaving(false)
+                setFlashMessage("Verifique o saldo na pagina inicial, saldo insuficiente", "error")
+                return
+            }
+        }
+
         const data = { type: transaction?.type, name, name_two, icon, icon_two, date: startDate, doc, paid, accountValue, updateAll, hash: transaction?.hash }
 
         try {
@@ -73,8 +112,11 @@ const EditTransaction = ({ transaction }) => {
                     msgType = response?.data?.message?.type
                 } else {
                     msgText = response?.data?.message?.data
-                    router.reload()
+                    toggleModalThird()
                     toggleModal()
+                    setDataModal("")
+                    setDataModalThird("")
+                    router.push("/dashboard")
                 }
             })
         } catch (error) {
@@ -96,7 +138,6 @@ const EditTransaction = ({ transaction }) => {
     useEffect(() => {
         setInfo("")
         setInfoSecondTwo("")
-        setInfoThird("")
         setStartDate(transaction?.date)
         setDoc(transaction?.doc || [])
         setPaid(transaction?.paid)
@@ -214,7 +255,7 @@ const EditTransaction = ({ transaction }) => {
                     <TitleH3 text="Comprovante" className="my-[5px]" />
                     <UploadFiles className={`flex gap-3 mb-[10px]`} files={doc} setFiles={setDoc} />
 
-                    <Button onClick={saveTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
+                    <Button onClick={updateTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
                 </>
             )}
 

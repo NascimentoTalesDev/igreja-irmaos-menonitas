@@ -32,32 +32,6 @@ const Settings = ({ rulesDb }) => {
   
   const [isSaving, setIsSaving] = useState("")
 
-  const saveNewUser = async () => {
-    setIsSaving(true)
-    let msgText;
-    let msgType = 'success'
-    const data = { name, email, password, rule }
-
-    try {
-      await axios.post(`${api}/${versionApi}/users/signup`, data).then(response => {
-        if (response?.data?.message?.type === "error") {
-          msgText = response?.data?.message?.data
-          msgType = response?.data?.message?.type
-        } else {
-          msgText = response?.data?.message?.data
-          toggleModal()
-          setDataModal("")
-          router.push("/dashboard/manage-accounts")
-        }
-      })
-    } catch (error) {
-      msgText = error?.response?.data?.message?.data
-      msgType = error?.response?.data?.message?.type
-    }
-    setFlashMessage(msgText, msgType)
-    setIsSaving(false)
-  }
-
   useEffect(() => {
     let currentUser = getCurrentUser()
     setUser(currentUser)
@@ -90,6 +64,10 @@ const Settings = ({ rulesDb }) => {
                 msgType = response?.data?.message?.type
             } else {
                 msgText = response?.data?.message?.data
+                localStorage.removeItem('remember-me')
+                localStorage.removeItem('email')
+                localStorage.removeItem('password')
+                router.replace("/")
             }
         })
     } catch (error) {

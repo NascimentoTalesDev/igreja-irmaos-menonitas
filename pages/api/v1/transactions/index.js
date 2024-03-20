@@ -90,7 +90,7 @@ export default async function Transactions(req, res, next) {
                     const hash = await bcrypt.hash(name, 12)
                     
                     if (recurrentType === "monthly") {
-                        for (let i = 1; i <= 2; i++) {
+                        for (let i = 1; i <= 60; i++) {
                             const expirationData = new Date(dateOfFirstInstallment);
                             expirationData.setMonth(expirationData.getMonth() + i - 1); 
                             
@@ -113,11 +113,22 @@ export default async function Transactions(req, res, next) {
                                 hash,
                             });
                         }
+
+                        try {
+                            Log.create({
+                                message: `criou uma ${type} mensal recorrente - ${name} - ${value.toFixed(2)} por 60 meses - `,
+                                date,
+                                user: userId
+                            })
+                        } catch (error) {
+                            console.log(error);
+                        }
+
                         return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
                     }
 
                     if (recurrentType === "annually") {
-                        for (let i = 1; i <= 3; i++) {
+                        for (let i = 1; i <= 10; i++) {
                             const expirationData = new Date(dateOfFirstInstallment);
                             expirationData.setFullYear(expirationData.getFullYear() + i - 1);
                             
@@ -139,6 +150,15 @@ export default async function Transactions(req, res, next) {
                                 inInstallmentValue: inInstallmentValue.toFixed(2),
                                 hash,
                             });
+                        }
+                        try {
+                            Log.create({
+                                message: `criou uma ${type} recorrente - ${name} - de ${value.toFixed(2)} por 10 anos - `,
+                                date,
+                                user: userId
+                            })
+                        } catch (error) {
+                            console.log(error);
                         }
                         return res.json({ message: { type: "success", data: "Transação criada com sucesso" } })
                     }
@@ -251,7 +271,6 @@ export default async function Transactions(req, res, next) {
             }
 
         } catch (error) {
-            console.log(error);
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }

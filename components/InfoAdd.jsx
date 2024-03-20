@@ -107,6 +107,27 @@ const InfoAdd = ({ valueCalc, type }) => {
             }    
         }
 
+        if(paid){
+            console.log("PAGO");
+            let value = parseInt(accountValue)
+            console.log(value);
+            console.log(inInstallmentsQtt);
+
+            if (inInstallmentsQtt > 0) {
+                if((value / inInstallmentsQtt) > saldoEmCaixa){
+                    setIsSaving(false)
+                    setFlashMessage("Verifique o saldo na pagina inicial, saldo insuficiente", "error")
+                    return
+                }
+            }
+            if (!inInstallments && value > saldoEmCaixa) {
+                console.log("MAIOR");
+                setIsSaving(false)
+                setFlashMessage("Verifique o saldo na pagina inicial, saldo insuficiente", "error")
+                return
+            }
+        }
+
         try {
             await axios.post(`${api}/${versionApi}/transactions?userId=${user?._id}`, data).then(response => {
                 if (response?.data?.message?.type === "error") {

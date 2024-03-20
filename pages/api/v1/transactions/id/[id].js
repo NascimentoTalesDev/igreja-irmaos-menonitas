@@ -59,7 +59,7 @@ export default async function TransactionId(req, res) {
                     const allTransaction = await Transaction.find({ hash })
                     
                     await Promise.all(allTransaction.map(async (transaction, i) => {
-                        if (paid && paid !== transaction.paid) transaction.paid = paid
+                        if (paid !== transaction.paid) transaction.paid = paid
                         if (name && name !== transaction.name) transaction.name = name
                         if (icon && icon !== transaction.icon) transaction.icon = icon
                         if (accountValue) {

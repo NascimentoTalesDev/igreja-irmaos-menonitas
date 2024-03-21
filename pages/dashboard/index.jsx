@@ -2,7 +2,7 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Transaction } from "@/models/Transaction";
 import Layout from "@/components/Layout";
 import getMonth from "@/lib/getMonth";
-import CardLinkHome from "@/components/CardLinkHome";
+import CardHome from "@/components/CardHome";
 import Revenue from "@/components/Revenue";
 import Expense from "@/components/Expense";
 import CashBalance from "@/components/CashBalance";
@@ -56,7 +56,7 @@ const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categori
             </div>
             {dizimo && (
                 <div className="w-full mb-[16px]">
-                    <CardLinkHome data={dizimo?.accountValue} icon={<DizimoIcon />} text={`Dízimo do último culto: ${formatDate(dizimo.createdAt)}`} bg="bg-success" path={"dashboard/transactions"} className={" w-full"} />
+                    <CardHome data={dizimo?.accountValue} icon={<DizimoIcon />} text={`Dízimo do último culto: ${formatDate(dizimo.createdAt)}`} bg="bg-success" path={"#"} className={" w-full"} />
                 </div>
             )}
 

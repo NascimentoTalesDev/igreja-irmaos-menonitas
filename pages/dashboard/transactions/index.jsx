@@ -13,19 +13,24 @@ import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import axios from "axios";
 import { api, versionApi } from "@/lib/configApi";
 import CardError from "../../../components/CardError";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import formatName from "@/lib/formatName";
 
 const Transactions = ({ transactionsDb }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [transactions, setTransactions] = useState(transactionsDb);
   const [nodata, setNodata] = useState(false);
   const [newMonth, setNewMonth] = useState("");
-
+  const [title, setTitle] = useState(true);
+  const router = useRouter()
   let actualMonth = new Date().getMonth() + 1
 
   const getData = (date) => {
     let year = date.getFullYear()
     let month = date.getMonth() + 1
     setNewMonth(month)
+    setTitle(false)
     const data = { month, year }
 
     axios.post(`${api}/${versionApi}/transactions/get-by-year-and-month`, data).then(response => {
@@ -39,6 +44,20 @@ const Transactions = ({ transactionsDb }) => {
     })
   }
   
+  useEffect(()=>{
+    if (router.query.type) {
+      setTitle(true)
+      axios.post(`${api}/${versionApi}/transactions/get-by-type?type=${router.query.type}`).then(response => {
+        if (!response.data.length) {
+          setTransactions([])
+          setNodata(true)
+        } else {
+          setNodata(false)
+          setTransactions(response.data);
+        }
+      })
+    }
+  },[])
   return (
     <Layout>
       <Title text="Movimentações" className="mb-[24px]" />
@@ -52,7 +71,7 @@ const Transactions = ({ transactionsDb }) => {
       </div>
 
       <h2 className="mb-[10px] text-[16px]">
-        Receitas e despesas do mês
+        {title ? `${formatName(router.query.type)}s` : "Receitas e despesas"} do mês
         {newMonth ? (
           <>
             {newMonth === actualMonth ? " atual" : ` de ${getMonth(newMonth)}`}

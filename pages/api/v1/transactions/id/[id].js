@@ -49,7 +49,7 @@ export default async function TransactionId(req, res) {
 
     if (method === "PATCH") {
         const { id, userId } = req.query
-        const { type, name, name_two, icon, icon_two, date, doc, paid, accountValue, updateAll, hash } = req.body
+        const { type, name, name_two, icon, icon_two, date, doc, paid, accountValue, updateAll, hash, recurrent } = req.body
 
         let value = parseInt(accountValue)
 
@@ -90,7 +90,7 @@ export default async function TransactionId(req, res) {
                     }))
                     try {
                         Log.create({
-                            message: `Atualizou a transação parcelada ${allTransaction[0]?.name}`,
+                            message: `Atualizou a transação parcelada ${allTransaction[0]?.name} de ${allTransaction[0]}`,
                             user: userId
                         })
                     } catch (error) {
@@ -101,29 +101,38 @@ export default async function TransactionId(req, res) {
                 }
 
                 const transaction = await Transaction.findById(id)
-
+                
                 if (paid !== transaction.paid) transaction.paid = paid
                 if (name && name !== transaction.name) transaction.name = name
                 if (icon && icon !== transaction.icon) transaction.icon = icon
                 if (date && date !== transaction.date) transaction.date = date
+                if (doc && doc !== transaction.doc) transaction.doc = doc
+                
+                if (transaction?.recurrent) {
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} de ${transaction?.accountValue} para ${value}`,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                    transaction.inInstallmentValue = value
+                    transaction.accountValue = value
+
+                    await transaction.save()
+
+                    return res.send({ message: { type: "success", data: "Transação atualizada com sucesso" } })
+                }
+
                 if(transaction.inInstallmentValue){
                     if (accountValue && accountValue !== transaction.inInstallmentValue) transaction.inInstallmentValue = value
                 }else{
                     if (accountValue && accountValue !== transaction.accountValue) transaction.accountValue = value
                 }
-                if (doc && doc !== transaction.doc) transaction.doc = doc
-    
+
                 await transaction.save()
 
-                try {
-                    Log.create({
-                        message: `atualizou a transação ${transaction?.name}`,
-                        user: userId
-                    })
-                } catch (error) {
-                    console.log(error);
-                }
-    
                 return res.send({ message: { type: "success", data: "Transação atualizada com sucesso" } })
             }
 
@@ -137,7 +146,7 @@ export default async function TransactionId(req, res) {
 
                 try {
                     Log.create({
-                        message: `Atualizou a transação parcelada ${transaction.name}`,
+                        message: `atualizou a transação ${transaction.type} ${transaction.name} - ${transaction?.accountValue} para ${value}`,
                         user: userId
                     })
                 } catch (error) {
@@ -158,16 +167,17 @@ export default async function TransactionId(req, res) {
                 if (date && date !== transaction.date) transaction.date = date
                 if (accountValue && accountValue !== transaction.accountValue) transaction.accountValue = value
 
-                await transaction.save()
-
                 try {
                     Log.create({
-                        message: `atualizou a transação ${transaction?.name}`,
+                        message: `atualizou a transação ${transaction?.name} - ${transaction?.accountValue} para ${value}`,
                         user: userId
                     })
                 } catch (error) {
                     console.log(error);
                 }
+
+                await transaction.save()
+
     
                 return res.send({ message: { type: "success", data: "Transação atualizada com sucesso" } })
 
@@ -175,7 +185,7 @@ export default async function TransactionId(req, res) {
 
             if (type === "transferencia") {
                 const transaction = await Transaction.findById(id)
-                console.log("transferencia");
+
                 if (icon && icon !== transaction.icon) transaction.icon = icon
                 if (icon_two && icon_two !== transaction.icon_two) transaction.icon_two = icon_two
                 if (name && name !== transaction.name) transaction.name = name

@@ -18,7 +18,7 @@ const Revenue = ({ data }) => {
     });
 
     return (
-        <CardLinkHome icon={<ChevronUpCircleIcon />} text="Receitas" data={sumNumbers(monthsFourChart.receita)} bg="bg-success" path={"dashboard/transactions"} />
+        <CardLinkHome icon={<ChevronUpCircleIcon />} text="Receitas" data={sumNumbers(monthsFourChart.receita)} bg="bg-success" path={"dashboard/transactions?type=receita"} className={"cursor-pointer"}  />
     );
 }
  

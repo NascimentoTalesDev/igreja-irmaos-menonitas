@@ -20,7 +20,7 @@ const Expense = ({ data }) => {
     });
 
     return (
-        <CardLinkHome icon={<ChevronDownCircleIcon />} text="Despesa" data={sumNumbers(monthsFourChart.despesa)} bg="bg-danger" path={"dashboard/transactions"} />
+        <CardLinkHome icon={<ChevronDownCircleIcon />} text="Despesa" data={sumNumbers(monthsFourChart.despesa)} bg="bg-danger" path={"dashboard/transactions?type=despesa"} className={"cursor-pointer"} />
     );
 }
  

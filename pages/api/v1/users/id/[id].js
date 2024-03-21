@@ -35,15 +35,27 @@ export default async function UserId(req, res) {
 
         try {
             const user = await User.findById(id)
+            const admin = await User.findById(userId)
             if(!user) return res.json({ message: { type: "error", data: "Falha ao atualizar o usuário" } })
 
-            try {
-                Log.create({
-                    message: `editou o usuário ${user?.name}`,
-                    user: userId,
-                })
-            } catch (error) {
-                console.log(error);
+            if(admin){
+                try {
+                    Log.create({
+                        message: `editou o usuário ${user?.name}`,
+                        user: userId,
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
+            }else{
+                try {
+                    Log.create({
+                        message: `editou os próprios dados`,
+                        user: user?._id,
+                    })
+                } catch (error) {
+                    console.log(error);
+                }
             }
 
             if(name) user.name = name
@@ -56,9 +68,12 @@ export default async function UserId(req, res) {
             }
 
             await user.save()
-
-
-            return res.send({ message: { type: "success", data: "Usuário atualizado com sucesso" } })
+            
+            if (admin) {
+                return res.send({ message: { type: "success", data: "Usuário atualizado com sucesso" } })
+            }
+            
+            return res.send({ message: { type: "success", data: "Usuário atualizado. Faça login novamente." } })
         } catch (error) {
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }

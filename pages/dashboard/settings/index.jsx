@@ -3,23 +3,20 @@ import { Rule } from "@/models/Rule";
 import { getCurrentUser } from "@/helpers/getCurrentUser"
 import Layout from "@/components/Layout";
 import Title from "@/components/Title";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import TitleH3 from "@/components/TitleH3";
 import InputContainerModal from "@/components/InputContainerModal";
-import Input from "@/components/InputContainer";
 import Button from "@/components//Button";
-import SelectContainer from "@/components//SelectContainer";
 import axios from "axios";
 import useFlashMessage from "@/hooks/useFlashMessage";
 import { api, versionApi } from "@/lib/configApi";
 import { useRouter } from "next/router";
-import { ModalContext } from "@/providers/ModalProvider";
 import { useEffect } from "react";
 import checkMatchPassword from "@/lib/checkMatchPassword";
+import formatName from "@/lib/formatName";
 
-const Settings = ({ rulesDb }) => {
+const Settings = () => {
   const { setFlashMessage } = useFlashMessage()
-  const { toggleModal, setDataModal } = useContext(ModalContext)
   const router = useRouter()
   const [user, setUser] = useState("")
 
@@ -82,7 +79,7 @@ const Settings = ({ rulesDb }) => {
       <Title text="Configurações" className="mb-[24px]" />
       <div className="flex flex-col text-sm max-w-[350px] mx-auto">
         <TitleH3 text="Nome" />
-        <InputContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"} classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
+        <InputContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"} classNameInput="bg-gray-100 dark:bg-secondary" value={formatName(name)} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
 
         <TitleH3 text="Email ou celular" />
         <InputContainerModal required={true} className={"my-[5px] bg-gray-100 dark:bg-secondary"} classNameInput="bg-gray-100 dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Email ou celular" />

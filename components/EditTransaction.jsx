@@ -103,7 +103,7 @@ const EditTransaction = ({ transaction, saldoEmCaixa }) => {
             }
         }
 
-        const data = { type: transaction?.type, name, name_two, icon, icon_two, date: startDate, doc, paid, accountValue, updateAll, hash: transaction?.hash }
+        const data = { type: transaction?.type, name, name_two, icon, icon_two, date: startDate, doc, paid, accountValue, updateAll, hash: transaction?.hash, recurrent }
 
         try {
             await axios.patch(`${api}/${versionApi}/transactions/id/${transaction?._id}?userId=${user?._id}`, data).then(response => {

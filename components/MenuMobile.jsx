@@ -21,6 +21,7 @@ import Moon from "./icons/Moon";
 import LogoutIcon from "./icons/LogOutIcon";
 import axios from "axios";
 import { api, versionApi } from "@/lib/configApi";
+import CategoryIcon from "./icons/CategoryIcon";
 
 const MenuMobile = () => {
     const { logout, themeUser, toggleTheme } = useContext(contextUserAuth)
@@ -77,10 +78,10 @@ const MenuMobile = () => {
                                 </li>
                             )}
                             <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
-                                <Link className="flex p-3 justify-between items-center" href={"/dashboard/transactions"}>
+                                <Link className="flex p-3 justify-between items-center" href={"/dashboard/categories"}>
                                     <div className="flex items-center gap-2">
-                                        <TransactionsIcon />
-                                        Movimentações
+                                        <CategoryIcon />
+                                        Categorias
                                     </div>
                                     <ChevronRightIcon className="w-4 h-4" />
                                 </Link>

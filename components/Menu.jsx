@@ -10,6 +10,7 @@ import Profile from "./Profile";
 import Add from "./Add";
 import { getCurrentUser } from "@/helpers/getCurrentUser";
 import useFlashMessage from "@/hooks/useFlashMessage";
+import TransactionsIcon from "./icons/TransactionsIcon";
 
 const Menu = () => {
     const { setFlashMessage } = useFlashMessage()
@@ -40,11 +41,17 @@ const Menu = () => {
                     </Link>
                 </li>
                 <li className="w-[60px] h-[60px] p-3 flex items-center justify-center">
+                    <Link className="flex flex-col items-center justify-center" href={"/dashboard/transactions"}>
+                        <TransactionsIcon />
+                        <span className="text-light text-sm">Gestão</span>
+                    </Link>
+                </li>
+                {/* <li className="w-[60px] h-[60px] p-3 flex items-center justify-center">
                     <Link className="flex flex-col items-center justify-center" href={"/dashboard/categories"}>
                         <CategoryIcon />
                         <span className="text-light text-sm">Categorias</span>
                     </Link>
-                </li>
+                </li> */}
                 <li onClick={newAction} className="w-[60px] h-[60px] p-3 flex items-center justify-center border border-light dark:border-0 rounded cursor-pointer">
                     <ActionsIcon />
                 </li>

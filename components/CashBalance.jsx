@@ -1,10 +1,10 @@
-import CardLinkHome from "@/components/CardLinkHome";
+import CardHome from "@/components/CardHome";
 import MoneyIcon from "./icons/MoneyIcon";
 
 const CashBalance = ({ data }) => {
     
     return (
-        <CardLinkHome icon={<MoneyIcon />} text="Saldo em caixa" data={data} bg="bg-success" path={"dashboard/transactions"} />
+        <CardHome icon={<MoneyIcon />} text="Saldo em caixa" data={data} bg="bg-success"  />
     );
 }
  

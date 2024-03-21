@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import TitleH2 from "./TitleH2";
 import { ModalContext } from "@/providers/ModalProvider";
 import { getCurrentUser } from "@/helpers/getCurrentUser";
+import formatName from "@/lib/formatName";
 
 const EditUser = ({ user, rules }) => {
     const { setFlashMessage } = useFlashMessage()
@@ -60,7 +61,7 @@ const EditUser = ({ user, rules }) => {
             <TitleH2 text="Editar usuário" className="mb-[24px]" />
 
             <TitleH3 text="Nome" />
-            <InputContainerModal required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={name} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
+            <InputContainerModal required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={formatName(name)} onChange={(ev) => setName(ev.target.value)} placeholder="Nome" />
                         
             <TitleH3 text="Email ou celular" />
             <InputContainerModal required={true} className={"my-[10px] bg-gray-100 dark:bg-secondary"}  classNameInput="bg-gray-100 dark:bg-secondary" value={email} onChange={(ev) => setEmail(ev.target.value)} placeholder="Email ou celular" />
@@ -71,7 +72,7 @@ const EditUser = ({ user, rules }) => {
             <TitleH3 text="Função" />
             <SelectContainer required={true} data={rules} value={rule} onchange={(ev)=> setRule(ev.target.value)}  className={"mt-[16px]"} placeholder="Selecione a função" />
 
-            <Button onClick={updateUser} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
+            <Button onClick={updateUser} text={`${isSaving ? "Atualizando..." : "Atualizar"}`} className={`mt-[24px] ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
         </div>
     );
 }

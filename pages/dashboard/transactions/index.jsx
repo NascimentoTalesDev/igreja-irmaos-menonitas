@@ -26,14 +26,14 @@ const Transactions = ({ transactionsDb }) => {
   const router = useRouter()
   let actualMonth = new Date().getMonth() + 1
 
-  const getData = (date) => {
+  const getData = async (date) => {
     let year = date.getFullYear()
     let month = date.getMonth() + 1
     setNewMonth(month)
     setTitle(false)
     const data = { month, year }
 
-    axios.post(`${api}/${versionApi}/transactions/get-by-year-and-month`, data).then(response => {
+    await axios.post(`${api}/${versionApi}/transactions/get-by-year-and-month`, data).then(response => {
       if (!response.data.length) {
         setTransactions([])
         setNodata(true)

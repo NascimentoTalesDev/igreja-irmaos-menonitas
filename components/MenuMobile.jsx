@@ -80,7 +80,7 @@ const MenuMobile = () => {
                             <li onClick={toggleMenuMobile} className="border-b border-mygray_more">
                                 <Link className="flex p-3 justify-between items-center" href={"/dashboard/categories"}>
                                     <div className="flex items-center gap-2">
-                                        <CategoryIcon />
+                                        <CategoryIcon className={themeUser ? "white": "#171C22" } />
                                         Categorias
                                     </div>
                                     <ChevronRightIcon className="w-4 h-4" />

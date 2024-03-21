@@ -22,7 +22,7 @@ const Transactions = ({ transactionsDb }) => {
   const [transactions, setTransactions] = useState(transactionsDb);
   const [nodata, setNodata] = useState(false);
   const [newMonth, setNewMonth] = useState("");
-  const [title, setTitle] = useState(true);
+  const [title, setTitle] = useState(false);
   const router = useRouter()
   let actualMonth = new Date().getMonth() + 1
 
@@ -58,6 +58,7 @@ const Transactions = ({ transactionsDb }) => {
       })
     }
   },[])
+
   return (
     <Layout>
       <Title text="Movimentações" className="mb-[24px]" />

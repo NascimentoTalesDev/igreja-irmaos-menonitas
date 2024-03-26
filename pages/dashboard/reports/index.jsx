@@ -9,24 +9,20 @@ import TitleH3 from "@/components/TitleH3";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ptBR from 'date-fns/locale/pt-BR';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import formatName from "@/lib/formatName";
 import Button from "@/components/Button";
 import dynamic from "next/dynamic"
-import Card from "@/components/Card";
 import TitleH2 from "@/components/TitleH2";
-import TrendingUpOutlineIcon from "@/components/icons/TrendingUpOutlineIcon";
-import CashBalance from "@/components/CashBalance";
-import CashInTheBank from "@/components/CashInTheBank";
 import CardHome from "@/components/CardHome";
-import MoneyIcon from "@/components/icons/MoneyIcon";
 import BankIcon from "@/components/icons/BankIcon";
 import axios from "axios";
 import { api, versionApi } from "@/lib/configApi";
 import useFlashMessage from "@/hooks/useFlashMessage";
 import formatDate from "@/lib/formatDate";
 import formatLocalCurrency from "@/lib/formatLocalCurrency";
+import MoneyIcon from "@/components/icons/MoneyIcon";
 
 const Spreadsheet3 = dynamic(() => import("@/components/Spreadsheet3"), {
     ssr: false
@@ -118,23 +114,42 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
         setIsSearching(false)
     }
 
-    const downloadPDF = () => {
+    const downloadPDFMobile = async () => {
         setIsDownloading(true)
-        const capture = document.getElementById("toDownload")
+        const chart = document.querySelector("#apexchartsbasic-bar svg")
+        console.log(chart);
+        const data = { 
+            startDate:formatDate(startDate),
+            endDate:formatDate(endDate),
+            chart
+        }
 
-        html2canvas(capture).then((canvas) => {
-            const imgData = canvas.toDataURL('img/png');
-            const doc = new jsPDF('p', 'mm', 'a4');
-            const componentWidth = doc.internal.pageSize.getWidth()
-            const componentHeight = doc.internal.pageSize.getHeight()
-            doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
-            doc.save('relatorio.pdf')
-            setIsDownloading(false)
+        await axios.post(`${api}/${versionApi}/download-reports-pdf`, data, { responseType: 'blob' })
+        .then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'meuPDF.pdf');
+            document.body.appendChild(link);
+            link.click();
         })
+        .catch(error => {
+            console.error('Erro ao baixar o PDF:', error);
+        });
+        // const capture = document.getElementById("toDownload")
+        // await html2canvas(capture).then((canvas) => {
+        //     const imgData = canvas.toDataURL('img/png');
+        //     const doc = new jsPDF('p', 'mm', 'a4');
+        //     const componentWidth = doc.internal.pageSize.getWidth()
+        //     const componentHeight = doc.internal.pageSize.getHeight()
+        //     doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
+        //     doc.save('relatorio.pdf')
+        // })
+        setIsDownloading(false)
     }
 
     return (
-        <Layout >
+        <Layout>
             <Title text="Relatórios" className="mb-[44px]" />
             <div className="flex flex-col lg:flex-row w-[300px] md:w-full mx-auto mb-[16px]">
                 <div className="w-[300px] md:w-full flex flex-col md:flex-row md:justify-between lg:justify-start md:gap-[16px] mx-auto">
@@ -172,7 +187,7 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
 
             {data?.length > 0 && (
                 <>
-                    <div id="toDownload" className={"bg-gray-100 dark:bg-secondary_less  py-[24px] px-[2px] rounded"} >
+                    <div id="toDownload" className={"bg-gray-100 dark:bg-secondary_less py-[24px] px-[2px] rounded"} >
                         {category ? (
                             <>
                                 <div className="flex items-center justify-center">{formatDate(startDate)} até {formatDate(endDate)}</div>
@@ -206,7 +221,7 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                                 <TitleH2 text={`Métricas das categorias`} className="text-base text-secondary dark:text-light mb-[16px]" />
                                 <>
                                     {allCategories.map(item => (
-                                        <TitleH3 key={item?._id} text={`${formatName(item?._id)} R$${item?.total} `} className="text-secondary dark:text-light" />
+                                        <TitleH3 key={item?._id} text={`${formatName(item?._id)} R$${formatLocalCurrency(item?.total)} `} className="text-secondary dark:text-light" />
 
                                     ))}
                                 </>
@@ -215,10 +230,11 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
 
                     </div>
                     <div className="mt-[16px] w-full flex items-center justify-center ">
-                        <Button onClick={downloadPDF} text={isDownloading ? "Baixando..." : "Baixar Relatório PDF"} className="bg-primary w-[300px]" />
+                        <Button onClick={downloadPDFMobile} text={isDownloading ? "Baixando..." : "Baixar Relatório PDF"} className="bg-primary w-[300px]" />
                     </div>
                 </>
             )}
+            
         </Layout>
     );
 }

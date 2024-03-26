@@ -128,6 +128,7 @@ const Spreadsheet3 = ({ data, startDate }) => {
     return (
         <>
             <Chart
+                id="apexchartsbasic-bar"
                 type="bar"
                 width="100%"
                 height="400px"

@@ -8,11 +8,13 @@ import checkMatchPassword from "@/lib/checkMatchPassword";
 import axios from "axios";
 import useFlashMessage from "@/hooks/useFlashMessage";
 import { api, versionApi } from "@/lib/configApi";
+import checkKey from "@/lib/checkKey";
+import { useRouter } from "next/router";
 
-export default function Home() {
+export default function NewPassword() {
   const [matchPassword, setMatchPassword] = useState(false)
   const { setFlashMessage } = useFlashMessage()
-
+  const router = useRouter()
   const [newPassword, setNewPassword] = useState('')
   const [confirmNewPassword, setConfirmNewPassword] = useState('')
   const [isCreatingNewPassword, setIsCreatingNewPassword] = useState(false)
@@ -25,25 +27,25 @@ export default function Home() {
     const data = { newPassword, confirmNewPassword }
 
     try {
-        await axios.post(`${api}/${versionApi}/users/new-password?token=${token}&email=${email}`, data).then(response => {
-            if (response?.data?.message?.type === "error") {
-                msgText = response?.data?.message?.data
-                msgType = response?.data?.message?.type
-            } else {
-                router.replace("/")
-                msgText = response?.data?.message?.data
-            }
-        })
+      await axios.post(`${api}/${versionApi}/users/new-password?token=${router?.query?.token}&email=${router?.query?.email}`, data).then(response => {
+        if (response?.data?.message?.type === "error") {
+          msgText = response?.data?.message?.data
+          msgType = response?.data?.message?.type
+        } else {
+          router.replace("/")
+          msgText = response?.data?.message?.data
+        }
+      })
     } catch (error) {
-        msgText = error?.response?.data?.message?.data
-        msgType = error?.response?.data?.message?.type
+      msgText = error?.response?.data?.message?.data
+      msgType = error?.response?.data?.message?.type
     }
     setFlashMessage(msgText, msgType);
     setIsCreatingNewPassword(false)
-}
+  }
 
   return (
-    <section className="bg-secondary h-full w-full overflow-y-hidden flex justify-center items-center">
+    <section onKeyDown={(ev) => checkKey(ev, createNewPassword)} className="bg-secondary h-full w-full overflow-y-hidden flex justify-center items-center">
       <Head>
         <meta property="og:title" content={"Sistema Financeiro - Igreja Irmãos Menonitas - Criar Nova Senha"} />
         <meta property="og:url" content={`https://igrejairmaosmenonitas.vercel.app`} />
@@ -59,15 +61,15 @@ export default function Home() {
         </div>
         <TitleH1 className="text-center mt-[20px]" text="Criar Nova Senha" />
         <p className="text-center text-sm text-light font-light tracking-wide ">Igreja Irmãos Menonitas</p>
-        <Input onKeyUp={()=> checkMatchPassword(newPassword, confirmNewPassword, setMatchPassword)} className={"mt-[16px]"} padlock={true} look={true} type="password" value={newPassword} onChange={(ev) => setNewPassword(ev.target.value)} text="Senha" placeholder="Senha" />
-        <Input onKeyUp={()=> checkMatchPassword(newPassword, confirmNewPassword, setMatchPassword)} className={"mt-[16px]"} padlock={true} look={true} type="password" value={confirmNewPassword} onChange={(ev) => setConfirmNewPassword(ev.target.value)} text="Senha" placeholder="Confirme a senha" />
+        <Input onKeyUp={() => checkMatchPassword(newPassword, confirmNewPassword, setMatchPassword)} className={"mt-[16px]"} padlock={true} look={true} type="password" value={newPassword} onChange={(ev) => setNewPassword(ev.target.value)} text="Senha" placeholder="Senha" />
+        <Input onKeyUp={() => checkMatchPassword(newPassword, confirmNewPassword, setMatchPassword)} className={"mt-[16px]"} padlock={true} look={true} type="password" value={confirmNewPassword} onChange={(ev) => setConfirmNewPassword(ev.target.value)} text="Senha" placeholder="Confirme a senha" />
         {matchPassword ?
           <p className='mt-2 text-danger text-sm md:text-base'>As senhas não conferem.</p>
           :
           ""
         }
         {!matchPassword ? (
-          <Button onClick={createNewPassword} text={isCreatingNewPassword ? "Cadastrando..." : "Cadastrar nova senha" } className={`mt-[14px] ${isCreatingNewPassword ? " bg-primary_less": " bg-primary" }`} />
+          <Button onClick={createNewPassword} text={isCreatingNewPassword ? "Cadastrando..." : "Cadastrar nova senha"} className={`mt-[14px] ${isCreatingNewPassword ? " bg-primary_less" : " bg-primary"}`} />
 
         ) :
           (

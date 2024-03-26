@@ -7,7 +7,7 @@ export default async function RecoveryPassword(req, res, next) {
     const { method } = req;
 
     if (method === "POST") {
-
+        console.log("AQUI");
         const { newPassword, confirmNewPassword } = req.body
         const { token, email } = req.query
 

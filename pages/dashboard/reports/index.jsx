@@ -172,9 +172,7 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
 
             {data?.length > 0 && (
                 <>
-
                     <div id="toDownload" className={"bg-gray-100 dark:bg-secondary_less  py-[24px] px-[2px] rounded"} >
-
                         {category ? (
                             <>
                                 <div className="flex items-center justify-center">{formatDate(startDate)} até {formatDate(endDate)}</div>
@@ -190,10 +188,10 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                                 )}
                             </>
                         )}
+
                         <div className="ml-[10px]">
                             <TitleH3 text={`Rendimentos: R$${formatLocalCurrency(performanceCategory?.total)}`} className="text-secondary dark:text-light " />
                             <TitleH3 text={`Investimentos: R$${formatLocalCurrency(investmentCategory?.total)}`} className="text-secondary dark:text-light " />
-
                         </div>
 
                         <div className="flex items-center gap-[7px] justify-center mt-[16px]">
@@ -221,8 +219,6 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                     </div>
                 </>
             )}
-
-
         </Layout>
     );
 }

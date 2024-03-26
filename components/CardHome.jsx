@@ -3,7 +3,7 @@ import formatLocalCurrency from "@/lib/formatLocalCurrency";
 const CardHome = ({icon, text, data, bg , className}) => {
     
     return (
-        <div className={`flex items-center bg-gray-100 dark:bg-secondary_less h-[70px] rounded cursor-default ${className} `}>
+        <div className={`flex items-center bg-gray-100 h-[70px] rounded cursor-default ${className} `}>
             <div className={`w-[35px] flex items-center justify-center mx-[8px] h-[45px] rounded ${bg}`}>
                 {icon}
             </div>

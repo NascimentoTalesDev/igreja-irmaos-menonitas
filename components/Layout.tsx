@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutProps> = ({children, onKeyDown}) => {
     },[])
 
     return (
-        <div onKeyDown={onKeyDown} className="h-screen w-full bg-light dark:bg-secondary text-secondary dark:text-light">
+        <div onKeyDown={onKeyDown} className="h-screen w-full bg-light dark:bg-secondary text-secondary dark:text-light ">
             <MenuMobile />
             <ModalThird />
             <ModalSecond />

@@ -66,7 +66,6 @@ export default async function Categories (req, res) {
 
         try {
             const categories = await Category.find({type : tipo})
-            console.log(categories);
             return res.json(categories)
         } catch (error) {
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });

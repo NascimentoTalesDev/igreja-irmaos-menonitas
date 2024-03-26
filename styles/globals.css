@@ -110,9 +110,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color: #fff !important;
 }
 
-.react-datepicker__day:hover{
+.react-datepicker__day:hover {
     background-color: #FF7A1F !important;
-    color: #fff !important;  
+    color: #fff !important;
     transition: 0.2s ease-in-out;
 }
 
@@ -120,8 +120,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #FF6B05 !important;
     color: #fff !important;
 }
+
 .react-datepicker__month-text:hover {
     background-color: #FF7A1F !important;
-    color: #fff !important;  
+    color: #fff !important;
     transition: 0.2s ease-in-out;
 }
+

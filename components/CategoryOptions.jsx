@@ -23,12 +23,13 @@ const CategoryOptions = ({ category }) => {
 
     const [user, setUser] = useState("")
 
+
     useEffect(()=>{
         let currentUser = getCurrentUser()
         setUser(currentUser)
     },[])
 
-    const deleteCategory = async() =>{
+    const deleteCategory = async() => {
         setIsDeleting(true)
         let msgText;
         let msgType = 'success'

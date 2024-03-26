@@ -274,4 +274,5 @@ export default async function Transactions(req, res, next) {
             return res.status(500).json({ message: { type: "error", data: "Aconteceu um erro inesperado" } });
         }
     }
+    
 }

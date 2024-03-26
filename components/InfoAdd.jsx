@@ -108,10 +108,7 @@ const InfoAdd = ({ valueCalc, type }) => {
         }
 
         if(paid){
-            console.log("PAGO");
             let value = parseInt(accountValue)
-            console.log(value);
-            console.log(inInstallmentsQtt);
 
             if (inInstallmentsQtt > 0) {
                 if((value / inInstallmentsQtt) > saldoEmCaixa){
@@ -121,7 +118,6 @@ const InfoAdd = ({ valueCalc, type }) => {
                 }
             }
             if (!inInstallments && value > saldoEmCaixa) {
-                console.log("MAIOR");
                 setIsSaving(false)
                 setFlashMessage("Verifique o saldo na pagina inicial, saldo insuficiente", "error")
                 return

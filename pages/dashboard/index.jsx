@@ -56,7 +56,7 @@ const Dashboard = ({ monthsFour, monthTree, monthTwo, monthOne, dizimo, categori
             </div>
             {dizimo && (
                 <div className="w-full mb-[16px]">
-                    <CardHome data={dizimo?.accountValue} icon={<DizimoIcon />} text={`Dízimo do último culto: ${formatDate(dizimo.createdAt)}`} bg="bg-success" path={"#"} className={" w-full"} />
+                    <CardHome data={dizimo?.accountValue} icon={<DizimoIcon />} text={`Dízimo do último culto: ${formatDate(dizimo.createdAt)}`} bg="bg-success" path={"#"} className={" w-full dark:bg-secondary_less"} />
                 </div>
             )}
 

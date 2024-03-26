@@ -59,7 +59,7 @@ const Spreadsheet2 = ({ categories, className }) => {
             options: {
                 chart:{
                     height: 450,
-                    width: 450,
+                    width: 370,
                 },
                 legend: {
                     show: true,

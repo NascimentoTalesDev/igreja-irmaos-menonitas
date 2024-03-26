@@ -37,7 +37,6 @@ export default function middleware(request: NextRequest, response: NextResponse)
 
   let user = JSON.parse(token);
   rule = user?.rule?.name;
-  console.log(rule);
     
   const allowedRoles = routePermissions[router] ?? [];
   const errorMessage = "Você não tem acesso a esta página.";

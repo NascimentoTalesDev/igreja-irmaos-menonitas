@@ -7,7 +7,6 @@ export default async function RecoveryPassword(req, res, next) {
     const { method } = req;
 
     if (method === "POST") {
-        console.log("AQUI");
         const { newPassword, confirmNewPassword } = req.body
         const { token, email } = req.query
 
@@ -18,20 +17,20 @@ export default async function RecoveryPassword(req, res, next) {
         try {
             
             const user = await User.findOne({ email: email })
-            if (!user) return res.status(400).send({ message: { type: "error", data: "Usuário não encontrado." } })
+            if (!user) return res.status(400).send({ message: { type: "error", data: "Usuário não encontrado" } })
             
             const passwordMatch = await bcrypt.compare(token, user.password)
-            if (!passwordMatch) return res.status(400).send({ message: { type: "error", data: "Token inválido." } })
+            if (!passwordMatch) return res.status(400).send({ message: { type: "error", data: "Token inválido" } })
 
             const newHash = await bcrypt.hash(newPassword, 12)
 
             user.password = newHash
             await user.save()
 
-            return res.send({ message: { type: "success", data: "Senha alterada com sucesso." } })
+            return res.send({ message: { type: "success", data: "Senha alterada com sucesso" } })
         } catch (error) {
             console.log(error);
-            return res.send({ message: { type: "error", data: "Error ao redefinir senha." } })
+            return res.send({ message: { type: "error", data: "Error ao redefinir senha" } })
         }
     }
 }

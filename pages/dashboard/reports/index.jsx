@@ -116,35 +116,35 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
 
     const downloadPDFMobile = async () => {
         setIsDownloading(true)
-        const chart = document.querySelector("#apexchartsbasic-bar svg")
-        console.log(chart);
-        const data = { 
-            startDate:formatDate(startDate),
-            endDate:formatDate(endDate),
-            chart
-        }
+        // const chart = document.querySelector("#apexchartsbasic-bar svg")
+        // console.log(chart);
+        // const data = { 
+        //     startDate:formatDate(startDate),
+        //     endDate:formatDate(endDate),
+        //     chart
+        // }
 
-        await axios.post(`${api}/${versionApi}/download-reports-pdf`, data, { responseType: 'blob' })
-        .then(response => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'meuPDF.pdf');
-            document.body.appendChild(link);
-            link.click();
-        })
-        .catch(error => {
-            console.error('Erro ao baixar o PDF:', error);
-        });
-        // const capture = document.getElementById("toDownload")
-        // await html2canvas(capture).then((canvas) => {
-        //     const imgData = canvas.toDataURL('img/png');
-        //     const doc = new jsPDF('p', 'mm', 'a4');
-        //     const componentWidth = doc.internal.pageSize.getWidth()
-        //     const componentHeight = doc.internal.pageSize.getHeight()
-        //     doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
-        //     doc.save('relatorio.pdf')
+        // await axios.post(`${api}/${versionApi}/download-reports-pdf`, data, { responseType: 'blob' })
+        // .then(response => {
+        //     const url = window.URL.createObjectURL(new Blob([response.data]));
+        //     const link = document.createElement('a');
+        //     link.href = url;
+        //     link.setAttribute('download', 'meuPDF.pdf');
+        //     document.body.appendChild(link);
+        //     link.click();
         // })
+        // .catch(error => {
+        //     console.error('Erro ao baixar o PDF:', error);
+        // });
+        const capture = document.getElementById("toDownload")
+        await html2canvas(capture).then((canvas) => {
+            const imgData = canvas.toDataURL('img/png');
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const componentWidth = doc.internal.pageSize.getWidth()
+            const componentHeight = doc.internal.pageSize.getHeight()
+            doc.addImage(imgData, 'PNG', 0, 0, componentWidth, componentHeight);
+            doc.save('relatorio.pdf')
+        })
         setIsDownloading(false)
     }
 

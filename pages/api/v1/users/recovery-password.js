@@ -24,7 +24,7 @@ export default async function RecoveryPassword(req, res, next) {
             const newHash = await bcrypt.hash(newPass, 12)
 
             user.password = newHash
-            // await user.save()
+            await user.save()
 
             const message = `
             <table width="600" border="0" align="center" cellpadding="0" cellspacing="0">

@@ -107,8 +107,8 @@ export default async function TransactionId(req, res) {
                 if (icon && icon !== transaction.icon) transaction.icon = icon
                 if (date && date !== transaction.date) transaction.date = date
                 if (doc && doc !== transaction.doc) transaction.doc = doc
-                
-                if (transaction?.recurrent) {
+                                
+                if (value && transaction?.recurrent) {
                     try {
                         Log.create({
                             message: `atualizou a transação ${transaction?.name} de ${transaction?.accountValue} para ${value}`,

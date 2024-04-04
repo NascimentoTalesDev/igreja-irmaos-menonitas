@@ -32,7 +32,7 @@ const Spreadsheet3 = ({ data, startDate }) => {
 
     let totalReceita = sumNumbers(valueReceitas)
     let totalDespesa = sumNumbers(valueDespesas)
-    console.log(totalReceita, totalDespesa);
+
     let crescimento = calcularPorcentagemDeCrescimento(totalReceita, totalDespesa)
 
     const categoriesRet = () => {
@@ -142,13 +142,21 @@ const Spreadsheet3 = ({ data, startDate }) => {
             <div className="flex gap-[10px] items-center justify-center mb-[16px]">
                 {crescimento > 0 ? (
                     <>
-                        <TrendingUpOutlineIcon />
-                        <TitleH2 text={`Crescimento de ${crescimento.toFixed(2)}%`} className="text-success" />
+                        {crescimento > 1 && (
+                            <>
+                                <TrendingUpOutlineIcon />
+                                <TitleH2 text={`Crescimento de ${crescimento.toFixed(2)}%`} className="text-success" />
+                            </>
+                        )}
                     </>
                 ):(
                     <>
-                        <TrendingUpOutline />
-                        <TitleH2 text={`Decrescimento de ${crescimento.toFixed(2)}%`} className="text-danger" />
+                        {crescimento < 1 && (
+                            <>
+                                <TrendingUpOutline />
+                                <TitleH2 text={`Decrescimento de ${crescimento.toFixed(2)}%`} className="text-danger" />
+                            </>
+                        )}
                     </>
                 )}
             </div>

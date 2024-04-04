@@ -197,8 +197,8 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                         )}
 
                         <div className="ml-[10px]">
-                            <TitleH3 text={`Rendimentos: R$${formatLocalCurrency(performanceCategory?.total)}`} className="text-secondary dark:text-light " />
-                            <TitleH3 text={`Investimentos: R$${formatLocalCurrency(investmentCategory?.total)}`} className="text-secondary dark:text-light " />
+                            <TitleH3 text={`Rendimentos: R$${performanceCategory?.total ? formatLocalCurrency(performanceCategory?.total): formatLocalCurrency(0)}`} className="text-secondary dark:text-light " />
+                            <TitleH3 text={`Investimentos: R$${investmentCategory?.total ? formatLocalCurrency(investmentCategory?.total) : formatLocalCurrency(0)}`} className="text-secondary dark:text-light " />
                         </div>
 
                         <div className="flex items-center gap-[7px] justify-center mt-[16px]">
@@ -214,7 +214,6 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                                 <>
                                     {allCategories.map(item => (
                                         <TitleH3 key={item?._id} text={`${formatName(item?._id)} R$${formatLocalCurrency(item?.total)} `} className="text-secondary dark:text-light" />
-
                                     ))}
                                 </>
                             </div>
@@ -391,11 +390,11 @@ export async function getServerSideProps(req) {
     return {
         props: {
             categoriesDb: JSON.parse(JSON.stringify(categoriesDb)),
-            saldoCaixa: JSON.parse(JSON.stringify(saldoCaixa || 0)),
-            performance: JSON.parse(JSON.stringify(performance || 0)),
-            performanceCategory: JSON.parse(JSON.stringify(...performanceCategory || 0)),
-            investmentCategory: JSON.parse(JSON.stringify(...investmentCategory || 0)),
-            allCategories: JSON.parse(JSON.stringify(allCategories || 0)),
+            saldoCaixa: JSON.parse(JSON.stringify(saldoCaixa) || 0),
+            performance: JSON.parse(JSON.stringify(performance) || 0),
+            performanceCategory: JSON.parse(JSON.stringify(...performanceCategory) || 0),
+            investmentCategory: JSON.parse(JSON.stringify(...investmentCategory) || 0),
+            allCategories: JSON.parse(JSON.stringify(allCategories) || 0),
         }
     }
 }

@@ -158,7 +158,7 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                     </div>
                 </div>
                 <div className="flex flex-col md:flex-row mt-[5px] lg:mt-0 gap-[5px] md:gap-[16px]">
-                    <div onChange={(ev) => toggleColor(ev.target.value)} className="w-full relative md:w-[50%] lg:w-[200px] overflow-hidden flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[32px] lg:h-[44px]">
+                    <div onChange={(ev) => toggleColor(ev.target.value)} className="w-full relative md:w-[50%] lg:w-[150px] overflow-hidden flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[32px] lg:h-[44px]">
                         <select value={category} className={`bg-gray-100 dark:bg-secondary pl-[5px] mr-[10px] w-full h-full ${newColor ? ' text-secondary dark:text-light ' : 'text-mygray_more dark:text-placeholder '}`} onChange={(ev) => {setData(''), setCategory(ev.target.value)}} >
                             <option value="" className="text-secondary dark:text-light" >Todas Categorias</option>
                             {categories?.length > 0 && categories?.map(item => (
@@ -170,7 +170,7 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                         </select>
                         <ChevronDownIcon className="absolute -right-[1px] top-[1.4px] w-4 h-4 mr-[8px] lg:hidden " />
                     </div>
-                    <Button text={isSearching ? "Buscando..." : "Buscar dados"} className={`h-[33px] lg:h-[44px] w-full md:w-[50%] lg:min-w-fit  ${isSearching ? " bg-primary_less" : " bg-primary"}`} onClick={getData} />
+                    <Button text={isSearching ? "Buscando..." : "Buscar dados"} className={`h-[34px] lg:h-[44px] w-full md:w-[120px] lg:min-w-fit  ${isSearching ? " bg-primary_less" : " bg-primary"}`} onClick={getData} />
                 </div>
             </div>
 
@@ -178,8 +178,11 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                 <>
                     <div id="toDownload" className={"bg-gray-100 dark:bg-secondary_less py-[24px] px-[2px] rounded"} >
                         {category ? (
-                            <>
-                                <div className="flex items-center justify-center">{formatName(category)} {formatDate(startDate)} até {formatDate(endDate)}</div>
+                            <>  
+                                <div className="flex items-center justify-center flex-col md:flex-row md:gap-1">
+                                    <div>{formatName(category)}</div>
+                                    <div>{formatDate(startDate)} até {formatDate(endDate)}</div>
+                                </div>
                                 <Spreadsheet4 data={data} startDate={startDate} />
                             </>
                         ) : (

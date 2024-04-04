@@ -37,10 +37,8 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
     const { setFlashMessage } = useFlashMessage()
     const actualYear = new Date().getFullYear()
 
-    const [startDate, setStartDate] = useState(new Date());
-    // const [startDate, setStartDate] = useState(new Date(`01 01 ${actualYear}`));
-    const [endDate, setEndDate] = useState(new Date());
-    // const [endDate, setEndDate] = useState(new Date(`01 01 ${actualYear + 1}`));
+    const [startDate, setStartDate] = useState(new Date(`01 01 ${actualYear}`));
+    const [endDate, setEndDate] = useState(new Date(`01 01 ${actualYear + 1}`));
     const [category, setCategory] = useState('');
     const [newColor, setNewColor] = useState(false)
     const [isSearching, setIsSearching] = useState(false)
@@ -120,32 +118,11 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
     }
 
     useEffect(() => {
-        // getData()
+        getData()
     }, [])
 
     const downloadPDF = async () => {
         setIsDownloading(true)
-        // const chart = document.querySelector("#apexchartsbasic-bar svg")
-        // console.log(chart);
-        // const data = { 
-        //     startDate:formatDate(startDate),
-        //     endDate:formatDate(endDate),
-        //     chart
-        // }
-
-        // await axios.post(`${api}/${versionApi}/download-reports-pdf`, data, { responseType: 'blob' })
-        // .then(response => {
-        //     const url = window.URL.createObjectURL(new Blob([response.data]));
-        //     const link = document.createElement('a');
-        //     link.href = url;
-        //     link.setAttribute('download', 'meuPDF.pdf');
-        //     document.body.appendChild(link);
-        //     link.click();
-        // })
-        // .catch(error => {
-        //     console.error('Erro ao baixar o PDF:', error);
-        // });
-
 
         const capture = document.getElementById("toDownload")
 
@@ -182,7 +159,7 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                 </div>
                 <div className="flex flex-col md:flex-row mt-[5px] lg:mt-0 gap-[5px] md:gap-[16px]">
                     <div onChange={(ev) => toggleColor(ev.target.value)} className="w-full relative md:w-[50%] lg:w-[200px] overflow-hidden flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[32px] lg:h-[44px]">
-                        <select value={category} className={`bg-gray-100 dark:bg-secondary pl-[5px] mr-[10px] w-full h-full ${newColor ? ' text-secondary dark:text-light ' : 'text-mygray_more dark:text-placeholder '}`} onChange={(ev) => setCategory(ev.target.value)} >
+                        <select value={category} className={`bg-gray-100 dark:bg-secondary pl-[5px] mr-[10px] w-full h-full ${newColor ? ' text-secondary dark:text-light ' : 'text-mygray_more dark:text-placeholder '}`} onChange={(ev) => {setData(''), setCategory(ev.target.value)}} >
                             <option value="" className="text-secondary dark:text-light" >Todas Categorias</option>
                             {categories?.length > 0 && categories?.map(item => (
                                 <option key={item?.name} className="text-secondary dark:text-light" value={item?.name}>{formatName(item?.name)}</option>
@@ -202,7 +179,7 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
                     <div id="toDownload" className={"bg-gray-100 dark:bg-secondary_less py-[24px] px-[2px] rounded"} >
                         {category ? (
                             <>
-                                <div className="flex items-center justify-center">{formatDate(startDate)} até {formatDate(endDate)}</div>
+                                <div className="flex items-center justify-center">{formatName(category)} {formatDate(startDate)} até {formatDate(endDate)}</div>
                                 <Spreadsheet4 data={data} startDate={startDate} />
                             </>
                         ) : (

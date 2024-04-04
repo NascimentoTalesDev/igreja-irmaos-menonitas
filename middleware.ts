@@ -22,6 +22,8 @@ export default function middleware(request: NextRequest, response: NextResponse)
     
     '/dashboard/system-log': ['administrador', 'presidente'],
 
+    '/dashboard/reports/report-to-download': ['administrador', 'presidente', 'tesoureiro'],
+    
     '/dashboard/categories': ['administrador','presidente', 'tesoureiro'],
     
     '/dashboard/documents': ['administrador', 'presidente', 'tesoureiro', 'pastor','contabilidade'],

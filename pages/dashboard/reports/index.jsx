@@ -9,7 +9,7 @@ import TitleH3 from "@/components/TitleH3";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ptBR from 'date-fns/locale/pt-BR';
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ChevronDownIcon from "@/components/icons/ChevronDownIcon";
 import formatName from "@/lib/formatName";
 import Button from "@/components/Button";
@@ -23,6 +23,7 @@ import useFlashMessage from "@/hooks/useFlashMessage";
 import formatDate from "@/lib/formatDate";
 import formatLocalCurrency from "@/lib/formatLocalCurrency";
 import MoneyIcon from "@/components/icons/MoneyIcon";
+import { contextUserAuth } from "@/providers/userAuthProvider";
 
 const Spreadsheet3 = dynamic(() => import("@/components/Spreadsheet3"), {
     ssr: false
@@ -34,9 +35,10 @@ const Spreadsheet4 = dynamic(() => import("@/components/Spreadsheet4"), {
 
 const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, investmentCategory, allCategories }) => {
     const { setFlashMessage } = useFlashMessage()
+    const actualYear = new Date().getFullYear()
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
+    const [startDate, setStartDate] = useState(new Date(`01 01 ${actualYear}`));
+    const [endDate, setEndDate] = useState(new Date(`01 01 ${actualYear + 1}`));
     const [category, setCategory] = useState('');
     const [newColor, setNewColor] = useState(false)
     const [isSearching, setIsSearching] = useState(false)
@@ -114,7 +116,11 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
         setIsSearching(false)
     }
 
-    const downloadPDFMobile = async () => {
+    useEffect(() => {
+        getData()
+    }, [])
+
+    const downloadPDF = async () => {
         setIsDownloading(true)
         // const chart = document.querySelector("#apexchartsbasic-bar svg")
         // console.log(chart);
@@ -136,8 +142,11 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
         // .catch(error => {
         //     console.error('Erro ao baixar o PDF:', error);
         // });
+
+
         const capture = document.getElementById("toDownload")
-        await html2canvas(capture).then((canvas) => {
+
+        html2canvas(capture).then((canvas) => {
             const imgData = canvas.toDataURL('img/png');
             const doc = new jsPDF('p', 'mm', 'a4');
             const componentWidth = doc.internal.pageSize.getWidth()
@@ -230,11 +239,10 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
 
                     </div>
                     <div className="mt-[16px] w-full flex items-center justify-center ">
-                        <Button onClick={downloadPDFMobile} text={isDownloading ? "Baixando..." : "Baixar Relatório PDF"} className="bg-primary w-[300px]" />
+                        <Button onClick={downloadPDF} text={isDownloading ? "Baixando..." : "Baixar Relatório PDF"} className="bg-primary w-[300px] hidden lg:flex" />
                     </div>
                 </>
             )}
-            
         </Layout>
     );
 }

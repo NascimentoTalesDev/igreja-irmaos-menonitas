@@ -16,7 +16,7 @@ export default async function Reports(req, res, next) {
     if (method === "POST") {
         var actualYear = new Date().getFullYear();
         const { startDate, endDate, category } = req.body
-
+        
         if (!startDate ) return res.status(422).json({ message: { type: "error", data: "Selecione uma data inicial" } });
         if (!endDate ) return res.status(422).json({ message: { type: "error", data: "Selecione uma data final" } });
 

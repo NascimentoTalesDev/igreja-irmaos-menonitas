@@ -14,17 +14,17 @@ const ViewDocument = ({ document }) => {
     const download = async(doc) => {
         let msgText = "Erro ao baixar o arquivo";
         let msgType = 'error'
-
+        
         const docName = doc.split('.com/')[1]
-
         try {
             const response = await fetch(doc);
             const blob = await response.blob();
             const blobUrl = URL.createObjectURL(blob);
+            console.log(blobUrl);
 
             const link = window.document.createElement('a');
             link.href = blobUrl;
-            link.setAttribute('download', `${docName}`); // Nome do arquivo a ser baixado
+            link.setAttribute('download', `${docName}`);
             window.document.body.appendChild(link);
             link.click();
             window.document.body.removeChild(link)

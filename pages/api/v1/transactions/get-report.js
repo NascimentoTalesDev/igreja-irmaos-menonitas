@@ -14,9 +14,8 @@ export default async function Reports(req, res, next) {
     }
 
     if (method === "POST") {
-        var actualYear = new Date().getFullYear();
         const { startDate, endDate, category } = req.body
-        
+
         if (!startDate ) return res.status(422).json({ message: { type: "error", data: "Selecione uma data inicial" } });
         if (!endDate ) return res.status(422).json({ message: { type: "error", data: "Selecione uma data final" } });
 
@@ -27,7 +26,7 @@ export default async function Reports(req, res, next) {
         var endYear = new Date(endDate).getFullYear()
 
         const diffMeses = (endYear - startYear) * 12 + (endMonth - startMonth);
-
+        
         if (startYear >= endYear && endMonth < startMonth || endYear < startYear ) return res.status(422).json({ message: { type: "error", data: "Data final deve ser futura" } });
         if ( diffMeses > 12 ) return res.status(422).json({ message: { type: "error", data: "Máximo 12 meses" } });
 
@@ -39,7 +38,7 @@ export default async function Reports(req, res, next) {
                     {
                         $match: {
                             $or: [
-                                { name: category,  paid: true, date: { $gte: firstDayOfMonth(actualYear, startMonth), $lt: lastDayOfMonth(actualYear, startMonth) }  },
+                                { name: category,  paid: true, date: { $gte: firstDayOfMonth(startYear, startMonth), $lt: lastDayOfMonth(startYear, startMonth) }  },
                             ]
                         }
                     },
@@ -61,9 +60,9 @@ export default async function Reports(req, res, next) {
                 months.push(transactions)
                 startMonth++
     
-                if (startMonth > 11) {
-                    startMonth = 1
-                    actualYear++
+                if (startMonth > 12) {
+                    startMonth = 0
+                    startYear++
                 }
             }
 
@@ -76,8 +75,8 @@ export default async function Reports(req, res, next) {
                 {
                     $match: {
                         $or: [
-                            { type: "receita",  paid: true, date: { $gte: firstDayOfMonth(actualYear, startMonth), $lt: lastDayOfMonth(actualYear, startMonth) }  },
-                            { $and: [{ type: "despesa" }, { paid: true }, { date: { $gte: firstDayOfMonth(actualYear, startMonth), $lt: lastDayOfMonth(actualYear, startMonth) }}] },
+                            { type: "receita",  paid: true, date: { $gte: firstDayOfMonth(startYear, startMonth), $lt: lastDayOfMonth(startYear, startMonth) }  },
+                            { $and: [{ type: "despesa" }, { paid: true }, { date: { $gte: firstDayOfMonth(startYear, startMonth), $lt: lastDayOfMonth(startYear, startMonth) }}] },
                         ]
                     }
                 },
@@ -110,10 +109,9 @@ export default async function Reports(req, res, next) {
 
             months.push(transactions)
             startMonth++
-
-            if (startMonth > 11) {
+            if (startMonth > 12) {
                 startMonth = 1
-                actualYear++
+                startYear++
             }
         }
         return res.json(months)

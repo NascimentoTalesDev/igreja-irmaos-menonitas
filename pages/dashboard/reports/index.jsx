@@ -37,8 +37,10 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
     const { setFlashMessage } = useFlashMessage()
     const actualYear = new Date().getFullYear()
 
-    const [startDate, setStartDate] = useState(new Date(`01 01 ${actualYear}`));
-    const [endDate, setEndDate] = useState(new Date(`01 01 ${actualYear + 1}`));
+    const [startDate, setStartDate] = useState(new Date());
+    // const [startDate, setStartDate] = useState(new Date(`01 01 ${actualYear}`));
+    const [endDate, setEndDate] = useState(new Date());
+    // const [endDate, setEndDate] = useState(new Date(`01 01 ${actualYear + 1}`));
     const [category, setCategory] = useState('');
     const [newColor, setNewColor] = useState(false)
     const [isSearching, setIsSearching] = useState(false)
@@ -107,6 +109,7 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
         try {
             await axios.post(`${api}/${versionApi}/transactions/get-report`, data).then(response => {
                 setData(response.data);
+                console.log(response.data);
             })
         } catch (error) {
             msgType = error?.response?.data?.message?.type
@@ -117,7 +120,7 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
     }
 
     useEffect(() => {
-        getData()
+        // getData()
     }, [])
 
     const downloadPDF = async () => {

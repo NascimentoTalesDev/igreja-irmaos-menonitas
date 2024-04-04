@@ -3,7 +3,7 @@ import { Document } from "@/models/Document";
 import { Log } from "@/models/Log";
 import bcrypt from "bcrypt"
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
-const bucketName = "igreja-irmaos-menonitas"
+const bucketName = "igreja-irmaos-menonitas-2"
 
 export default async function DocumentId(req, res, next) {
     await mongooseConnect()

@@ -20,7 +20,6 @@ const ViewDocument = ({ document }) => {
             const response = await fetch(doc);
             const blob = await response.blob();
             const blobUrl = URL.createObjectURL(blob);
-            console.log(blobUrl);
 
             const link = window.document.createElement('a');
             link.href = blobUrl;

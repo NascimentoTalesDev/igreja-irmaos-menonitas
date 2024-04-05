@@ -17,7 +17,7 @@ const Spreadsheet3 = ({ data, startDate }) => {
     
     let valueReceitas = [];
     let valueDespesas = [];
-    console.log("startDate", startDate);
+
     for (let i = 0; i < data.length; i++) {
 
         let receita = data[i]?.[0]?.receitas !== undefined ? data[i]?.[0]?.receitas : 0
@@ -32,7 +32,6 @@ const Spreadsheet3 = ({ data, startDate }) => {
 
     let totalReceita = sumNumbers(valueReceitas)
     let totalDespesa = sumNumbers(valueDespesas)
-
     let crescimento = calcularPorcentagemDeCrescimento(totalReceita, totalDespesa)
 
     const categoriesRet = () => {

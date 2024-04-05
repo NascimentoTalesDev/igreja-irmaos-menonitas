@@ -76,25 +76,25 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
             name: "lanches"
         },
         {
-            name: "Limpeza Pátio"
+            name: "limpeza pátio"
         },
         {
-            name: "Manutencao"
+            name: "manutencao"
         },
         {
-            name: "Materiais Escolinhas"
+            name: "materiais escolinhas"
         },
         {
-            name: "Oferta Extra"
+            name: "oferta extra"
         },
         {
-            name: "Redízimo"
+            name: "redízimo"
         },
         {
-            name: "Rendimento"
+            name: "rendimento"
         },
         {
-            name: "Salário Pastor"
+            name: "salário pastor"
         },
     ]
 
@@ -107,7 +107,6 @@ const Reports = ({ categoriesDb, saldoCaixa, performance, performanceCategory, i
         try {
             await axios.post(`${api}/${versionApi}/transactions/get-report`, data).then(response => {
                 setData(response.data);
-                console.log(response.data);
             })
         } catch (error) {
             msgType = error?.response?.data?.message?.type

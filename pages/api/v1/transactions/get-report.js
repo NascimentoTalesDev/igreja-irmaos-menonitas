@@ -59,7 +59,7 @@ export default async function Reports(req, res, next) {
                 ]);
                 months.push(transactions)
                 startMonth++
-    
+
                 if (startMonth > 12) {
                     startMonth = 0
                     startYear++

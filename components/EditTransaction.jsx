@@ -255,7 +255,24 @@ const EditTransaction = ({ transaction, saldoEmCaixa }) => {
                     <TitleH3 text="Comprovante" className="my-[5px]" />
                     <UploadFiles className={`flex gap-3 mb-[10px]`} files={doc} setFiles={setDoc} />
 
-                    <Button onClick={updateTransaction} text={`${isSaving ? "Cadastrando..." : "Cadastrar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
+                    <TitleH3 text="Valor" className="my-[5px]" />
+                    
+                    <div onClick={() => { toggleModalSecond(), setDataModalSecond(<CalculatorEdit />) }} className="w-full text-mygray_more dark:text-light cursor-pointer px-[10px] flex rounded items-center bg-gray-100 dark:bg-secondary border-[0.1px] border-gray-200 dark:border-gray-500 h-[44px]">
+                        <>
+                            {infoThird ?
+                                (
+                                    <>
+                                        <span>{formatLocalCurrency(sumNumbers(infoThird))}</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>{transaction?.inInstallments ? formatLocalCurrency(transaction?.inInstallmentValue) : formatLocalCurrency(transaction?.accountValue)}</span>
+                                    </>
+                                )}
+                        </>
+                    </div>
+
+                    <Button onClick={updateTransaction} text={`${isSaving ? "Atualizando..." : "Atualizar"}`} className={`mt-[24px] w-full ${isSaving ? "bg-neutral-500" : "bg-primary"}`} />
                 </>
             )}
 

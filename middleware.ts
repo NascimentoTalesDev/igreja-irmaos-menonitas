@@ -5,6 +5,7 @@ type RoutePermissions = {
 }
 
 export default function middleware(request: NextRequest, response: NextResponse) {
+
   var token: string | undefined = request.cookies.get("user")?.value
   let rule: string;
 

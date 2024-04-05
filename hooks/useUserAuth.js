@@ -15,6 +15,8 @@ export default function useUserAuth() {
 
         if (token) {
             api.defaults.headers.Authorization = `Bearer ${JSON.parse(token)}`
+            api.defaults.headers['Access-Control-Allow-Origin'] = '*';
+
             setAuthenticated(true)
         } else {
             setAuthenticated(false)

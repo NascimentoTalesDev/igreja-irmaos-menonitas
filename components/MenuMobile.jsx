@@ -35,7 +35,7 @@ const MenuMobile = () => {
 
     const logoutUser = async () => {
         await logout()
-        let message = "deslogou do sistema"
+        let message = " deslogou do sistema"
         const data = { message }
         await axios.post(`${api}/${versionApi}/log?userId=${user?._id}`, data)
     }

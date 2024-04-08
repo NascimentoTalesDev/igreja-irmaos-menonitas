@@ -179,6 +179,7 @@ const EditTransaction = ({ transaction, saldoEmCaixa }) => {
 
                     <TitleH3 text="Comprovante" className="my-[5px]" />
                     <UploadFiles className={`flex gap-3 mb-[10px]`} files={doc} setFiles={setDoc} />
+                    
                     <div className={`flex mb-[10px] justify-between items-center ${recurrent ? "hidden " : "flex "}`}>
                         {paid ?
                             (
@@ -254,6 +255,16 @@ const EditTransaction = ({ transaction, saldoEmCaixa }) => {
 
                     <TitleH3 text="Comprovante" className="my-[5px]" />
                     <UploadFiles className={`flex gap-3 mb-[10px]`} files={doc} setFiles={setDoc} />
+                    
+                    <div className={`flex mb-[10px] justify-between items-center ${recurrent ? "hidden " : "flex "}`}>
+                        {paid ?
+                            (
+                                <TitleH3 text="Já recebi" />
+                            ) : (
+                                <TitleH3 text="Não recebi" />
+                            )}
+                        <button value={paid} onClick={() => setPaid(!paid)} >{paid ? <ToggleThemeOnIcon /> : <ToggleThemeOffIcon />}</button>
+                    </div>
 
                     <TitleH3 text="Valor" className="my-[5px]" />
                     

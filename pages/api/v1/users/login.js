@@ -26,7 +26,7 @@ export default async function login(req, res){
 
             try {
                 Log.create({
-                    message : "Fez login no sistema",
+                    message : " Fez login no sistema",
                     user: user?._id
                 })
             } catch (error) {

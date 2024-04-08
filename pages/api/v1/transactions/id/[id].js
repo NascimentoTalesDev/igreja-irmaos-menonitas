@@ -90,7 +90,7 @@ export default async function TransactionId(req, res) {
                     }))
                     try {
                         Log.create({
-                            message: `Atualizou a transação parcelada ${allTransaction[0]?.name} de ${allTransaction[0]}`,
+                            message: `atualizou a transação parcelada ${allTransaction[0]?.name} de ${allTransaction[0]}`,
                             user: userId
                         })
                     } catch (error) {
@@ -102,6 +102,59 @@ export default async function TransactionId(req, res) {
 
                 const transaction = await Transaction.findById(id)
                 
+                if (paid && !value && !name && !date && !accountValue) {   
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} - de: não pago para: pago `,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }else if(paid === false){
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} - de: pago para: não pago `,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
+                if (value && paid === transaction?.paid && !name) {   
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} - de: ${transaction?.accountValue.toFixed(2)} para: ${value.toFixed(2)}`,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
+                if (value && paid !== transaction?.paid && !name) {   
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} - de: ${transaction?.accountValue.toFixed(2)} para: ${value.toFixed(2)} e de: ${transaction?.paid ? "pago": "não pago"} para: ${paid ? "pago": "não pago"}`,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
+                if (name && name !== transaction?.name) {   
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} para: ${name}`,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
                 if (paid !== transaction.paid) transaction.paid = paid
                 if (name && name !== transaction.name) transaction.name = name
                 if (icon && icon !== transaction.icon) transaction.icon = icon
@@ -138,7 +191,7 @@ export default async function TransactionId(req, res) {
 
             if (type === "rendimento") {
                 const transaction = await Transaction.findById(id)
-
+                
                 if (name && name !== transaction.name) transaction.name = name
                 if (icon && icon !== transaction.icon) transaction.icon = icon
                 if (date && date !== transaction.date) transaction.date = date
@@ -161,26 +214,68 @@ export default async function TransactionId(req, res) {
             if (type === "receita") {
                 const transaction = await Transaction.findById(id)
 
+                if (paid && !value && !name && !date && !accountValue) {   
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} - de: não recebido para: recebido `,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }else if(paid === false){
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} - de: recebido para: não recebido `,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
+                if (value && paid === transaction?.paid && !name) {   
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} - de: ${transaction?.accountValue.toFixed(2)} para: ${value.toFixed(2)}`,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
+                if (value && paid !== transaction?.paid && !name) {   
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} - de: ${transaction?.accountValue.toFixed(2)} para: ${value.toFixed(2)} e de: ${transaction?.paid ? "recebido": "não recebido"} para: ${paid ? "recebido": "não recebido"}`,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
+                if (name && name !== transaction?.name) {   
+                    try {
+                        Log.create({
+                            message: `atualizou a transação ${transaction?.name} para: ${name}`,
+                            user: userId
+                        })
+                    } catch (error) {
+                        console.log(error);
+                    }
+                }
+
+                if (name && name !== transaction.name) transaction.name = name
                 if (paid !== transaction.paid) transaction.paid = paid
                 if (icon && icon !== transaction.icon) transaction.icon = icon
-                if (name && name !== transaction.name) transaction.name = name
                 if (date && date !== transaction.date) transaction.date = date
                 if (accountValue && accountValue !== transaction.accountValue) transaction.accountValue = value
 
-                try {
-                    Log.create({
-                        message: `atualizou a transação ${transaction?.name} - ${transaction?.accountValue} para ${value}`,
-                        user: userId
-                    })
-                } catch (error) {
-                    console.log(error);
-                }
-
                 await transaction.save()
 
-    
                 return res.send({ message: { type: "success", data: "Transação atualizada com sucesso" } })
-
             }
 
             if (type === "transferencia") {

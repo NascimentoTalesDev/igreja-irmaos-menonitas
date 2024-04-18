@@ -66,7 +66,7 @@
 
 <h2>Rotas da Aplicação</h2>
 
-<h3>Aqui estão as principais rotas da aplicação, detalhando os endpoints disponíveis, seus métodos HTTP e os parâmetros necessários:</h3>
+<h3>Aqui estão as principais rotas da aplicação, detalhando os endpoints disponíveis, seus métodos HTTP (e os parâmetros necessários-(TO DO):</h3>
 
 <h4>Usuários</h4>
 

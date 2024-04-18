@@ -3,7 +3,7 @@ import fs from "fs"
 import { PutObjectCommand, S3Client, DeleteObjectCommand, GetObjectAclCommand } from "@aws-sdk/client-s3";
 import mime from "mime-types"
 
-const bucketName = "irmaos-menonitas"
+const bucketName = "igreja-irmaos-menonitas"
 
 export default async function handle(req, res) {
     const { method } = req
